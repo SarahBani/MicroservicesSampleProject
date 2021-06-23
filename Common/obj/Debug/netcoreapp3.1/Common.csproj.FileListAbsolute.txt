@@ -1,0 +1,8 @@
+H:\Project\Microservices\MicroservicesSampleProject\Common\bin\Debug\netcoreapp3.1\Common.deps.json
+H:\Project\Microservices\MicroservicesSampleProject\Common\bin\Debug\netcoreapp3.1\Common.dll
+H:\Project\Microservices\MicroservicesSampleProject\Common\bin\Debug\netcoreapp3.1\Common.pdb
+H:\Project\Microservices\MicroservicesSampleProject\Common\obj\Debug\netcoreapp3.1\Common.AssemblyInfoInputs.cache
+H:\Project\Microservices\MicroservicesSampleProject\Common\obj\Debug\netcoreapp3.1\Common.AssemblyInfo.cs
+H:\Project\Microservices\MicroservicesSampleProject\Common\obj\Debug\netcoreapp3.1\Common.csproj.CoreCompileInputs.cache
+H:\Project\Microservices\MicroservicesSampleProject\Common\obj\Debug\netcoreapp3.1\Common.dll
+H:\Project\Microservices\MicroservicesSampleProject\Common\obj\Debug\netcoreapp3.1\Common.pdb

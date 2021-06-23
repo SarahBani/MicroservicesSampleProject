@@ -1,0 +1,256 @@
+﻿using Identity.APIService.Entities;
+using Identity.APIService.Models;
+using Identity.APIService.Repository;
+using Identity.APIService.Settings;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Identity.APIService.Services
+{
+    public class AuthService : BaseService, IAuthService
+    {
+
+        #region Properties
+
+        private readonly TokenSetting _tokenSetting;
+
+        private readonly UserManager<User> _userManager;
+
+        #endregion /Properties
+
+        #region Constructors
+
+        public AuthService(IUnitOfWork unitOfWork,
+            IOptions<TokenSetting> tokenSetting, 
+            UserManager<User> userManager):
+            base(unitOfWork)
+        {
+            this._tokenSetting = tokenSetting.Value;
+            this._userManager = userManager;
+        }
+
+        #endregion
+
+        #region Methods
+
+        public async Task<TransactionResult> Register(User user, string password)
+        {
+            try
+            {
+                if (this._userManager.FindByEmailAsync(user.Email).Result != null)
+                {
+                    throw new CustomException(Constant.Exception_EmailAlreadyRegistered);
+                }
+                if (this._userManager.FindByNameAsync(user.UserName).Result != null)
+                {
+                    throw new CustomException(Constant.Exception_DuplicateUserName);
+                }
+                base.BeginTransaction();
+                var identityResult = await this._userManager.CreateAsync(user, password);
+                if (identityResult.Succeeded)
+                {
+                    await AddRole(user, RoleEnum.Member.ToString());
+                    await AddClaims(user, RoleEnum.Member);
+                }
+                else
+                {
+                    string errors = string.Empty;
+                    if (identityResult.Errors.Count() > 0)
+                    {
+                        foreach (var error in identityResult.Errors)
+                        {
+                            errors += error.Description;
+                        }
+                        throw new CustomException(errors);
+                    }
+                    throw new CustomException(Constant.Exception_RegistrationFailed);
+                }
+                return await CommitTransactionAsync();
+            }
+            catch (Exception ex)
+            {
+                return GetTransactionException(ex);
+            }
+        }
+
+        private async Task<TransactionResult> AddRole(User user, string role)
+        {
+            var result = await this._userManager.AddToRoleAsync(user, role);
+            if (result.Succeeded)
+            {
+                return new TransactionResult();
+            }
+            else
+            {
+                string errors = string.Empty;
+                if (result.Errors.Count() > 0)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        errors += error.Description;
+                    }
+                    throw new CustomException(errors);
+                }
+                throw new CustomException(Constant.Exception_RegistrationFailed);
+            }
+        }
+
+        private async Task<TransactionResult> AddClaims(User user, RoleEnum role)
+        {
+            string subSystems = string.Empty;
+            switch (role)
+            {
+                case RoleEnum.Admin:
+                    subSystems = string.Join(";", SubSystemEnum.Auth.ToString().ToLower(), SubSystemEnum.CRUD.ToString().ToLower(), SubSystemEnum.CQRS.ToString().ToLower());
+                    break;
+                case RoleEnum.Manager:
+                    subSystems = string.Join(";", SubSystemEnum.CRUD.ToString().ToLower(), SubSystemEnum.CQRS.ToString().ToLower());
+                    break;
+                case RoleEnum.Employee:
+                case RoleEnum.Member:
+                default:
+                    subSystems = SubSystemEnum.CRUD.ToString();
+                    break;
+            }
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.System, subSystems)
+
+            };
+            //claims.Add(new Claim(ClaimTypes.Role, role.ToString()));
+
+            var result = await this._userManager.AddClaimsAsync(user, claims);
+            if (result.Succeeded)
+            {
+                return new TransactionResult();
+            }
+            else
+            {
+                string errors = string.Empty;
+                if (result.Errors.Count() > 0)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        errors += error.Description;
+                    }
+                    throw new CustomException(errors);
+                }
+                throw new CustomException(Constant.Exception_RegistrationFailed);
+            }
+        }
+
+        public async Task<TransactionResult> Login(string username, string password)
+        {
+            //var userId = this._httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var user = await this._userManager.FindByNameAsync(username);
+            if (user != null)
+            {
+                bool isCorrect = await this._userManager.CheckPasswordAsync(user, password);
+                if (isCorrect)
+                {
+                    return new TransactionResult();
+                }
+            }
+            return new TransactionResult(new CustomException(Constant.Exception_LoginFailed));
+        }
+
+        public async Task<TransactionResult> ChangePassword(string username, string oldPassword, string newPassword)
+        {
+            var user = await this._userManager.FindByNameAsync(username);
+            if (user != null)
+            {
+                var identityResult = await this._userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+                if (identityResult.Succeeded)
+                {
+                    return new TransactionResult();
+                }
+            }
+            return new TransactionResult(new CustomException(Constant.Exception_ChangePasswordFailed));
+        }
+
+        //public async Task<TransactionResult> CreateRole(string name)
+        //{
+        //    var role = new Role()
+        //    {
+        //        Name = name,
+        //        NormalizedName = name.ToUpper(),
+        //        ConcurrencyStamp = Guid.NewGuid().ToString(),
+        //        Description = null
+        //    };
+        //    var result = await this._roleManager.CreateAsync(role);
+        //    if (result.Succeeded)
+        //    {
+        //        return new TransactionResult();
+        //    }
+        //    else
+        //    {
+        //        return new TransactionResult(new CustomException(Constant.Exception_RoleCreationFailed));
+        //    }
+        //}
+
+        public async Task<bool> IsAuthenticated(string username, string password)
+        {
+            var result = await this.Login(username, password);
+            return result.IsSuccessful;
+        }
+
+        private async Task<TransactionResult> GetAuthenticationToken(string username)
+        {
+            try
+            {
+                var user = await this._userManager.FindByNameAsync(username);
+                if (user == null)
+                {
+                    throw new CustomException(ExceptionKey.AuthenticationFailed);
+                }
+                var claims = await this._userManager.GetClaimsAsync(user);
+                if (claims == null)
+                {
+                    throw new CustomException(ExceptionKey.UserNotAccess);
+                }
+                var subSystems = claims.SingleOrDefault(q => q.Type == ClaimTypes.System);
+                if (subSystems == null)
+                {
+                    throw new CustomException(ExceptionKey.UserNotAccess);
+                }
+
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this._tokenSetting.SecretKey));
+                var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512Signature); //  HmacSha256Signature);
+
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Issuer = this._tokenSetting.Issuer,
+                    Audience = subSystems.Value,
+                    //Subject = new ClaimsIdentity(new Claim[]
+                    //{
+                    //    new Claim(ClaimTypes.Name, "crud")
+                    //}),
+                    Subject = new ClaimsIdentity(claims),
+                    Expires = DateTime.UtcNow.AddMinutes(double.Parse(this._tokenSetting.AccessExpiration)),
+                    SigningCredentials = credentials
+                };
+                string token = tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
+
+                return new TransactionResult(token);
+            }
+            catch (Exception ex)
+            {
+                return GetTransactionException(ex);
+            }
+        }
+
+        #endregion /Methods
+
+    }
+}
