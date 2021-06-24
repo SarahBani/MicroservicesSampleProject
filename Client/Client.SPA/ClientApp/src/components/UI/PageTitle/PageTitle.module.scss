@@ -1,0 +1,16 @@
+﻿@import "../../colors";
+
+.PageTitle {
+    margin-bottom: 30px;
+   // color: $title-green;
+
+    span {
+        font-size: 2rem;
+        padding-right: 10px;
+        margin: -5px 0;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+}

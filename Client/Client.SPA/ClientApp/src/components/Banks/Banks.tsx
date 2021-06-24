@@ -1,9 +1,22 @@
 ﻿import * as React from 'react';
 import { FC, useMemo } from 'react';
 
+import PageTitle from '../UI/PageTitle/PageTitle';
+import BankList from './BankList/BankList';
+
 const Banks: FC = () => {
     return (
-        <div>sdfsdf </div>
+        <div className="container">
+            <PageTitle title="Hotels" />
+            <div className="row">
+                <div className="col-7">
+                    <BankList />
+                </div>
+                <div className="col-5">
+                    {/*{detailContent}*/}
+                </div>
+            </div>
+        </div>
     );
 };
 

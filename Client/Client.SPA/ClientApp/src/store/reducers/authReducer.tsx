@@ -7,7 +7,7 @@ const initialState = {
     user: null
 };
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case actionTypes.SIGN_IN_SUCCEEDED:
             return {

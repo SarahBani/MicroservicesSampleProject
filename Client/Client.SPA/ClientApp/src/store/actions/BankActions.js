@@ -66,4 +66,4 @@ var deleteBank = function (id, token) {
     };
 };
 exports.deleteBank = deleteBank;
-//# sourceMappingURL=BankActions.js.map
+//# sourceMappingURL=bankActions.js.map

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = require("axios");
 var axiosInstance = axios_1.default.create({
-    baseURL: ''
+    baseURL: 'http://localhost:5100/gateway'
 });
 //instance.default.headers.common['Authorization'] = 'Auth Token dgdfgdfg';
 //instance.default.headers.post['Content-Type'] = 'application/json';

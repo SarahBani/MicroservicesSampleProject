@@ -56,7 +56,7 @@ namespace CRUD.APIService.Repository
             GetQueryable().Count(filter);
 
         public virtual Task<int> GetCountAsync(Expression<Func<TEntity, bool>> filter = null) =>
-            this.MyDBContext.Set<TEntity>().CountAsync(filter);
+            filter != null ? this.MyDBContext.Set<TEntity>().CountAsync(filter) : this.MyDBContext.Set<TEntity>().CountAsync();
 
         public virtual TEntity GetSingle(Expression<Func<TEntity, bool>> filter) =>
             GetQueryable().Where(filter).SingleOrDefault();

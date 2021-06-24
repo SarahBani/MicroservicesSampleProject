@@ -9,7 +9,7 @@ export const SuccessfulOperationsEnum = Object.freeze({
 });
 
 export const FailedOperationsEnum = Object.freeze({
-    FetchHotel: 'FetchHotel'
+    FetchBank: 'FetchBank'
 });
 
 export const FormControlTypesEnum = Object.freeze({

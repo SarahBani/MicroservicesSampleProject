@@ -10,7 +10,7 @@ exports.SuccessfulOperationsEnum = Object.freeze({
     Remove: 'Remove'
 });
 exports.FailedOperationsEnum = Object.freeze({
-    FetchHotel: 'FetchHotel'
+    FetchBank: 'FetchBank'
 });
 exports.FormControlTypesEnum = Object.freeze({
     Input: 'input',

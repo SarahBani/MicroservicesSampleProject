@@ -40,7 +40,7 @@
     /// CRUD
     {
       "DownstreamPathTemplate": "/api/bank",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",

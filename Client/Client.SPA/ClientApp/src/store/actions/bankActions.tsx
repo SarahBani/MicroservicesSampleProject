@@ -1,4 +1,5 @@
 ﻿import * as actionTypes from './bankActionTypes';
+import { IBank } from '../../models/IBank.model';
 
 export const fetchBanks = (pageNo: number, pageCount: number) => {
     return {
@@ -8,7 +9,7 @@ export const fetchBanks = (pageNo: number, pageCount: number) => {
     };
 };
 
-export const setBanks = (banks) => {
+export const setBanks = (banks: IBank[]) => {
     return {
         type: actionTypes.SET_BANKS,
         banks: banks
@@ -35,7 +36,7 @@ export const fetchBank = (id: number) => {
     };
 };
 
-export const setBank = (bank) => {
+export const setBank = (bank: IBank) => {
     return {
         type: actionTypes.SET_BANK,
         bank: bank
@@ -48,7 +49,7 @@ export const clearSelectedBank = () => {
     };
 };
 
-export const saveBank = (bank, token: string) => {
+export const saveBank = (bank: IBank, token: string) => {
     return {
         type: actionTypes.SAVE_BANK,
         bank: bank,

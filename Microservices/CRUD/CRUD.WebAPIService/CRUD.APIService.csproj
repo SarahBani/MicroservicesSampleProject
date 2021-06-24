@@ -5,15 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20210605204920_Init.cs" />
-    <Compile Remove="Migrations\20210605204920_Init.Designer.cs" />
-    <Compile Remove="Migrations\20210623184538_Branch_Fields.cs" />
-    <Compile Remove="Migrations\20210623184538_Branch_Fields.Designer.cs" />
-    <Compile Remove="Migrations\20210623184731_Branch_Fields.cs" />
-    <Compile Remove="Migrations\20210623184731_Branch_Fields.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.15">
       <PrivateAssets>all</PrivateAssets>

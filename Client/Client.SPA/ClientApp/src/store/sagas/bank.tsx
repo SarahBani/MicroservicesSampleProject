@@ -1,13 +1,14 @@
-﻿import { put, take, call } from 'redux-saga/effects';
+﻿import { AxiosResponse } from 'axios';
+import { put } from 'redux-saga/effects';
 
-import axiosInstance from '../../axios-instance';
+import axiosInstance from '../../shared/axios-instance';
 import { SuccessfulOperationsEnum, FailedOperationsEnum } from '../../shared/constant';
-import * as actions from '../actions/BankActions';
+import * as actions from '../actions/bankActions';
 import * as commonActions from '../actions/commonActions';
 import * as uploadActions from '../actions/uploadActions';
-import uploadFileChannel from './uploadFileChannel';
+//import uploadFileChannel from './uploadFileChannel';
 
-export function* fetchBanksSaga(action) {
+export function* fetchBanksSaga(action: any) {
     yield put(commonActions.showLoader());
     const headers = {
         'Content-Type': 'application/json; charset=utf-8'
@@ -26,8 +27,8 @@ export function* fetchBanksSaga(action) {
         if (action.pageCount) {
             yield filters.push(`pageCount=${action.pageCount}`);
         }
-        const queryString = yield (filters.length > 0 ? '?' + filters.join('&') : '');
-        const response = yield axiosInstance.get('/Bank/GetList' + queryString, { headers: headers });
+        const queryString: string = yield (filters.length > 0 ? '?' + filters.join('&') : '');
+        const response: Promise<AxiosResponse<any>> = yield axiosInstance.get('/banks' + queryString, { headers: headers });
         if (response?.status === 200) {
             yield put(actions.setBanks(response.data));
         }
@@ -37,7 +38,7 @@ export function* fetchBanksSaga(action) {
     }
 }
 
-export function* fetchBanksCountSaga(action) {
+export function* fetchBanksCountSaga(action: any) {
     yield put(commonActions.showLoader());
     const headers = {
         'Content-Type': 'application/json; charset=utf-8'
@@ -50,8 +51,8 @@ export function* fetchBanksCountSaga(action) {
         if (action.countryId) {
             yield filters.push(`countryId=${action.countryId}`);
         }
-        const queryString = yield (filters.length > 0 ? '?' + filters.join('&') : '');
-        const response = yield axiosInstance.get('/Bank/GetCount' + queryString, { headers: headers });
+        const queryString: string = yield (filters.length > 0 ? '?' + filters.join('&') : '');
+        const response: Promise<AxiosResponse<any>> = yield axiosInstance.get('/bank/count' + queryString, { headers: headers });
         if (response?.status === 200) {
             yield put(actions.setBanksCount(response.data));
         }
@@ -61,13 +62,13 @@ export function* fetchBanksCountSaga(action) {
     }
 }
 
-export function* fetchBankSaga(action) {
+export function* fetchBankSaga(action: any) {
     yield put(commonActions.showLoader());
     const headers = {
         'Content-Type': 'application/json; charset=utf-8'
     };
     try {
-        const response = yield axiosInstance.get('/Bank/GetById/' + action.id, { headers: headers });
+        const response: Promise<AxiosResponse<any>> = yield axiosInstance.get('/bank/' + action.id, { headers: headers });
         if (response?.status === 200) {
             yield put(actions.setBank(response.data));
         }
@@ -80,37 +81,37 @@ export function* fetchBankSaga(action) {
     }
 }
 
-export function* fetchBankPhotosSaga(action) {
-    yield put(commonActions.showLoader());
-    const headers = {
-        'Content-Type': 'application/json; charset=utf-8'
-    };
-    try {
-        const response = yield axiosInstance.get('/Bank/GetPhotos/' + action.BankId, { headers: headers });
-        if (response?.status === 200) {
-            yield put(actions.setBankPhotos(response.data));
-        }
-        yield put(commonActions.hideLoader());
-    } catch (error) {
-        yield put(commonActions.raiseError(error));
-    }
-}
+//export function* fetchBankPhotosSaga(action: any) {
+//    yield put(commonActions.showLoader());
+//    const headers = {
+//        'Content-Type': 'application/json; charset=utf-8'
+//    };
+//    try {
+//        const response: Promise<AxiosResponse<any>>  = yield axiosInstance.get('/Bank/GetPhotos/' + action.BankId, { headers: headers });
+//        if (response?.status === 200) {
+//            yield put(actions.setBankPhotos(response.data));
+//        }
+//        yield put(commonActions.hideLoader());
+//    } catch (error) {
+//        yield put(commonActions.raiseError(error));
+//    }
+//}
 
-export function* saveBankSaga(action) {
+export function* saveBankSaga(action: any) {
     yield put(commonActions.showLoader());
     const headers = {
         'Content-Type': 'application/json; charset=utf-8',
         'Authorization': `Bearer ${action.token}`
     };
     try {
-        let response;
+        let response: Promise<AxiosResponse<any>>;
         let operation;
         if (!action.Bank.id) {
-            response = yield axiosInstance.post('/Bank/Insert', action.Bank, { headers: headers });
+            response = yield axiosInstance.post('/bank', action.Bank, { headers: headers });
             operation = SuccessfulOperationsEnum.Insert;
         }
         else {
-            response = yield axiosInstance.put('/Bank/Update/' + action.Bank.id, action.Bank, { headers: headers });
+            response = yield axiosInstance.put('/bank' + action.Bank.id, action.Bank, { headers: headers });
             operation = SuccessfulOperationsEnum.Update;
         }
         if (response?.status === 200) {
@@ -122,14 +123,14 @@ export function* saveBankSaga(action) {
     }
 }
 
-export function* deleteBankSaga(action) {
+export function* deleteBankSaga(action: any) {
     yield put(commonActions.showLoader());
     const headers = {
         'Content-Type': 'application/json; charset=utf-8',
         Authorization: `Bearer ${action.token}`
     };
     try {
-        const response = yield axiosInstance.delete('/Bank/Delete/' + action.id, { headers: headers });
+        const response: Promise<AxiosResponse<any>> = yield axiosInstance.delete('/bank' + action.id, { headers: headers });
         if (response?.status === 200) {
             yield put(commonActions.operationSucceeded(SuccessfulOperationsEnum.Delete));
         }
