@@ -7,7 +7,6 @@ import BankList from './BankList/BankList';
 const Banks: FC = () => {
     return (
         <div className="container">
-            <PageTitle title="Hotels" />
             <div className="row">
                 <div className="col-7">
                     <BankList />

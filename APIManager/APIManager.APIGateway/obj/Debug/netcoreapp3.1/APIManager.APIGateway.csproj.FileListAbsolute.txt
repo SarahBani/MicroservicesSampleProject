@@ -28,7 +28,6 @@ H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGat
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netstandard1.3\System.Net.Http.WinHttpHandler.dll
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard1.3\System.Net.Http.WinHttpHandler.dll
-H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\APIManager.APIGateway.csprojAssemblyReference.cache
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\APIManager.APIGateway.AssemblyInfoInputs.cache
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\APIManager.APIGateway.AssemblyInfo.cs
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\APIManager.APIGateway.csproj.CoreCompileInputs.cache
@@ -41,3 +40,4 @@ H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGat
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\APIManager.APIGateway.dll
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\APIManager.APIGateway.pdb
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\APIManager.APIGateway.genruntimeconfig.cache
+H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\APIManager.APIGateway.csprojAssemblyReference.cache

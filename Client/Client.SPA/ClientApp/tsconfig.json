@@ -11,15 +11,28 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "lib": [
       "es2015",
       "dom"
     ],
-    "skipLibCheck": false
+    "skipLibCheck": false,
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules"
+      }
+    ],
+    "noFallthroughCasesInSwitch": true
   },
   "include": [
-    "src"
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts",
+    "**/*.test.tsx",
+    "dist",
+    ".vscode"
   ],
   "compileOnSave": false
 }

@@ -7,7 +7,7 @@ export class User {
     private _tokenExpirationDate: Date) {
   }
 
-  public get token(): string {
+  public get token(): string | null {
     if (this.isExpired()) {
       return null;
     }
@@ -18,11 +18,11 @@ export class User {
     return (!this._tokenExpirationDate || new Date() > this._tokenExpirationDate);
   }
 
-  public get expirationDuration(): number {
-    if (this.isExpired()) {
-      return 0
-    }
-    return new Date(this._tokenExpirationDate).getTime() - new Date().getTime();
-  }
+  //public get expirationDuration(): number {
+  //  if (this.isExpired()) {
+  //    return 0
+  //  }
+  //  return new Date(this._tokenExpirationDate).getTime() - new Date().getTime();
+  //}
 
 }

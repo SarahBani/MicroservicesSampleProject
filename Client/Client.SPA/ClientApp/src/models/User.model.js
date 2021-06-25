@@ -22,16 +22,6 @@ var User = /** @class */ (function () {
     User.prototype.isExpired = function () {
         return (!this._tokenExpirationDate || new Date() > this._tokenExpirationDate);
     };
-    Object.defineProperty(User.prototype, "expirationDuration", {
-        get: function () {
-            if (this.isExpired()) {
-                return 0;
-            }
-            return new Date(this._tokenExpirationDate).getTime() - new Date().getTime();
-        },
-        enumerable: false,
-        configurable: true
-    });
     return User;
 }());
 exports.User = User;

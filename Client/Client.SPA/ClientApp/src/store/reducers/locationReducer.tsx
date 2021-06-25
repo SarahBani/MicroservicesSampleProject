@@ -1,6 +1,6 @@
 ﻿import * as actionTypes from '../actions/locationActionTypes';
-import { ICity } from '../../models/ICity.model';
-import { ICountry } from '../../models/ICountry.model';
+import { City } from '../../models/City.model';
+import { Country } from '../../models/Country.model';
 
 const initialState = {
     countries: [],
