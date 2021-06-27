@@ -2,26 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-
     <TypeScriptTarget>ES5</TypeScriptTarget>
     <TypeScriptJSXEmit>React</TypeScriptJSXEmit>
-    <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
     <TypeScriptCompileBlocked>false</TypeScriptCompileBlocked>
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
-    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
-    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
-    <TypeScriptESModuleInterop>True</TypeScriptESModuleInterop>
-    <TypeScriptOutFile />
-    <TypeScriptAllowSyntheticDefaultImports>True</TypeScriptAllowSyntheticDefaultImports>
-    <TypeScriptOutDir />
-    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
-    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
-    <TypeScriptSourceMap>True</TypeScriptSourceMap>
-    <TypeScriptMapRoot />
-    <TypeScriptSourceRoot />
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
-
-
     <IsPackable>false</IsPackable>
     <SpaRoot>ClientApp\</SpaRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
@@ -51,6 +36,20 @@
 
   <ItemGroup>
     <TypeScriptCompile Remove="ClientApp\node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Remove="ClientApp\src\components\Banks\BankItem\BankItem.tsx" />
+    <TypeScriptCompile Remove="ClientApp\src\components\Banks\sss\sss.tsx" />
+    <TypeScriptCompile Remove="ClientApp\src\components\UI\Pagination\Pagination.tsx" />
+    <TypeScriptCompile Remove="ClientApp\src\components\UI\Spinner\Spinner.tsx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="ClientApp\src\components\Banks\BankItem\BankItem.tsx" />
+    <None Include="ClientApp\src\components\Banks\sss\sss.tsx" />
+    <None Include="ClientApp\src\components\UI\Pagination\Pagination.tsx" />
+    <None Include="ClientApp\src\components\UI\Spinner\Spinner.tsx" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

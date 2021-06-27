@@ -3,10 +3,12 @@ import { FC, useMemo } from 'react';
 
 import PageTitle from '../UI/PageTitle/PageTitle';
 import BankList from './BankList/BankList';
+import Sss from './sss/sss';
 
 const Banks: FC = () => {
     return (
         <div className="container">
+            <PageTitle title="Banks" />
             <div className="row">
                 <div className="col-7">
                     <BankList />

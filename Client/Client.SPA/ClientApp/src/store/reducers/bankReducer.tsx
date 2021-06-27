@@ -12,7 +12,7 @@ const bankReducer = (state = initialState, action: any) => {
         case actionTypes.SET_BANKS:
             return {
                 ...state,
-                hotels: action.hotels
+                banks: action.banks
             };
         case actionTypes.SET_BANKS_COUNT:
             return {
@@ -22,12 +22,12 @@ const bankReducer = (state = initialState, action: any) => {
         case actionTypes.SET_BANK:
             return {
                 ...state,
-                selectedHotel: action.hotel
+                selectedBank: action.bank
             };
         case actionTypes.CLEAR_SELECTED_BANK:
             return {
                 ...state,
-                selectedHotel: null
+                selectedBank: null
             };
         default:
             return state;

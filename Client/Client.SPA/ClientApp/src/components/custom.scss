@@ -1,0 +1,120 @@
+@import "_globals";
+@import "colors";
+
+$shadow-item: 0 0 1px;
+
+@mixin shadow($color) {
+    text-shadow: $shadow-item $color, $shadow-item $color, $shadow-item $color, $shadow-item $color;
+}
+
+body {
+    background-color: $light-green-background;
+    min-height: 100vh;
+    margin-bottom: 5vh;
+}
+
+main {
+    padding-bottom: 400px;
+}
+
+/*********** ScrollBar **************/
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #CCC;
+    border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: $light-blue;
+    @include border(#000, 5px);
+    /* Handle on hover */
+    &:hover {
+        background: $light-blue-highlight;
+    }
+}
+
+/************************************/
+
+.fa {
+    &.fa-home {
+        font-size: 30px;
+        margin: -5px 10px;
+    }
+
+    &.fa-star {
+        color: $dark-color;
+        @include shadow($dark-color);
+
+        &.checked {
+            color: $medium-yellow;
+            @include shadow(black);
+        }
+    }
+}
+
+/*.card-columns {
+    -webkit-column-count: 3;
+    -moz-column-count: 3;
+    column-count: 3;
+}*/
+
+.card-deck > .card {
+    width: 30%;
+    flex-wrap: wrap;
+    flex: initial;
+    margin: 10px;
+}
+
+.btn {
+    margin: .5px;
+}
+
+.btn-group .btn-primary {
+    @include border(#628DBC);
+}
+
+.dropdown-menu {
+    padding: 0;
+
+    .dropdown-item {
+        padding:5x;
+        cursor: pointer;
+
+        &:hover {
+            background-color: $light-blue;
+        }
+    }
+
+    .dropdown-divider {
+        border-top: 1px solid $light-gray;
+    }
+}
+
+.star-container svg path {
+    stroke: #000;
+    stroke-width: 1px;
+    stroke-linejoin: round;
+}
+
+.carousel {
+
+    .control-dots .dot {
+        background-color: $light-green-highlight !important;
+    }
+
+    .thumb {
+        &:not(.selected ) {
+            border: none;
+        }
+
+        &.selected, &:hover {
+            @include border($light-green, 2px, 3px, true);
+        }
+    }
+}

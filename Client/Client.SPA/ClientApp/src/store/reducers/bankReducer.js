@@ -10,27 +10,8 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var actionTypes = __importStar(require("../actions/bankActionTypes"));
+var actionTypes = require("../actions/bankActionTypes");
 var initialState = {
     banks: [],
     count: 0,
@@ -41,13 +22,13 @@ var bankReducer = function (state, action) {
     if (state === void 0) { state = initialState; }
     switch (action.type) {
         case actionTypes.SET_BANKS:
-            return __assign(__assign({}, state), { hotels: action.hotels });
+            return __assign(__assign({}, state), { banks: action.banks });
         case actionTypes.SET_BANKS_COUNT:
             return __assign(__assign({}, state), { count: action.count });
         case actionTypes.SET_BANK:
-            return __assign(__assign({}, state), { selectedHotel: action.hotel });
+            return __assign(__assign({}, state), { selectedBank: action.bank });
         case actionTypes.CLEAR_SELECTED_BANK:
-            return __assign(__assign({}, state), { selectedHotel: null });
+            return __assign(__assign({}, state), { selectedBank: null });
         default:
             return state;
     }

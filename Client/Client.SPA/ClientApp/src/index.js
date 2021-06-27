@@ -1,43 +1,45 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.composeEnhancers = void 0;
 require("bootstrap/dist/css/bootstrap.css");
 require("react-app-polyfill/ie11");
-var React = __importStar(require("react"));
-var ReactDOM = __importStar(require("react-dom"));
+var React = require("react");
+var ReactDOM = require("react-dom");
+var redux_1 = require("redux");
 var react_redux_1 = require("react-redux");
+var redux_saga_1 = require("redux-saga");
 var connected_react_router_1 = require("connected-react-router");
 var history_1 = require("history");
-var configureStore_1 = __importDefault(require("./store/configureStore"));
-var App_1 = __importDefault(require("./components/App"));
-var registerServiceWorker_1 = __importDefault(require("./registerServiceWorker"));
+var App_1 = require("./components/App");
+var registerServiceWorker_1 = require("./registerServiceWorker");
+var commonReducer_1 = require("./store/reducers/commonReducer");
+var authReducer_1 = require("./store/reducers/authReducer");
+var bankReducer_1 = require("./store/reducers/bankReducer");
+var sagas_1 = require("./store/sagas");
 // Create browser history to use in the Redux store
-//const baseUrl: string = document.getElementsByTagName('base')[0].getAttribute('href') as string;
-var history = history_1.createBrowserHistory();
+var baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
+var history = history_1.createBrowserHistory({ basename: baseUrl });
 var rootElement = document.getElementById('root');
+var sagaMiddleware = redux_saga_1.default();
+var rootReducer = redux_1.combineReducers({
+    common: commonReducer_1.default,
+    auth: authReducer_1.default,
+    //location: locationReducer,
+    bank: bankReducer_1.default,
+    //upload: uploadReducer
+    router: connected_react_router_1.connectRouter(history)
+});
+//declare global {
+//    interface Window {
+//        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+//    }
+//}
+exports.composeEnhancers = (window && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || redux_1.compose;
 // Get the application-wide store instance, prepopulating with state from the server where available.
-var store = configureStore_1.default(history);
+var store = redux_1.createStore(rootReducer, exports.composeEnhancers(redux_1.applyMiddleware(sagaMiddleware)));
+sagaMiddleware.run(sagas_1.watchAuth);
+//sagaMiddleware.run(watchLocation);
+sagaMiddleware.run(sagas_1.watchBank);
 ReactDOM.render(React.createElement(react_redux_1.Provider, { store: store },
     React.createElement(connected_react_router_1.ConnectedRouter, { history: history },
         React.createElement(App_1.default, null))), rootElement);

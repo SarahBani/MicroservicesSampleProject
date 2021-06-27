@@ -1,23 +1,4 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __generator = (this && this.__generator) || function (thisArg, body) {
     var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
     return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
@@ -46,39 +27,54 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.watchBank = void 0;
+exports.watchBank = exports.watchAuth = void 0;
 var effects_1 = require("redux-saga/effects");
-//import { autoSignInSaga, checkAuthTimeoutSaga, signInSaga, signOutSaga } from './auth';
+var auth_1 = require("./auth");
 //import { fetchCountriesSaga, selectCountrySaga, selectCitySaga } from './location';
 var bank_1 = require("./bank");
+var authActionTypes = require("../actions/authActionTypes");
 //import * as locationActionTypes from '../actions/locationActionTypes';
-var bankActionTypes = __importStar(require("../actions/bankActionTypes"));
-//export function* watchAuth() {
-//    yield all([
-//        takeLatest(authActionTypes.AUTO_SIGN_IN, autoSignInSaga),
-//        takeLatest(authActionTypes.SIGN_IN_START, signInSaga),
-//        takeLatest(authActionTypes.SIGN_OUT, signOutSaga),
-//        //takeLatest(authActionTypes.CHECK_AUTH_TIMEOUT, checkAuthTimeoutSaga);
-//    ]);
-//    //while (true) {
-//    //    const payload = yield take(authActionTypes.CHECK_AUTH_TIMEOUT);
-//    //    const bgSyncTask = yield fork(checkAuthTimeoutSaga, payload);
-//    //    yield takeLatest(authActionTypes.STOP_AUTH_TIMER, cancelWorkerSaga, bgSyncTask);
-//    //}
-//    // Or
-//    let payload;
-//    while (payload = yield take(authActionTypes.CHECK_AUTH_TIMEOUT)) {
-//        // starts the task in the background
-//        const bgSyncTask = yield fork(checkAuthTimeoutSaga, payload);
-//        //// wait for the user to sign out
-//        //yield take(authActionTypes.STOP_AUTH_TIMER);
-//        //// user signed out. cancel the background task
-//        //// this will cause the forked bgSync task to jump into its finally block
-//        //yield cancel(bgSyncTask);
-//        // Or
-//        yield takeLatest(authActionTypes.STOP_AUTH_TIMER, cancelWorkerSaga, bgSyncTask);
-//    }
-//}
+var bankActionTypes = require("../actions/bankActionTypes");
+function watchAuth() {
+    var payload, bgSyncTask;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, effects_1.all([
+                    effects_1.takeLatest(authActionTypes.AUTO_SIGN_IN, auth_1.autoSignInSaga),
+                    effects_1.takeLatest(authActionTypes.SIGN_IN_START, auth_1.signInSaga),
+                    effects_1.takeLatest(authActionTypes.SIGN_OUT, auth_1.signOutSaga),
+                    //takeLatest(authActionTypes.CHECK_AUTH_TIMEOUT, checkAuthTimeoutSaga);
+                ])];
+            case 1:
+                _a.sent();
+                _a.label = 2;
+            case 2: return [4 /*yield*/, effects_1.take(authActionTypes.CHECK_AUTH_TIMEOUT)];
+            case 3:
+                if (!(payload = _a.sent())) return [3 /*break*/, 6];
+                return [4 /*yield*/, effects_1.fork(auth_1.checkAuthTimeoutSaga, payload)];
+            case 4:
+                bgSyncTask = _a.sent();
+                //// wait for the user to sign out
+                //yield take(authActionTypes.STOP_AUTH_TIMER);
+                //// user signed out. cancel the background task
+                //// this will cause the forked bgSync task to jump into its finally block
+                //yield cancel(bgSyncTask);
+                // Or
+                return [4 /*yield*/, effects_1.takeLatest(authActionTypes.STOP_AUTH_TIMER, cancelWorkerSaga, bgSyncTask)];
+            case 5:
+                //// wait for the user to sign out
+                //yield take(authActionTypes.STOP_AUTH_TIMER);
+                //// user signed out. cancel the background task
+                //// this will cause the forked bgSync task to jump into its finally block
+                //yield cancel(bgSyncTask);
+                // Or
+                _a.sent();
+                return [3 /*break*/, 2];
+            case 6: return [2 /*return*/];
+        }
+    });
+}
+exports.watchAuth = watchAuth;
 //function* watchCheckAuthTimeout() {
 //    yield takeLatest(authActionTypes.CHECK_AUTH_TIMEOUT, checkAuthTimeoutSaga);
 //}

@@ -1,0 +1,29 @@
+﻿@import "../../_globals";
+@import "../../colors";
+
+.Pagination {
+    display: flex;
+    text-align: center;
+
+    li {
+        color: $light-yellow;
+        background-color: $medium-green;
+        padding: 2px 10px;
+        @include border($light-green);
+
+        &:not(.ActiveLink) {
+            cursor: pointer;
+        }
+
+        &.ActiveLink {
+            color: $medium-yellow;
+            background-color: $light-green-highlight;
+            cursor: default;
+        }
+
+        &:hover {
+            color: $yellow;
+            background-color: $light-green-highlight;
+        }
+    }
+}

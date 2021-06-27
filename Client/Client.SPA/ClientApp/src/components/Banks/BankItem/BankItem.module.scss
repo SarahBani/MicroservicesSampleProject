@@ -1,0 +1,19 @@
+﻿@import "../../_globals";
+@import "../../colors";
+
+.BankItem {
+    background-color: $light-green;
+    color: $dark-green;
+    cursor: pointer;
+
+    &:hover {
+        color: $yellow;
+    }
+
+    img {
+        max-width: 50px;
+        max-height: 50px;
+        margin-right: 5px;
+        @include border(#000, 2px);
+    }
+}

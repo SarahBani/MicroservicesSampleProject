@@ -1,0 +1,21 @@
+$gradient-background: linear-gradient(to bottom right, #4BA18E, #50AF9C, #63BB84, #DDE65A);
+
+@function is-important($important) {
+    @return #{if($important, '!important', '')};
+}
+
+@mixin border($color, $radius: 0, $width: 1px, $important: false) {
+    border: $width solid $color is-important($important);
+
+    @if($radius > 0) {
+        border-radius: $radius is-important($important);
+    }
+}
+
+@mixin bottom-border($color) {
+    border-bottom: 1px solid $color;
+    border-right: 1px solid $color;
+    border-left: 1px solid $color;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}

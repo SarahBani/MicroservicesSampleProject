@@ -1,6 +1,5 @@
 ﻿import { AxiosResponse } from 'axios';
 import { put } from 'redux-saga/effects';
-import { ResponseGenerator } from '../../models/ResponseGenerator.model';
 
 import axiosInstance from '../../shared/axios-instance';
 import { SuccessfulOperationsEnum, FailedOperationsEnum } from '../../shared/constant';
@@ -8,6 +7,7 @@ import * as actions from '../actions/bankActions';
 import * as commonActions from '../actions/commonActions';
 import * as uploadActions from '../actions/uploadActions';
 //import uploadFileChannel from './uploadFileChannel';
+import { ResponseGenerator } from '../../models/ResponseGenerator.model';
 
 export function* fetchBanksSaga(action: any) {
     yield put(commonActions.showLoader());
