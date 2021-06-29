@@ -1,13 +1,20 @@
 ﻿import * as actionTypes from '../actions/commonActionTypes';
 
-const initialState = {
+export interface State {
+    isLoading: boolean,
+    error: string | null,
+    successfulOperation: string | null,
+    failedOperation: string | null,
+}
+
+const initialState: State = {
     isLoading: false,
     error: null,
     successfulOperation: null,
     failedOperation: null
 };
 
-const commonReducer = (state = initialState, action: any) => {
+const commonReducer = (state: State = initialState, action: any) => {
     switch (action.type) {
         case actionTypes.SHOW_LOADER:
             return {
@@ -53,4 +60,4 @@ const commonReducer = (state = initialState, action: any) => {
     }
 };
 
-export default commonReducer;
+ export default commonReducer;

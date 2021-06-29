@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
-import { ApplicationState } from '../store';
+import { AppState } from '../store';
 import * as WeatherForecastsStore from '../store/WeatherForecasts';
 
 // At runtime, Redux will merge together...
@@ -78,7 +78,7 @@ class FetchData extends React.PureComponent<WeatherForecastProps> {
   }
 }
 
-const mapStateToProps = (state: ApplicationState) =>
+const mapStateToProps = (state: AppState) =>
     state.weatherForecasts; // Selects which state properties are merged into the component's props
 
 export default connect(

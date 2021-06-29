@@ -1,13 +1,21 @@
-﻿import * as actionTypes from '../actions/authActionTypes';
+﻿import { User } from '../../models/User.model';
+import * as actionTypes from '../actions/authActionTypes';
 
-const initialState = {
+export interface State {
+    loggedIn: boolean,
+    token: string | null,
+    authRedirectPath: string,
+    user: User | null
+}
+
+const initialState: State = {
     loggedIn: false,
     token: null,
     authRedirectPath: '/',
     user: null
 };
 
-const authReducer = (state = initialState, action: any) => {
+const authReducer = (state: State = initialState, action: any) => {
     switch (action.type) {
         case actionTypes.SIGN_IN_SUCCEEDED:
             return {

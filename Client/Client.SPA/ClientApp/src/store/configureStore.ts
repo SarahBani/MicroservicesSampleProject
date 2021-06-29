@@ -1,29 +1,40 @@
-import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
+import { applyMiddleware, combineReducers, compose, createStore, Store } from 'redux';
 import thunk from 'redux-thunk';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
-import { History } from 'history';
-import { ApplicationState, reducers } from './';
+import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 
-export default function configureStore(history: History, initialState?: ApplicationState) {
+//import { AppState } from './';
+import { watchAuth, watchBank } from './sagas';
+import { browserHistory } from '../browserHistory';
+
+
+export default function configureStore(reducers: any, sagaMiddleware: SagaMiddleware,
+    //initialState?: AppState
+): Store{
     const middleware = [
         thunk,
-        routerMiddleware(history)
+        sagaMiddleware,
+        routerMiddleware(browserHistory),        
     ];
 
     const rootReducer = combineReducers({
         ...reducers,
-        router: connectRouter(history)
+        router: connectRouter(browserHistory)
     });
 
-    const enhancers = [];
-    const windowIfDefined = typeof window === 'undefined' ? null : window as any;
-    if (windowIfDefined && windowIfDefined.__REDUX_DEVTOOLS_EXTENSION__) {
-        enhancers.push(windowIfDefined.__REDUX_DEVTOOLS_EXTENSION__());
-    }
+    //const enhancers = [];
+    //const windowIfDefined = typeof window === 'undefined' ? null : window as any;
+    //if (windowIfDefined && windowIfDefined.__REDUX_DEVTOOLS_EXTENSION__) {
+    //    enhancers.push(windowIfDefined.__REDUX_DEVTOOLS_EXTENSION__());
+    //}
+
+    const composeEnhancers =
+        (window && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
     return createStore(
         rootReducer,
-        initialState,
-        compose(applyMiddleware(...middleware), ...enhancers)
+        //{},
+        //initialState,
+        composeEnhancers(applyMiddleware(...middleware))
     );
 }

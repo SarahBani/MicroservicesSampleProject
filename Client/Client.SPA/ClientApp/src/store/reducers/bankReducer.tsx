@@ -1,13 +1,20 @@
-﻿import * as actionTypes from '../actions/bankActionTypes';
+﻿import { Action } from 'redux';
+import { Bank } from '../../models/Bank.model';
+import * as actionTypes from '../actions/bankActionTypes';
 
-const initialState = {
+export interface State {
+    banks: Bank[],
+    count: number,
+    selectedBank: Bank | null
+}
+
+const initialState: State = {
     banks: [],
     count: 0,
-    selectedBank: null,
-    photos: [],
+    selectedBank: null
 };
 
-const bankReducer = (state = initialState, action: any) => {
+export const bankReducer = (state: State = initialState, action: any): any => {
     switch (action.type) {
         case actionTypes.SET_BANKS:
             return {

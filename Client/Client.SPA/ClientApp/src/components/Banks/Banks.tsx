@@ -11,6 +11,7 @@ const Banks: FC = () => {
             <PageTitle title="Banks" />
             <div className="row">
                 <div className="col-7">
+                    <Sss  />
                     <BankList />
                 </div>
                 <div className="col-5">

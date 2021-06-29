@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { ApplicationState } from '../store';
+import { AppState } from '../store';
 import * as CounterStore from '../store/Counter';
 
 type CounterProps =
@@ -30,6 +30,6 @@ class Counter extends React.PureComponent<CounterProps> {
 };
 
 export default connect(
-    (state: ApplicationState) => state.counter,
+    (state: AppState) => state.counter,
     CounterStore.actionCreators
 )(Counter);

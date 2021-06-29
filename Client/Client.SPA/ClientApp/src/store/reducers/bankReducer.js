@@ -11,12 +11,12 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.bankReducer = void 0;
 var actionTypes = require("../actions/bankActionTypes");
 var initialState = {
     banks: [],
     count: 0,
-    selectedBank: null,
-    photos: [],
+    selectedBank: null
 };
 var bankReducer = function (state, action) {
     if (state === void 0) { state = initialState; }
@@ -33,5 +33,6 @@ var bankReducer = function (state, action) {
             return state;
     }
 };
-exports.default = bankReducer;
+exports.bankReducer = bankReducer;
+exports.default = exports.bankReducer;
 //# sourceMappingURL=bankReducer.js.map
