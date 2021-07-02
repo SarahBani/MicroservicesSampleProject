@@ -1,5 +1,6 @@
 ﻿import * as actionTypes from './commonActionTypes';
 import { UNKNOWN_ERROR_MESSAGE } from '../../shared/constant';
+import { FailedOperation, SuccessfulOperation } from '../../shared/enums';
 
 const unknownError = {
     message: UNKNOWN_ERROR_MESSAGE
@@ -30,14 +31,14 @@ export const clearError = () => {
     };
 };
 
-export const operationSucceeded = (operation: string) => {
+export const operationSucceeded = (operation: SuccessfulOperation) => {
     return {
         type: actionTypes.OPERATION_SUCCEEDED,
         successfulOperation: operation
     };
 };
 
-export const operationFailed = (operation: string) => {
+export const operationFailed = (operation: FailedOperation) => {
     return {
         type: actionTypes.OPERATION_FAILED,
         failedOperation: operation

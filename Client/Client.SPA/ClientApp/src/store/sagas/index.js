@@ -108,7 +108,7 @@ function watchBank() {
                     //takeLatest(bankActionTypes.REMOVE_BANK_PHOTO, removeBankPhotoSaga),
                     //takeLatest(bankActionTypes.SAVE_BANK_PHOTO, saveBankPhotoSaga),
                     //takeLatest(bankActionTypes.DELETE_BANK_PHOTO, deleteBankPhotoSaga),
-                    //takeEvery(hotelActionTypes.UPLOAD_BANK_PHOTO, function* (action) {
+                    //takeEvery(bankActionTypes.UPLOAD_BANK_PHOTO, function* (action) {
                     //    const file = action.payload;
                     //    yield call(uploadFileSaga, file);
                     //})

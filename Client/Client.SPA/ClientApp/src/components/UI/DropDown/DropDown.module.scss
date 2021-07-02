@@ -1,0 +1,57 @@
+﻿@import "../../_globals";
+@import "../../colors";
+
+.DropDown {
+
+    > button {
+        width: 100%;
+        text-align: right;
+        background-color: $light-background; //$medium-green;
+        @include border(#5AB690);
+
+        &:focus {
+            color: $dark-green;
+            box-shadow: 0 0 0.2rem rgba(78, 211, 140, 25%);
+        }
+
+        > div {
+            float: left;
+            padding-right: 50px;
+        }
+    }
+
+    ul {
+        padding: 0;
+        max-height: 200px;
+        overflow-y: auto;
+        width: 100%;
+
+        > li {
+            padding: 5px;
+            @include border(#96A3BC);
+            cursor: pointer;
+
+            &:hover {
+                background-color: $light-green-highlight;
+            }
+
+            > img {
+                width: 20px;
+                height: auto;
+                margin-right: 10px;
+            }
+        }
+    }
+
+    .SelecedItem {
+        background-color: $light-green;
+    }
+}
+
+@media(max-width:800px) {
+
+    button {
+        overflow-x: hidden;
+        content: '';
+    }
+}

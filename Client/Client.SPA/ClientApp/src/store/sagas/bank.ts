@@ -1,8 +1,7 @@
-﻿import { AxiosResponse } from 'axios';
-import { put } from 'redux-saga/effects';
+﻿import { put } from 'redux-saga/effects';
 
 import axiosInstance from '../../shared/axios-instance';
-import { SuccessfulOperationsEnum, FailedOperationsEnum } from '../../shared/constant';
+import { SuccessfulOperation, FailedOperation } from '../../shared/enums';
 import * as actions from '../actions/bankActions';
 import * as commonActions from '../actions/commonActions';
 import * as uploadActions from '../actions/uploadActions';
@@ -74,7 +73,7 @@ export function* fetchBankSaga(action: any) {
             yield put(actions.setBank(response.data));
         }
         else {
-            yield put(commonActions.operationFailed(FailedOperationsEnum.FetchBank));
+            yield put(commonActions.operationFailed(FailedOperation.FetchBank));
         }
         yield put(commonActions.hideLoader());
     } catch (error) {
@@ -109,11 +108,11 @@ export function* saveBankSaga(action: any) {
         let operation;
         if (!action.Bank.id) {
             response = yield axiosInstance.post('/bank', action.Bank, { headers: headers });
-            operation = SuccessfulOperationsEnum.Insert;
+            operation = SuccessfulOperation.Insert;
         }
         else {
             response = yield axiosInstance.put('/bank' + action.Bank.id, action.Bank, { headers: headers });
-            operation = SuccessfulOperationsEnum.Update;
+            operation = SuccessfulOperation.Update;
         }
         if (response?.status === 200) {
             yield put(commonActions.operationSucceeded(operation));
@@ -133,7 +132,7 @@ export function* deleteBankSaga(action: any) {
     try {
         const response: ResponseGenerator = yield axiosInstance.delete('/bank' + action.id, { headers: headers });
         if (response?.status === 200) {
-            yield put(commonActions.operationSucceeded(SuccessfulOperationsEnum.Delete));
+            yield put(commonActions.operationSucceeded(SuccessfulOperation.Delete));
         }
         yield put(commonActions.hideLoader());
     } catch (error) {

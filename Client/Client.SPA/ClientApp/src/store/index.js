@@ -30,15 +30,7 @@ var reducers = {
     //upload: uploadReducer
 };
 var sagaMiddleware = redux_saga_1.default();
-exports.store = configureStore_1.default(
-//{
-////reducer: {
-////    auth: authReducer,
-////    common: commonReducer,
-////    bank: bankReducer,
-////},
-//}
-reducers, sagaMiddleware);
+exports.store = configureStore_1.default(reducers, sagaMiddleware);
 sagaMiddleware.run(sagas_1.watchAuth);
 //sagaMiddleware.run(watchLocation);
 sagaMiddleware.run(sagas_1.watchBank);

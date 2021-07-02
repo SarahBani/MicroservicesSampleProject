@@ -1,0 +1,12 @@
+﻿@import "../../_globals";
+@import "../../colors";
+
+.BankDetail {
+    text-align: center;
+
+    img {
+        max-width: 100% !important;
+        max-height: 400px !important;
+        @include border(#000, 2px, 1px, true);
+    }
+}

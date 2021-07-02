@@ -25,10 +25,7 @@ var BankList = function () {
     var dispatch = react_redux_1.useDispatch();
     var _b = react_1.useState(1), pageNo = _b[0], setPageNo = _b[1];
     var _c = react_1.useState(1), pagesCount = _c[0], setPagesCount = _c[1];
-    //const rootDispatcher = new RootDispatcher(dispatch);
     react_1.useEffect(function () {
-        //onFetchBanks?.(pageNo, pageCount);
-        //onFetchBanks!(pageNo, pageCount)
         dispatch(actions.fetchBanks(pageNo, pageCount));
     }, [pageNo, pageCount]);
     react_1.useEffect(function () {
@@ -70,20 +67,5 @@ var BankList = function () {
             loggedIn && React.createElement(react_router_dom_1.Link, { className: "btn btn-primary", to: "/Banks/new" }, "Add"),
             React.createElement("button", { className: "btn btn-success", onClick: refreshHandler }, "Refresh"))));
 };
-//const mapStateToProps = (state: AppState) => {
-//    return {
-//        banks: state.bank.banks,
-//        banksCount: state.bank.count,
-//        successfulOperation: state.common.successfulOperation,
-//        loggedIn: state.auth.loggedIn
-//    };
-//};
-//const mapDispatchToProps = (dispatch: AppDispatch) => {
-//    return {
-//        onFetchBanks: (pageNo: number, pageCount: number) => dispatch(actions.fetchBanks(pageNo, pageCount)),
-//        onFetchBanksCount: () => dispatch(actions.fetchBanksCount()),
-//    };
-//};
-//export default connect(mapStateToProps, mapDispatchToProps)(BankList);
 exports.default = BankList;
 //# sourceMappingURL=BankList.js.map

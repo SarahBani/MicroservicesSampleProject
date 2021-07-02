@@ -1,26 +1,48 @@
 import * as React from 'react';
 import { Suspense, useEffect } from 'react';
 import { Route, Switch } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
 
-import './custom.css'
+import './custom.scss'
 import Layout from '../hoc/Layout/Layout';
 import Home from './Home/Home';
 import Counter from './Counter';
 import FetchData from './FetchData';
+import NotFound from './NotFound/NotFound';
+import About from './About/About';
+import { AppState } from '../store';
+import * as authActions from '../store/actions/authActions';
+
+interface StoreProps {
+    isLoggedIn: boolean
+};
+
+const Banks = React.lazy(() => {
+    return import('./Banks/Banks');
+});
 
 export default () => {
 
-    const Banks = React.lazy(() => {
-        return import('./Banks/Banks');
-    });
+    const { isLoggedIn }: StoreProps = useSelector((state: AppState) => ({
+        isLoggedIn: state.auth.loggedIn
+    }));
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(authActions.autoSignIn());
+    }, []);
 
     let routes = null;
     routes =
         <Switch>
-            <Route exact path='/' component={Home} />
-            <Route path='/banks' component={Banks} />
+            <Route path='/banks/new' render={(props) => <Banks {...props} add />} />
+            <Route path='/banks/:id?/:action?' exact component={Banks} />
             <Route path='/counter' component={Counter} />
             <Route path='/fetch-data/:startDateIndex?' component={FetchData} />
+            <Route path='/about' component={About} />
+            {/*<Route path='/auth' render={(props) => <Auth {...props} />} />*/}
+            <Route path='/' exact component={Home} />
+            <Route component={NotFound} />
         </Switch>;
 
     return (

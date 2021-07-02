@@ -1,0 +1,41 @@
+﻿@import "../../_globals";
+@import "../../colors";
+
+.Footer {
+    display: none;
+}
+
+@media(min-width:500px) {
+    .Footer {
+        display: block;
+        background: $gradient-background;
+        color: #000;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        padding-top: 10px;
+        font-size: 14px;
+        z-index: 100;
+        border-top: 1px solid $light-gray;
+
+        img {
+            width: 120px;
+            height: 120px;
+        }
+
+        ul, li {
+            margin: 10px;
+        }
+
+        a {
+            font-weight: 600;
+            color: #000;
+            text-decoration: none;
+
+            &:hover {
+                color: $yellow;
+                text-decoration: underline;
+            }
+        }
+    }
+}

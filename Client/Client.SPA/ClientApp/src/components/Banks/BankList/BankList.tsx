@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import { FC, useMemo, useState, useCallback, useEffect, InputHTMLAttributes } from 'react';
 import { Link } from 'react-router-dom';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import * as classes from './BankList.module.scss';
 import BankItem from '../BankItem/BankItem';
@@ -9,12 +9,11 @@ import NoBank from '../NoBank/NoBank';
 import * as actions from '../../../store/actions/bankActions';
 import Pagination from '../../UI/Pagination/Pagination';
 import { Bank } from '../../../models/Bank.model';
-import { AppDispatch, AppState } from '../../../store';
+import { AppState } from '../../../store';
 
 const pageCount: number = 10;
 
-interface StateProps 
-{
+interface StoreProps {
     banks: Bank[],
     banksCount: number,
     successfulOperation: string,
@@ -28,7 +27,7 @@ interface StateProps
 
 const BankList: FC = () => {
 
-    const { banks, banksCount, successfulOperation, loggedIn }: StateProps = useSelector((state: AppState ) => ({
+    const { banks, banksCount, successfulOperation, loggedIn }: StoreProps = useSelector((state: AppState) => ({
         banks: state.bank.banks,
         banksCount: state.bank.count,
         successfulOperation: state.common.successfulOperation,
@@ -39,13 +38,7 @@ const BankList: FC = () => {
     const [pageNo, setPageNo] = useState(1);
     const [pagesCount, setPagesCount] = useState(1);
 
-    //const rootDispatcher = new RootDispatcher(dispatch);
-
-
-
     useEffect(() => {
-        //onFetchBanks?.(pageNo, pageCount);
-        //onFetchBanks!(pageNo, pageCount)
         dispatch(actions.fetchBanks(pageNo, pageCount));
     }, [pageNo, pageCount]);
 
@@ -74,8 +67,7 @@ const BankList: FC = () => {
 
     const bankItems = useMemo(() => {
         return banks.map((bank: Bank) =>
-            <BankItem key={bank.id} bank={bank} />
-        );
+            <BankItem key={bank.id} bank={bank} />);
     }, [banks]);
 
     const footerContent = (
@@ -111,21 +103,4 @@ const BankList: FC = () => {
     );
 };
 
-//const mapStateToProps = (state: AppState) => {
-//    return {
-//        banks: state.bank.banks,
-//        banksCount: state.bank.count,
-//        successfulOperation: state.common.successfulOperation,
-//        loggedIn: state.auth.loggedIn
-//    };
-//};
-
-//const mapDispatchToProps = (dispatch: AppDispatch) => {
-//    return {
-//        onFetchBanks: (pageNo: number, pageCount: number) => dispatch(actions.fetchBanks(pageNo, pageCount)),
-//        onFetchBanksCount: () => dispatch(actions.fetchBanksCount()),
-//    };
-//};
-
-//export default connect(mapStateToProps, mapDispatchToProps)(BankList);
 export default BankList;

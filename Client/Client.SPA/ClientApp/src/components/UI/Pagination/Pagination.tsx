@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import { useMemo, Fragment, memo, FC } from 'react';
 
-import classes from './Pagination.module.scss';
+import * as classes from './Pagination.module.scss';
 
 interface PropsType {
     pageNo: number,

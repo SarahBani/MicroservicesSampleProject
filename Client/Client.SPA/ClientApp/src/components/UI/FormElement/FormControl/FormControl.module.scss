@@ -1,0 +1,43 @@
+﻿@import "../../../_globals";
+@import "../../../colors";
+
+.FormControl {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+
+    label {
+        font-weight: bold;
+        display: block;
+        margin: 8px;
+    }
+}
+
+.FormElement {
+    background-color: $light-background;
+    outline: none;
+    /*@include border(#ccc);*/
+    @include border(#5AB690, 5px);
+    font: inherit;
+    padding: 6px 10px;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+
+    &:focus {
+        outline: none;
+        background-color: $light-background; // $light-gray
+        color: $dark-green;
+        box-shadow: 0 0 0.2rem rgba(78, 211, 140, 25%);
+    }
+}
+
+.Invalid {
+    @include border(red);
+    background-color: #FDA49A;
+}
+
+.ValidationError {
+    color: red;
+    margin: 5px 0;
+}

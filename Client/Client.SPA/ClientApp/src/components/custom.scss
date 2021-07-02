@@ -69,6 +69,7 @@ main {
     flex-wrap: wrap;
     flex: initial;
     margin: 10px;
+    display: inline-block;
 }
 
 .btn {
@@ -83,7 +84,7 @@ main {
     padding: 0;
 
     .dropdown-item {
-        padding:5x;
+        padding: 5px;
         cursor: pointer;
 
         &:hover {
@@ -93,28 +94,5 @@ main {
 
     .dropdown-divider {
         border-top: 1px solid $light-gray;
-    }
-}
-
-.star-container svg path {
-    stroke: #000;
-    stroke-width: 1px;
-    stroke-linejoin: round;
-}
-
-.carousel {
-
-    .control-dots .dot {
-        background-color: $light-green-highlight !important;
-    }
-
-    .thumb {
-        &:not(.selected ) {
-            border: none;
-        }
-
-        &.selected, &:hover {
-            @include border($light-green, 2px, 3px, true);
-        }
     }
 }

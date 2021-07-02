@@ -28,10 +28,7 @@ function configureStore(reducers, sagaMiddleware) {
     //    enhancers.push(windowIfDefined.__REDUX_DEVTOOLS_EXTENSION__());
     //}
     var composeEnhancers = (window && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || redux_1.compose;
-    return redux_1.createStore(rootReducer, 
-    //{},
-    //initialState,
-    composeEnhancers(redux_1.applyMiddleware.apply(void 0, middleware)));
+    return redux_1.createStore(rootReducer, composeEnhancers(redux_1.applyMiddleware.apply(void 0, middleware)));
 }
 exports.default = configureStore;
 //# sourceMappingURL=configureStore.js.map

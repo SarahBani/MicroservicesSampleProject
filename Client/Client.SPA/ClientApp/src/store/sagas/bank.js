@@ -30,7 +30,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteBankSaga = exports.saveBankSaga = exports.fetchBankSaga = exports.fetchBanksCountSaga = exports.fetchBanksSaga = void 0;
 var effects_1 = require("redux-saga/effects");
 var axios_instance_1 = require("../../shared/axios-instance");
-var constant_1 = require("../../shared/constant");
+var enums_1 = require("../../shared/enums");
 var actions = require("../actions/bankActions");
 var commonActions = require("../actions/commonActions");
 function fetchBanksSaga(action) {
@@ -168,7 +168,7 @@ function fetchBankSaga(action) {
             case 4:
                 _a.sent();
                 return [3 /*break*/, 7];
-            case 5: return [4 /*yield*/, effects_1.put(commonActions.operationFailed(constant_1.FailedOperationsEnum.FetchBank))];
+            case 5: return [4 /*yield*/, effects_1.put(commonActions.operationFailed(enums_1.FailedOperation.FetchBank))];
             case 6:
                 _a.sent();
                 _a.label = 7;
@@ -222,12 +222,12 @@ function saveBankSaga(action) {
                 return [4 /*yield*/, axios_instance_1.default.post('/bank', action.Bank, { headers: headers })];
             case 3:
                 response = _a.sent();
-                operation = constant_1.SuccessfulOperationsEnum.Insert;
+                operation = enums_1.SuccessfulOperation.Insert;
                 return [3 /*break*/, 6];
             case 4: return [4 /*yield*/, axios_instance_1.default.put('/bank' + action.Bank.id, action.Bank, { headers: headers })];
             case 5:
                 response = _a.sent();
-                operation = constant_1.SuccessfulOperationsEnum.Update;
+                operation = enums_1.SuccessfulOperation.Update;
                 _a.label = 6;
             case 6:
                 if (!((response === null || response === void 0 ? void 0 : response.status) === 200)) return [3 /*break*/, 8];
@@ -268,7 +268,7 @@ function deleteBankSaga(action) {
             case 3:
                 response = _a.sent();
                 if (!((response === null || response === void 0 ? void 0 : response.status) === 200)) return [3 /*break*/, 5];
-                return [4 /*yield*/, effects_1.put(commonActions.operationSucceeded(constant_1.SuccessfulOperationsEnum.Delete))];
+                return [4 /*yield*/, effects_1.put(commonActions.operationSucceeded(enums_1.SuccessfulOperation.Delete))];
             case 4:
                 _a.sent();
                 _a.label = 5;

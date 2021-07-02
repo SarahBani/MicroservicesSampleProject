@@ -1,0 +1,79 @@
+﻿@import "../../_globals";
+@import "../../colors";
+
+.Modal {
+    position: fixed;
+    z-index: 500;
+    background-color: $light-background;
+    width: 70%;
+    @include border($light-gray);
+    box-shadow: 1px 1px 1px black;
+    padding: 16px;
+    left: 15%;
+    top: 30%;
+    box-sizing: border-box;
+    transition: all 0.3s ease-out;
+    @include border(#ccc, 3px);
+
+    h3 {
+        text-transform: uppercase;
+    }
+
+    &.Info {
+        padding: 20px;
+        z-index: 1000;
+
+        > span {
+            font-size: 25px;
+            color: $medium-blue;
+            margin-right: 20px;
+        }
+    }
+
+    &.Question {
+        z-index: 1000;
+
+        > span {
+            font-size: 25px;
+            color: $medium-blue;
+            margin-right: 20px;
+        }
+    }
+
+    &.Warning {
+        padding: 30px;
+        font-weight: bold;
+        z-index: 1000;
+
+        > span {
+            font-size: 25px;
+            color: $dark-yellow;
+            margin-right: 20px;
+        }
+    }
+
+    &.Error {
+        padding: 30px;
+        font-weight: bold;
+        z-index: 1000;
+
+        > span {
+            font-size: 25px;
+            color: red;
+            margin-right: 20px;
+        }
+    }
+
+    &.Component {
+        background-color: $light-green-background;
+        z-index: 500;
+    }
+}
+
+@media (min-width: 600px) {
+
+    .Modal {
+        width: 500px;
+        left: calc(50% - 250px);
+    }
+}

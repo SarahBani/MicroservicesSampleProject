@@ -1,13 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
-var react_1 = require("react");
 var react_router_dom_1 = require("react-router-dom");
-var BankItem_module_scss_1 = require("./BankItem.module.scss");
+var classes = require("./BankItem.module.scss");
 var BankItem = function (_a) {
     var bank = _a.bank;
-    var _b = react_1.useState('images/no-image.png'), imageUrl = _b[0], setImageUrl = _b[1];
-    return (React.createElement(react_router_dom_1.Link, { className: ["list-group-item", "clearfix", BankItem_module_scss_1.default.BankItem].join(' '), to: "/Banks/" + bank.id },
+    var imageUrl = (bank.logoUrl ? "Resources/Images/Banks/" + bank.logoUrl : 'images/no-image.png');
+    return (React.createElement(react_router_dom_1.Link, { className: ["list-group-item", "clearfix", classes.BankItem].join(' '), to: "/Banks/" + bank.id },
         React.createElement("img", { src: imageUrl, className: "img-response" }),
         React.createElement("strong", { className: "list-group-item-heading" }, bank.name)));
 };

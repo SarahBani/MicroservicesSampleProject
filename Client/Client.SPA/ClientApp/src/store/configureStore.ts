@@ -1,20 +1,16 @@
 import { applyMiddleware, combineReducers, compose, createStore, Store } from 'redux';
 import thunk from 'redux-thunk';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
-import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
+import { SagaMiddleware } from 'redux-saga';
 
-//import { AppState } from './';
-import { watchAuth, watchBank } from './sagas';
 import { browserHistory } from '../browserHistory';
 
 
-export default function configureStore(reducers: any, sagaMiddleware: SagaMiddleware,
-    //initialState?: AppState
-): Store{
+export default function configureStore(reducers: any, sagaMiddleware: SagaMiddleware): Store {
     const middleware = [
         thunk,
         sagaMiddleware,
-        routerMiddleware(browserHistory),        
+        routerMiddleware(browserHistory),
     ];
 
     const rootReducer = combineReducers({
@@ -27,14 +23,11 @@ export default function configureStore(reducers: any, sagaMiddleware: SagaMiddle
     //if (windowIfDefined && windowIfDefined.__REDUX_DEVTOOLS_EXTENSION__) {
     //    enhancers.push(windowIfDefined.__REDUX_DEVTOOLS_EXTENSION__());
     //}
-
     const composeEnhancers =
         (window && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
     return createStore(
         rootReducer,
-        //{},
-        //initialState,
         composeEnhancers(applyMiddleware(...middleware))
     );
 }

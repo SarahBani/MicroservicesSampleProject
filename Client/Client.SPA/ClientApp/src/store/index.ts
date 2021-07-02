@@ -1,11 +1,8 @@
-import { combineReducers } from '@reduxjs/toolkit'
-
 import * as WeatherForecasts from './WeatherForecasts';
 import * as Counter from './Counter';
 import authReducer, * as Auth from './reducers/authReducer';
 import commonReducer, * as Common from './reducers/commonReducer';
 import bankReducer, * as Bank from './reducers/bankReducer';
-import { connectRouter } from 'connected-react-router';
 import configureStore from './configureStore';
 import createSagaMiddleware from 'redux-saga';
 import { watchAuth, watchBank } from './sagas';
@@ -39,18 +36,9 @@ export interface AppThunkAction<TAction> {
     (dispatch: (action: TAction) => void, getState: () => AppState): void;
 }
 
-
-
 const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore(
-    //{
-    ////reducer: {
-    ////    auth: authReducer,
-    ////    common: commonReducer,
-    ////    bank: bankReducer,
-    ////},
-    //}
     reducers,
     sagaMiddleware
 );
