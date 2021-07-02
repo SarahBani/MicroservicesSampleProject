@@ -25,3 +25,8 @@ export enum ModalType {
     ERROR,
     COMPONENT
 };
+
+export enum ButtonType {
+    Success ,
+    Danger
+};

@@ -103,7 +103,7 @@ const BankDetail: FC<Props> = memo(({ id }) => {
                         <button className="btn btn-primary" onClick={cancelHandler}>
                             Back
                         </button>
-                        <button className="btn btn-primary dropdown-toggle" data-toggle="dropdown" >
+                        <button className="btn btn-primary dropdown-toggle" data-toggle="dropdown" disabled={!loggedIn} >
                             Manage<span className="caret"></span>
                         </button>
                         <div className="dropdown-menu">

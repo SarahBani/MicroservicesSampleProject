@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ModalType = exports.FormControlType = exports.FailedOperation = exports.SuccessfulOperation = void 0;
+exports.ButtonType = exports.ModalType = exports.FormControlType = exports.FailedOperation = exports.SuccessfulOperation = void 0;
 var SuccessfulOperation;
 (function (SuccessfulOperation) {
     SuccessfulOperation[SuccessfulOperation["Insert"] = 0] = "Insert";
@@ -32,5 +32,11 @@ var ModalType;
     ModalType[ModalType["ERROR"] = 3] = "ERROR";
     ModalType[ModalType["COMPONENT"] = 4] = "COMPONENT";
 })(ModalType = exports.ModalType || (exports.ModalType = {}));
+;
+var ButtonType;
+(function (ButtonType) {
+    ButtonType[ButtonType["Success"] = 0] = "Success";
+    ButtonType[ButtonType["Danger"] = 1] = "Danger";
+})(ButtonType = exports.ButtonType || (exports.ButtonType = {}));
 ;
 //# sourceMappingURL=enums.js.map

@@ -1,0 +1,35 @@
+@import '../../colors';
+@import '../../_globals';
+
+.Button {
+    color: #FFF;
+    cursor: pointer;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: 0 2px 3px $medium-gray;
+    @include border($medium-gray, 5px);
+
+    &.Success {
+        background-color: $medium-green;
+
+        &:hover {
+            background-color: $light-green;
+        }
+    }
+
+    &.Danger {
+        background-color: #944317;
+    }
+
+    &:disabled {
+        color: #AFAFAF;
+        background-color: $light-gray;
+        cursor: not-allowed;
+        box-shadow: none;
+        @include border($light-gray);
+
+        &:hover {
+            background-color: $light-gray;
+        }
+    }
+}

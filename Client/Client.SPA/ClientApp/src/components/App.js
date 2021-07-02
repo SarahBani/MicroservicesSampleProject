@@ -24,6 +24,12 @@ var NotFound_1 = require("./NotFound/NotFound");
 var About_1 = require("./About/About");
 var authActions = require("../store/actions/authActions");
 ;
+var Auth = React.lazy(function () {
+    return Promise.resolve().then(function () { return require('./Auth/Auth'); });
+});
+//const Profile = React.lazy(() => {
+//    return import('./Profile/Profile');
+//});
 var Banks = React.lazy(function () {
     return Promise.resolve().then(function () { return require('./Banks/Banks'); });
 });
@@ -43,6 +49,7 @@ exports.default = (function () {
             React.createElement(react_router_1.Route, { path: '/counter', component: Counter_1.default }),
             React.createElement(react_router_1.Route, { path: '/fetch-data/:startDateIndex?', component: FetchData_1.default }),
             React.createElement(react_router_1.Route, { path: '/about', component: About_1.default }),
+            React.createElement(react_router_1.Route, { path: '/auth', render: function (props) { return React.createElement(Auth, __assign({}, props)); } }),
             React.createElement(react_router_1.Route, { path: '/', exact: true, component: Home_1.default }),
             React.createElement(react_router_1.Route, { component: NotFound_1.default }));
     return (React.createElement(Layout_1.default, null,
