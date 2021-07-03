@@ -1,4 +1,5 @@
 ﻿import { ChangeEvent, FormEvent, SyntheticEvent } from "react";
+import { Dictionary, FormControlElementContent, Validation, FormControlElement } from "./types";
 
 export const updateObject = (oldObject, updatedProperties) => {
     return {
@@ -7,8 +8,8 @@ export const updateObject = (oldObject, updatedProperties) => {
     };
 };
 
-export const getFormElements = (formControls) => {
-    const formElements = [];
+export const getFormElements = (formControls: Dictionary<FormControlElementContent>): FormControlElement[] => {
+    const formElements: FormControlElement[] = [];
     for (const key in formControls) {
         formElements.push({
             id: key,
@@ -19,7 +20,10 @@ export const getFormElements = (formControls) => {
 };
 
 //export const getUpdatedForm = (event: { target: HTMLInputElement }, formControls, controlId) => {
-export const getUpdatedForm = (event: SyntheticEvent<Element>, formControls, controlId) => {
+export const getUpdatedForm = (
+    event: SyntheticEvent<Element>,
+    formControls: Dictionary<FormControlElementContent>,
+    controlId: string): Dictionary<FormControlElementContent> => {
     const isControlValid = checkValidity((event.target as HTMLInputElement).value, formControls[controlId].validation);
     const updatedForm = {
         ...formControls,
@@ -33,8 +37,8 @@ export const getUpdatedForm = (event: SyntheticEvent<Element>, formControls, con
     return updatedForm;
 };
 
-export const ValidateForm = (formControls) => {
-    let isValid = true;
+export const ValidateForm = (formControls: Dictionary<FormControlElementContent>): boolean => {
+    let isValid: boolean = true;
     for (const controlId in formControls) {
         if (!formControls[controlId].valid) {
             isValid = false;
@@ -44,44 +48,44 @@ export const ValidateForm = (formControls) => {
     return isValid;
 };
 
-export const checkValidity = (value, rules): boolean => {
+export const checkValidity = (value: string | number, rules: Validation): boolean => {
     if (!rules) {
         return true;
     }
 
     if (rules.required) {
-        if (!value || value.trim() === '') {
+        if (!value || value.toString().trim() === '') {
             return false;
         }
     }
     if (rules.minLength) {
-        if (value.length < rules.minLength) {
+        if (value.toString().length < rules.minLength) {
             return false;
         }
     }
     if (rules.maxLength) {
-        if (value.length > rules.maxLength) {
+        if (value.toString().length > rules.maxLength) {
             return false;
         }
     }
-    if (rules.minimum) {
-        if (value < rules.minimum) {
+    if (rules.min) {
+        if (value < rules.min) {
             return false;
         }
     }
-    if (rules.maximum) {
-        if (value > rules.maximum) {
+    if (rules.max) {
+        if (value > rules.max) {
             return false;
         }
     }
     if (rules.email) {
-        const emailRegEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if (!emailRegEx.test(value)) {
+        const emailRegEx: RegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (!emailRegEx.test(value.toString())) {
             return false;
         }
     }
-    if (rules.regularExpression) {
-        if (!rules.maximum.test(value)) {
+    if (rules.pattern) {
+        if (!new RegExp(rules.pattern).test(value.toString())) {
             return false;
         }
     }
@@ -89,8 +93,9 @@ export const checkValidity = (value, rules): boolean => {
     return true;
 };
 
-export const disableForm = (formControls, isDisabled) => {
-    const updatedForm = { ...formControls };
+export const disableForm = (formControls: Dictionary<FormControlElementContent>, isDisabled: boolean)
+    : Dictionary<FormControlElementContent> => {
+    const updatedForm: Dictionary<FormControlElementContent> = { ...formControls };
     for (const inputId in updatedForm) {
         formControls[inputId].disabled = isDisabled;
     }

@@ -1,4 +1,4 @@
-﻿export enum SuccessfulOperation {
+﻿export enum SuccessfulOperationEnum {
     Insert,
     Update,
     Delete,
@@ -6,11 +6,11 @@
     Remove
 };
 
-export enum FailedOperation {
+export enum FailedOperationEnum {
     FetchBank
 };
 
-export enum FormControlType {
+export enum ElementTypeEnum {
     Input,
     TextArea,
     Select,
@@ -18,7 +18,17 @@ export enum FormControlType {
     Stars
 };
 
-export enum ModalType {
+export enum ElementConfigTypeEnum {
+    Text,
+    Email,
+    Password,
+    Button,
+    Checkbox,
+    Radio,
+    Range
+};
+
+export enum ModalTypeEnum {
     INFO,
     QUESTION,
     WARNING,
@@ -26,7 +36,7 @@ export enum ModalType {
     COMPONENT
 };
 
-export enum ButtonType {
-    Success ,
+export enum ButtonTypeEnum {
+    Success,
     Danger
 };

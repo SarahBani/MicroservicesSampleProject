@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import * as classes from './BankDetail.module.scss';
 import ConfirmDelete from '../../UI/ConfirmDelete/ConfirmDelete';
-import { FailedOperation, SuccessfulOperation, ModalType } from '../../../shared/enums';
+import { FailedOperationEnum, SuccessfulOperationEnum, ModalTypeEnum } from '../../../shared/enums';
 import * as actions from '../../../store/actions/bankActions';
 import { AppState } from '../../../store';
 import { Bank } from '../../../models/Bank.model';
@@ -17,8 +17,8 @@ interface Props {
 
 interface StoreProps {
     bank: Bank,
-    successfulOperation: SuccessfulOperation,
-    failedOperation: FailedOperation,
+    successfulOperation: SuccessfulOperationEnum,
+    failedOperation: FailedOperationEnum,
     loggedIn: boolean,
     token: string,
     error: string,
@@ -47,13 +47,13 @@ const BankDetail: FC<Props> = memo(({ id }) => {
     }, [id]);
 
     useEffect(() => {
-        if (failedOperation && failedOperation === FailedOperation.FetchBank) {
+        if (failedOperation && failedOperation === FailedOperationEnum.FetchBank) {
             cancelHandler();
         }
     }, [failedOperation]);
 
     useEffect(() => {
-        if (!action && successfulOperation === SuccessfulOperation.Delete) {
+        if (!action && successfulOperation === SuccessfulOperationEnum.Delete) {
             cancelHandler();
         }
     }, [successfulOperation]);
@@ -68,7 +68,7 @@ const BankDetail: FC<Props> = memo(({ id }) => {
 
     const deleteConfirmContent = useMemo(() => {
         return (
-            <Modal isShown={isDeleteConfirmShown} type={ModalType.COMPONENT}>
+            <Modal isShown={isDeleteConfirmShown} type={ModalTypeEnum.COMPONENT}>
                 <ConfirmDelete onOK={() => confirmDeleteHandler(true)}
                     onCancel={() => confirmDeleteHandler(false)} />
             </Modal>

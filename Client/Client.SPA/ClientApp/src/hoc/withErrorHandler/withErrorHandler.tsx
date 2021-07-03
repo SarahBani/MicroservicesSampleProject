@@ -6,7 +6,7 @@ import Modal from '../../components/UI/Modal/Modal';
 import useHttpErrorHandler from '../../hooks/http-error-handler';
 import axiosInstance from '../../shared/axios-instance';
 import * as actions from '../../store/actions/commonActions';
-import { ModalType } from '../../shared/enums';
+import { ModalTypeEnum } from '../../shared/enums';
 import { AppState } from '../../store';
 
 interface StoreProps {
@@ -22,17 +22,17 @@ const withErrorHandler = (WrappedComponent: FC<any>) => {
         }));
         const dispatch = useDispatch();
         const [error, setError] = useState<string | null>();
-        const [errorType, setErrorType] = useState<ModalType>();
+        const [errorType, setErrorType] = useState<ModalTypeEnum>();
         const [axiosError, axiosClearErrorHandler] = useHttpErrorHandler(axiosInstance);
 
         useEffect(() => {
             if (axiosError) {
                 setError(axiosError + '!');
-                setErrorType(ModalType.ERROR);
+                setErrorType(ModalTypeEnum.ERROR);
             }
             else if (customError) {
                 setError(customError);
-                setErrorType(ModalType.WARNING);
+                setErrorType(ModalTypeEnum.WARNING);
             }
             else {
                 setError(null);
@@ -48,7 +48,7 @@ const withErrorHandler = (WrappedComponent: FC<any>) => {
 
         return (
             <Fragment>
-                <Modal type={errorType as ModalType} isShown={!!error} hide={hideErrorHandler} >
+                <Modal type={errorType as ModalTypeEnum} isShown={!!error} hide={hideErrorHandler} >
                     {error}
                 </Modal>
                 <WrappedComponent {...props} />

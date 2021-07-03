@@ -3,10 +3,12 @@ import { ChangeEventHandler, FC, FocusEventHandler } from 'react';
 
 import * as classes from './FormControl.module.scss';
 import DropDown, { DropDownItem } from '../../DropDown/DropDown';
-import { FormControlType } from '../../../../shared/enums';
+import { ElementTypeEnum } from '../../../../shared/enums';
+import { ElementConfig } from '../../../../shared/types';
+import { ElementConfigTypeEnum } from '../../../../shared/enums';
 
 interface Props {
-    type: FormControlType,
+    type: ElementTypeEnum,
     id?: string,
     label?: string,
     title?: string,
@@ -15,7 +17,7 @@ interface Props {
     disabled: boolean,
     valid: boolean,
     touched: boolean,
-    elementConfig: any,
+    elementConfig: ElementConfig,
     options: DropDownItem[],
     onChange: ChangeEventHandler<Element>,
     onSelect: (id: string) => void,
@@ -37,16 +39,17 @@ const FormControl: FC<Props> = props => {
     }
 
     switch (props.type) {
-        case FormControlType.TextArea:
-            formElement = <textarea
-                {...props.elementConfig}
-                value={props.value}
-                className={controlClasses.join(' ')}
-                onChange={props.onChange}
-                onBlur={props.onLostFocus}
-                disabled={props.disabled} />;
+        case ElementTypeEnum.TextArea:
+            formElement =
+                <textarea
+                    {...props.elementConfig}
+                    value={props.value}
+                    className={controlClasses.join(' ')}
+                    onChange={props.onChange}
+                    onBlur={props.onLostFocus}
+                    disabled={props.disabled} />;
             break;
-        case FormControlType.Select:
+        case ElementTypeEnum.Select:
             formElement =
                 <select
                     name={props.id}
@@ -62,11 +65,11 @@ const FormControl: FC<Props> = props => {
                     ))}
                 </select>;
             break;
-        case FormControlType.DropDown:
+        case ElementTypeEnum.DropDown:
             formElement =
                 <DropDown
                     {...props.elementConfig}
-                    name={props.id}
+                    id={props.id}
                     className={controlClasses.join(' ')}
                     data={props.options}
                     value={props.value}
@@ -75,17 +78,20 @@ const FormControl: FC<Props> = props => {
                     onSelect={props.onSelect}
                     onBlur={props.onLostFocus} />;
             break;
-        case FormControlType.Input:
+        case ElementTypeEnum.Input:
         default:
-            formElement = <input
-                {...props.elementConfig}
-                name={props.id}
-                value={props.value}
-                className={controlClasses.join(' ')}
-                onChange={props.onChange}
-                onBlur={props.onLostFocus}
-                disabled={props.disabled}
-                autoComplete={props.autoComplete} />;
+            const inputType: string = ElementConfigTypeEnum[props.elementConfig.type].toLowerCase();
+            formElement =
+                <input
+                    {...props.elementConfig}
+                    type={inputType}
+                    name={props.id}
+                    value={props.value}
+                    className={controlClasses.join(' ')}
+                    onChange={props.onChange}
+                    onBlur={props.onLostFocus}
+                    disabled={props.disabled}
+                    autoComplete={props.autoComplete ? 'on' : null} />;
     }
 
     return (

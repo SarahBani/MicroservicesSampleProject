@@ -9,8 +9,9 @@ import Button from '../UI/Button/Button';
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import { getFormElements, getUpdatedForm, disableForm, ValidateForm } from '../../shared/utility';
 import * as actions from '../../store/actions/authActions';
-import { ButtonType, FormControlType } from "../../shared/enums";
+import { ButtonTypeEnum, ElementConfigTypeEnum, ElementTypeEnum } from "../../shared/enums";
 import { AppState } from "../../store";
+import { Dictionary, FormControlElement, FormControlElementContent } from "../../shared/types";
 
 interface StoreProps {
     isLoggedIn: boolean,
@@ -18,11 +19,11 @@ interface StoreProps {
     authRedirectPath: string
 }
 
-const initialFormState = {
+const initialFormState: Dictionary<FormControlElementContent> = {
     email: {
-        elementType: FormControlType.Input,
+        elementType: ElementTypeEnum.Input,
         elementConfig: {
-            type: 'email',
+            type: ElementConfigTypeEnum.Email,
             placeholder: 'Email',
         },
         value: 'sarah@yahoo.com',
@@ -33,13 +34,13 @@ const initialFormState = {
         valid: true
     },
     password: {
-        elementType: FormControlType.Input,
+        elementType: ElementTypeEnum.Input,
         elementConfig: {
-            type: 'password',
+            type: ElementConfigTypeEnum.Password,
             placeholder: 'Password',
         },
         value: '',
-        autoComplete: 'on',
+        autoComplete: true,
         validation: {
             required: true,
             minLength: 6
@@ -83,7 +84,7 @@ export const Auth: FC = () => {
 
     const signInHandler = (event: any) => {
         event.preventDefault();
-        dispatch(actions.signIn(formControls.email.value, formControls.password.value));
+        dispatch(actions.signIn(formControls.email.value.toString(), formControls.password.value.toString()));
     };
 
     const loggedInRedirect = (isLoggedIn && <Redirect to={authRedirectPath} />);
@@ -91,7 +92,7 @@ export const Auth: FC = () => {
     const form = (
         <form onSubmit={signInHandler}>
             {
-                getFormElements(formControls).map(formElement => (
+                getFormElements(formControls).map((formElement: FormControlElement) => (
                     <FormElement formElement={formElement}
                         key={formElement.id}
                         onChange={(event: any) => elementChangedHandler(event, formElement.id)}
@@ -99,7 +100,7 @@ export const Auth: FC = () => {
                     />
                 ))
             }
-            <Button type={ButtonType.Success} disabled={!isFormValid || isLoading}>Sign In</Button>
+            <Button type={ButtonTypeEnum.Success} disabled={!isFormValid || isLoading}>Sign In</Button>
         </form>
     );
 

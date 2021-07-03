@@ -3,7 +3,7 @@ import { FC, Fragment, memo, MouseEventHandler, ReactElement, ReactNode, useEffe
 
 import * as classes from './Modal.module.scss';
 import Backdrop from '../Backdrop/Backdrop';
-import { ModalType } from '../../../shared/enums';
+import { ModalTypeEnum } from '../../../shared/enums';
 
 type ModalState = {
     typeClass?: string | null,
@@ -17,39 +17,39 @@ const initialModalState: ModalState = {
     icon: null
 };
 
-type ModalAction = { type: ModalType };
+type ModalAction = { type: ModalTypeEnum };
 
 const modalReducer = (currentState: ModalState, action: ModalAction): ModalState => {
     switch (action.type) {
-        case ModalType.INFO:
+        case ModalTypeEnum.INFO:
             return {
                 ...currentState,
                 typeClass: classes.Info,
                 title: null,
                 icon: <span className="fa fa-info" ></span>
             };
-        case ModalType.QUESTION:
+        case ModalTypeEnum.QUESTION:
             return {
                 ...currentState,
                 typeClass: classes.Question,
                 title: null,
                 icon: <span className="fa fa-question" ></span>
             };
-        case ModalType.WARNING:
+        case ModalTypeEnum.WARNING:
             return {
                 ...currentState,
                 typeClass: classes.Warning,
                 title: 'Warning',
                 icon: <span className="fa fa-warning" ></span>
             };
-        case ModalType.ERROR:
+        case ModalTypeEnum.ERROR:
             return {
                 ...currentState,
                 typeClass: classes.Error,
                 title: 'Error',
                 icon: <span className="fa fa-warning" ></span>
             };
-        case ModalType.COMPONENT:
+        case ModalTypeEnum.COMPONENT:
             return {
                 ...currentState,
                 typeClass: classes.Component,
@@ -67,7 +67,7 @@ const modalReducer = (currentState: ModalState, action: ModalAction): ModalState
 };
 
 interface OwnProps {
-    type: ModalType,
+    type: ModalTypeEnum,
     isShown: boolean,
     hide?: MouseEventHandler
 };

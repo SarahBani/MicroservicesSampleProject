@@ -1,30 +1,30 @@
 import * as React from 'react';
-import { useState, useEffect, useCallback, useReducer, memo, ReactElement, FormEventHandler, FormEvent } from 'react';
+import { useState, useEffect, useCallback, memo, ReactElement, FormEventHandler, FormEvent } from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getUpdatedForm, getFormElements, ValidateForm, checkValidity } from '../../../shared/utility';
 import FormElement from '../../UI/FormElement/FormElement';
-import { FormControlType, SuccessfulOperation } from '../../../shared/enums';
+import { ElementConfigTypeEnum, ElementTypeEnum, SuccessfulOperationEnum } from '../../../shared/enums';
 import * as actions from '../../../store/actions/bankActions';
 //import * as locationActions from '../../../store/actions/locationActions';
 import * as authActions from '../../../store/actions/authActions';
 import { AppState } from '../../../store';
 import { Bank } from '../../../models/Bank.model';
-import { Dictionary, FormElementType } from '../../../shared/types';
+import { Dictionary, FormControlElement, FormControlElementContent } from '../../../shared/types';
 
 interface StoreProps {
     loggedIn: boolean
     token: string,
     loading: boolean,
-    successfulOperation: SuccessfulOperation,
+    successfulOperation: SuccessfulOperationEnum,
 };
 
-const initialFormState: Dictionary<FormElementType> = {
+const initialFormState: Dictionary<FormControlElementContent> = {
     name: {
-        elementType: FormControlType.Input,
+        elementType: ElementTypeEnum.Input,
         elementConfig: {
-            type: 'text',
+            type: ElementConfigTypeEnum.Text,
             placeholder: 'Name',
         },
         value: '',
@@ -33,14 +33,17 @@ const initialFormState: Dictionary<FormElementType> = {
         },
         valid: false
     },
-    address: {
-        elementType: FormControlType.TextArea,
+    grade: {
+        elementType: ElementTypeEnum.Input,
         elementConfig: {
-            placeholder: 'Address',
+            type: ElementConfigTypeEnum.Text,
         },
         value: '',
-        valid: true
-    },
+        validation: {
+            required: true
+        },
+        valid: false
+    }
 };
 
 const BankNew = memo(props => {
@@ -70,7 +73,7 @@ const BankNew = memo(props => {
     }, [formControls]);
 
     useEffect(() => {
-        if (successfulOperation === SuccessfulOperation.Insert) {
+        if (successfulOperation === SuccessfulOperationEnum.Insert) {
             cancelHandler();
         }
     }, [successfulOperation]);
@@ -87,21 +90,19 @@ const BankNew = memo(props => {
         event.preventDefault();
         const bank: Bank = {
             id: 0,
-            name: formControls.name.value,
+            name: formControls.name.value.toString(),
             grade: 0
         };
         dispatch(actions.saveBank(bank, token));
     };
-
-    const formElements = getFormElements(formControls).map(formElement => {
-        return (
+ 
+    const formElements = getFormElements(formControls).map((formElement: FormControlElement) => (
             <FormElement formElement={formElement}
                 key={formElement.id}
                 onChange={(event) => elementHandler(event, formElement.id)}
                 onLostFocus={(event) => elementHandler(event, formElement.id)}
             />
-        )
-    });
+        ));
 
     return (
         <div>

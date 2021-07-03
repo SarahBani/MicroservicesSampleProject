@@ -1,7 +1,7 @@
 ﻿import { put } from 'redux-saga/effects';
 
 import axiosInstance from '../../shared/axios-instance';
-import { SuccessfulOperation, FailedOperation } from '../../shared/enums';
+import { SuccessfulOperationEnum, FailedOperationEnum } from '../../shared/enums';
 import * as actions from '../actions/bankActions';
 import * as commonActions from '../actions/commonActions';
 import * as uploadActions from '../actions/uploadActions';
@@ -73,7 +73,7 @@ export function* fetchBankSaga(action: any) {
             yield put(actions.setBank(response.data));
         }
         else {
-            yield put(commonActions.operationFailed(FailedOperation.FetchBank));
+            yield put(commonActions.operationFailed(FailedOperationEnum.FetchBank));
         }
         yield put(commonActions.hideLoader());
     } catch (error) {
@@ -108,11 +108,11 @@ export function* saveBankSaga(action: any) {
         let operation;
         if (!action.Bank.id) {
             response = yield axiosInstance.post('/bank', action.Bank, { headers: headers });
-            operation = SuccessfulOperation.Insert;
+            operation = SuccessfulOperationEnum.Insert;
         }
         else {
             response = yield axiosInstance.put('/bank' + action.Bank.id, action.Bank, { headers: headers });
-            operation = SuccessfulOperation.Update;
+            operation = SuccessfulOperationEnum.Update;
         }
         if (response?.status === 200) {
             yield put(commonActions.operationSucceeded(operation));
@@ -132,7 +132,7 @@ export function* deleteBankSaga(action: any) {
     try {
         const response: ResponseGenerator = yield axiosInstance.delete('/bank' + action.id, { headers: headers });
         if (response?.status === 200) {
-            yield put(commonActions.operationSucceeded(SuccessfulOperation.Delete));
+            yield put(commonActions.operationSucceeded(SuccessfulOperationEnum.Delete));
         }
         yield put(commonActions.hideLoader());
     } catch (error) {

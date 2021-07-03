@@ -7,30 +7,40 @@ import { getUpdatedForm, getFormElements, ValidateForm, checkValidity } from '..
 import FormElement from '../../UI/FormElement/FormElement';
 import ConfirmDelete from '../../UI/ConfirmDelete/ConfirmDelete';
 import Modal from '../../UI/Modal/Modal';
-import { SuccessfulOperation, FailedOperation, FormControlType, ModalType } from '../../../shared/enums';
+import { SuccessfulOperationEnum, FailedOperationEnum, ElementTypeEnum, ModalTypeEnum, ElementConfigTypeEnum } from '../../../shared/enums';
 import * as actions from '../../../store/actions/bankActions';
 import * as authActions from '../../../store/actions/authActions';
-import { FormElementType, Dictionary } from '../../../shared/types';
+//import * as locationActions from '../../../store/actions/locationActions';
+import { Dictionary, FormControlElement, FormControlElementContent } from '../../../shared/types';
 import { AppState } from '../../../store';
 import { Bank } from '../../../models/Bank.model';
-//import * as locationActions from '../../../store/actions/locationActions';
-//import * as authActions from '../../../store/actions/authActions';
 
 interface StoreProps {
     bank: Bank,
     loggedIn: boolean
     token: string,
     loading: boolean,
-    successfulOperation: SuccessfulOperation,
-    failedOperation: FailedOperation
+    successfulOperation: SuccessfulOperationEnum,
+    failedOperation: FailedOperationEnum
 };
 
-const initialFormState: Dictionary<FormElementType> = {
+const initialFormState: Dictionary<FormControlElementContent> = {
     name: {
-        elementType: FormControlType.Input,
+        elementType: ElementTypeEnum.Input,
         elementConfig: {
-            type: 'text',
+            type: ElementConfigTypeEnum.Text,
             placeholder: 'Name',
+        },
+        value: '',
+        validation: {
+            required: true
+        },
+        valid: false
+    },
+    grade: {
+        elementType: ElementTypeEnum.Input,
+        elementConfig: {
+            type: ElementConfigTypeEnum.Text,
         },
         value: '',
         validation: {
@@ -59,7 +69,7 @@ const BankEdit: FC<{ id: number }> = memo(({ id }) => {
     const [isInitializing, setIsInitializing] = useState(true);
 
     useEffect(() => {
-        if (failedOperation && failedOperation === FailedOperation.FetchBank) {
+        if (failedOperation && failedOperation === FailedOperationEnum.FetchBank) {
             setRedirect(<Redirect to={'/banks'} />);
         }
     }, [failedOperation]);
@@ -92,7 +102,7 @@ const BankEdit: FC<{ id: number }> = memo(({ id }) => {
                 },
                 ['grade']: {
                     ...updatedForm['grade'],
-                    value: bank.grade?.toString(),
+                    value: bank.grade?.toString() ?? '',
                     valid: true
                 },
             };
@@ -107,10 +117,10 @@ const BankEdit: FC<{ id: number }> = memo(({ id }) => {
 
     useEffect(() => {
         switch (successfulOperation) {
-            case SuccessfulOperation.Update:
+            case SuccessfulOperationEnum.Update:
                 cancelHandler();
                 break;
-            case SuccessfulOperation.Delete:
+            case SuccessfulOperationEnum.Delete:
                 setRedirect(<Redirect to="/banks/" />);
             default:
         }
@@ -139,15 +149,15 @@ const BankEdit: FC<{ id: number }> = memo(({ id }) => {
         event.preventDefault();
         const bank: Bank = {
             id: id,
-            name: formControls.name.value,
-            grade: parseInt(formControls.grade.value)
+            name: formControls.name.value.toString(),
+            grade: parseInt(formControls.grade.value.toString())
         };
         dispatch(actions.saveBank(bank, token));
     };
 
     const deleteConfirmContent = useMemo(() => {
         return (
-            <Modal isShown={isDeleteConfirmShown} type={ModalType.COMPONENT}>
+            <Modal isShown={isDeleteConfirmShown} type={ModalTypeEnum.COMPONENT}>
                 <ConfirmDelete onOK={() => confirmDeleteHandler(true)}
                     onCancel={() => confirmDeleteHandler(false)} />
             </Modal>
@@ -165,15 +175,12 @@ const BankEdit: FC<{ id: number }> = memo(({ id }) => {
         setIsDeleteConfirmShown(false);
     }, [id, token, setIsDeleteConfirmShown]);
 
-    const formElements = getFormElements(formControls).map(formElement => {
-        return (
-            <FormElement formElement={formElement}
-                key={formElement.id}
-                onChange={(event) => elementHandler(event, formElement.id)}
-                onLostFocus={(event) => elementHandler(event, formElement.id)}
-            />
-        )
-    });
+    const formElements = getFormElements(formControls).map((formElement: FormControlElement) => (
+        <FormElement formElement={formElement}
+            key={formElement.id}
+            onChange={(event) => elementHandler(event, formElement.id)}
+            onLostFocus={(event) => elementHandler(event, formElement.id)}
+        />));
 
     return (
         <div>
