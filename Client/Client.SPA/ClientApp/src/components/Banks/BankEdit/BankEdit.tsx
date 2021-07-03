@@ -82,16 +82,9 @@ const BankEdit: FC<{ id: number }> = memo(({ id }) => {
     }, [loggedIn]);
 
     useEffect(() => {
-        if (!bank) {
-            dispatch(actions.fetchBank(id));
-        }
-    }, [id]);
-
-    useEffect(() => {
         let updatedForm = {
             ...formControls
         };
-
         if (updatedForm && isInitializing) {
             updatedForm = {
                 ...updatedForm,
@@ -112,6 +105,12 @@ const BankEdit: FC<{ id: number }> = memo(({ id }) => {
     }, []);
 
     useEffect(() => {
+        if (!bank) {
+            dispatch(actions.fetchBank(id));
+        }
+    }, [id]);
+
+    useEffect(() => {
         setIsFormValid(ValidateForm(formControls));
     }, [formControls]);
 
@@ -122,30 +121,20 @@ const BankEdit: FC<{ id: number }> = memo(({ id }) => {
                 break;
             case SuccessfulOperationEnum.Delete:
                 setRedirect(<Redirect to="/banks/" />);
-            default:
+                break;
         }
     }, [successfulOperation]);
 
-    const elementHandler = (event, id) => {
+    const elementHandler = (event: any, id: string): void => {
+        console.log(event);
         setFormControls(getUpdatedForm(event, formControls, id));
     };
 
-    const changeStarsHandler = (value, id) => {
-        const updatedForm = {
-            ...formControls,
-            ['stars']: {
-                ...formControls['stars'],
-                value: value
-            }
-        };
-        setFormControls(updatedForm);
-    };
-
-    const cancelHandler = useCallback(() => {
+    const cancelHandler = useCallback((): void => {
         setRedirect(<Redirect to={`/banks/${id}`} />);
     }, [id, setRedirect]);
 
-    const saveHandler = (event) => {
+    const saveHandler = (event: any): void => {
         event.preventDefault();
         const bank: Bank = {
             id: id,
@@ -155,7 +144,7 @@ const BankEdit: FC<{ id: number }> = memo(({ id }) => {
         dispatch(actions.saveBank(bank, token));
     };
 
-    const deleteConfirmContent = useMemo(() => {
+    const deleteConfirmContent = useMemo((): ReactElement => {
         return (
             <Modal isShown={isDeleteConfirmShown} type={ModalTypeEnum.COMPONENT}>
                 <ConfirmDelete onOK={() => confirmDeleteHandler(true)}
@@ -164,18 +153,18 @@ const BankEdit: FC<{ id: number }> = memo(({ id }) => {
         );
     }, [isDeleteConfirmShown]);
 
-    const deleteHandler = useCallback(() => {
+    const deleteHandler = useCallback((): void => {
         setIsDeleteConfirmShown(true);
     }, [setIsDeleteConfirmShown]);
 
-    const confirmDeleteHandler = useCallback((isConfirmed) => {
+    const confirmDeleteHandler = useCallback((isConfirmed): void => {
         if (isConfirmed) {
             dispatch(actions.deleteBank(id, token));
         }
         setIsDeleteConfirmShown(false);
     }, [id, token, setIsDeleteConfirmShown]);
 
-    const formElements = getFormElements(formControls).map((formElement: FormControlElement) => (
+    const formElements: ReactElement[] = getFormElements(formControls).map((formElement: FormControlElement) => (
         <FormElement formElement={formElement}
             key={formElement.id}
             onChange={(event) => elementHandler(event, formElement.id)}

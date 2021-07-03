@@ -1,17 +1,18 @@
 import * as React from "react";
-import { useContext, useState, useEffect, FC } from "react";
+import { useState, useEffect, FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory } from "react-router";
 
 import * as classes from './Auth.module.scss';
 import FormElement from '../UI/FormElement/FormElement';
 import Button from '../UI/Button/Button';
-import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import { getFormElements, getUpdatedForm, disableForm, ValidateForm } from '../../shared/utility';
 import * as actions from '../../store/actions/authActions';
 import { ButtonTypeEnum, ElementConfigTypeEnum, ElementTypeEnum } from "../../shared/enums";
 import { AppState } from "../../store";
 import { Dictionary, FormControlElement, FormControlElementContent } from "../../shared/types";
+import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
+import axiosInstance from '../../shared/identity-axios-instance';
 
 interface StoreProps {
     isLoggedIn: boolean,
@@ -112,4 +113,4 @@ export const Auth: FC = () => {
     );
 };
 
-export default withErrorHandler(Auth);
+export default withErrorHandler(Auth, axiosInstance);

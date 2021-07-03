@@ -1,16 +1,11 @@
 ﻿import * as React from 'react';
-import { useState, useEffect, useMemo, useCallback, useRef, Fragment, FC, ReactElement, FocusEventHandler } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef, Fragment, FC, ReactElement, FocusEventHandler, MutableRefObject, LegacyRef } from 'react';
+import { DropDownItem } from '../../../shared/types';
 
 import * as classes from './DropDown.module.scss';
 
-export interface DropDownItem {
-    id: string,
-    text: string,
-    imageUrl?: string
-}
-
 interface Props {
-    id: string,
+    id?: string,
     data: DropDownItem[],
     value: string,
     title?: string,
@@ -24,24 +19,24 @@ interface Props {
 const DropDown: FC<Props> = (props) => {
 
     const initialItem: DropDownItem = {
-        id: '',
-        text: props.placeholder ? '--- Select ' + props.placeholder + ' ---' : '------'
+        value: '',
+        text: props.placeholder ? ('--- Select ' + props.placeholder + ' ---') : '------'
     };
-    const [selectedItem, setSelectedItem] = useState<DropDownItem>(null);
-    const [label, setLabel] = useState(null);
-    const [idAttribute, setIdAttribute] = useState(null);
-    const itemListControl = useRef<HTMLUListElement>();
+    const [selectedItem, setSelectedItem] = useState<DropDownItem | null>();
+    const [label, setLabel] = useState<ReactElement | null>();
+    const [idAttribute, setIdAttribute] = useState<string | null>();
+    const itemListControl: MutableRefObject<HTMLUListElement> = useRef<HTMLUListElement>() as MutableRefObject<HTMLUListElement>;
 
     const listItems = useMemo(() => {
         const list: ReactElement[] = props.data?.map(item =>
-            <li className={['dropdown-item', (selectedItem?.id === item.id ? classes.SelecedItem : '')].join(' ')}
-                key={item.id} id={item.id} onClick={() => selectHandler(item)}>
+            <li className={['dropdown-item', (selectedItem?.value === item.value ? classes.SelecedItem : '')].join(' ')}
+                key={item.value} id={item.value} onClick={() => selectHandler(item)}>
                 {item.imageUrl && <img src={item.imageUrl} />}
                 {item.text}
             </li>);
         list?.unshift(
             <li className={['dropdown-item', (!selectedItem ? classes.SelecedItem : '')].join(' ')}
-                key={initialItem.id} id={initialItem.id} onClick={() => selectHandler(initialItem)}
+                key={initialItem.value} id={initialItem.value} onClick={() => selectHandler(initialItem)}
             /*style={{ paddingLeft: '30px' }}*/ >
                 {initialItem.text}
             </li>);
@@ -54,7 +49,7 @@ const DropDown: FC<Props> = (props) => {
         }
         else {
             if (props.value != '') {
-                const item: DropDownItem = props.data?.filter(q => q.id === props.value)[0];
+                const item: DropDownItem = props.data?.filter(q => q.value === props.value)[0];
                 setSelectedItem(item);
             }
             else {
@@ -75,13 +70,13 @@ const DropDown: FC<Props> = (props) => {
         props.onSelect(item?.id);
     }, [props.onSelect, setSelectedItem]);
 
-    const filterHandler = useCallback((event) => {
+    const filterHandler = useCallback((event: any) => {
         const key: string = event.key.toLowerCase();
         const filteredData: DropDownItem[] = props.data?.filter(q => q.text.toLowerCase().startsWith(key))
         if (filteredData.length > 0) {
-            const ul: HTMLUListElement = itemListControl.current;
-            const li: HTMLLIElement = ul.querySelector(`li[id="${filteredData[0].id}"]`);
-            ul.scrollTop = li.offsetTop;
+            const uiElement: HTMLUListElement = itemListControl.current;
+            const liElement: HTMLLIElement = uiElement.querySelector(`li[id="${filteredData[0].value}"]`)!;
+            uiElement.scrollTop = liElement.offsetTop;
         }
     }, [props.data]);
 
@@ -89,7 +84,7 @@ const DropDown: FC<Props> = (props) => {
         <Fragment>
             {label}
             <div id={props.id} className={["dropdown", classes.DropDown, props.className].join(' ')}
-                onKeyDown={(event) => filterHandler(event)}
+                onKeyDown={(event: any) => filterHandler(event)}
                 onBlur={props.onBlur}>
                 <button type="button" className="btn dropdown-toggle"
                     data-toggle="dropdown" disabled={props.disabled}>

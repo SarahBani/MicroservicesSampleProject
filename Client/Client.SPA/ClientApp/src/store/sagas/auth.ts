@@ -1,15 +1,16 @@
 ﻿import { put, call, all } from 'redux-saga/effects';
+
+import axiosInstance from '../../shared/identity-axios-instance';
+import * as actions from '../actions/authActions';
+import * as commonActions from '../actions/commonActions';
 import { AuthToken } from '../../models/AuthToken';
 import { ResponseGenerator } from '../../models/ResponseGenerator.model';
 import { User } from '../../models/User.model';
 
-import axiosInstance from '../../shared/axios-instance';
-import * as actions from '../actions/authActions';
-import * as commonActions from '../actions/commonActions';
+const authStorageKeyName: string = 'auth_token';
 
-const authStorageKeyName = 'auth_token';
-
-export const delay = (ms: number) => new Promise(res => setTimeout(res, ms))
+export const delay = (ms: number): Promise<NodeJS.Timeout> =>
+    new Promise(res => setTimeout(res, ms));
 
 export function* signInSaga(action: any) {
     yield put(commonActions.showLoader());

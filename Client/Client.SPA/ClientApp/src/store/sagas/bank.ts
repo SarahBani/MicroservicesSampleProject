@@ -1,6 +1,6 @@
 ﻿import { put } from 'redux-saga/effects';
 
-import axiosInstance from '../../shared/axios-instance';
+import axiosInstance from '../../shared/crud-axios-instance';
 import { SuccessfulOperationEnum, FailedOperationEnum } from '../../shared/enums';
 import * as actions from '../actions/bankActions';
 import * as commonActions from '../actions/commonActions';

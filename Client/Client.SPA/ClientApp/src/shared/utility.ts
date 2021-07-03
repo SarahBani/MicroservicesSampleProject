@@ -1,7 +1,7 @@
 ﻿import { ChangeEvent, FormEvent, SyntheticEvent } from "react";
 import { Dictionary, FormControlElementContent, Validation, FormControlElement } from "./types";
 
-export const updateObject = (oldObject, updatedProperties) => {
+export const updateObject = <T>(oldObject: T, updatedProperties: any) => {
     return {
         ...oldObject,
         updatedProperties
@@ -48,7 +48,7 @@ export const ValidateForm = (formControls: Dictionary<FormControlElementContent>
     return isValid;
 };
 
-export const checkValidity = (value: string | number, rules: Validation): boolean => {
+export const checkValidity = (value: string | number, rules?: Validation): boolean => {
     if (!rules) {
         return true;
     }

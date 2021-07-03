@@ -9,12 +9,19 @@ export type FormControlElementContent = {
     elementType: ElementTypeEnum,
     elementConfig: ElementConfig,
     value: string | number,
+    options?: DropDownItem[],
     autoComplete?: boolean;
     disabled?: boolean,
     readonly?: boolean,
     validation?: Validation,
     valid: boolean,
     touched?: boolean
+};
+
+export type DropDownItem = {
+    value: string,
+    text: string,
+    imageUrl?: string
 };
 
 export type ElementConfig = {

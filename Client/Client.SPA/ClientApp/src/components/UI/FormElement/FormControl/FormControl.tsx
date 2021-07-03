@@ -1,10 +1,10 @@
 ﻿import * as React from 'react';
-import { ChangeEventHandler, FC, FocusEventHandler } from 'react';
+import { ChangeEventHandler, FC, FocusEventHandler, ReactElement } from 'react';
 
 import * as classes from './FormControl.module.scss';
-import DropDown, { DropDownItem } from '../../DropDown/DropDown';
+import DropDown from '../../DropDown/DropDown';
 import { ElementTypeEnum } from '../../../../shared/enums';
-import { ElementConfig } from '../../../../shared/types';
+import { DropDownItem, ElementConfig } from '../../../../shared/types';
 import { ElementConfigTypeEnum } from '../../../../shared/enums';
 
 interface Props {
@@ -12,13 +12,13 @@ interface Props {
     id?: string,
     label?: string,
     title?: string,
-    value: string,
-    autoComplete: boolean,
-    disabled: boolean,
+    value: string | number,
+    options?: DropDownItem[],
+    autoComplete?: boolean,
+    disabled?: boolean,
     valid: boolean,
-    touched: boolean,
-    elementConfig: ElementConfig,
-    options: DropDownItem[],
+    touched?: boolean,
+    elementConfig?: ElementConfig,
     onChange: ChangeEventHandler<Element>,
     onSelect: (id: string) => void,
     onLostFocus: FocusEventHandler<Element>
@@ -26,10 +26,10 @@ interface Props {
 
 const FormControl: FC<Props> = props => {
 
-    let formElement = null;
-    const controlClasses = [classes.FormElement];
+    let formElement: ReactElement;
+    const controlClasses: string[] = [classes.FormElement];
 
-    let validationError = null;
+    let validationError: ReactElement | null = null;
     if (!props.valid && props.touched) {
         controlClasses.push(classes.Invalid);
         validationError = (
@@ -54,11 +54,11 @@ const FormControl: FC<Props> = props => {
                 <select
                     name={props.id}
                     className={controlClasses.join(' ')}
-                    title={props.value}
+                    title={props.value.toString()}
                     onChange={props.onChange}
                     onBlur={props.onLostFocus}
                     disabled={props.disabled}>
-                    {props.elementConfig?.options.map(option => (
+                    {props.elementConfig?.options?.map(option => (
                         <option key={option.value} value={option.value}>
                             {option.text}
                         </option>
@@ -71,8 +71,8 @@ const FormControl: FC<Props> = props => {
                     {...props.elementConfig}
                     id={props.id}
                     className={controlClasses.join(' ')}
-                    data={props.options}
-                    value={props.value}
+                    data={props.options!}
+                    value={props.value.toString()}
                     title={props.title}
                     disabled={props.disabled}
                     onSelect={props.onSelect}
@@ -80,7 +80,7 @@ const FormControl: FC<Props> = props => {
             break;
         case ElementTypeEnum.Input:
         default:
-            const inputType: string = ElementConfigTypeEnum[props.elementConfig.type].toLowerCase();
+            const inputType: string = ElementConfigTypeEnum[props.elementConfig!.type!].toLowerCase();
             formElement =
                 <input
                     {...props.elementConfig}
@@ -91,7 +91,7 @@ const FormControl: FC<Props> = props => {
                     onChange={props.onChange}
                     onBlur={props.onLostFocus}
                     disabled={props.disabled}
-                    autoComplete={props.autoComplete ? 'on' : null} />;
+                    autoComplete={props.autoComplete ? 'on' : undefined} />;
     }
 
     return (

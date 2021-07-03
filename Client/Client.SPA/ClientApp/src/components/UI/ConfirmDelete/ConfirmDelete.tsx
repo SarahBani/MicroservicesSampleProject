@@ -3,12 +3,12 @@ import { FC } from 'react';
 
 import * as classes from './ConfirmDelete.module.scss';
 
-interface OwnProps {
-    onOK: (event) => void,
-    onCancel: (event) => void
+interface Props {
+    onOK: (event: any) => void,
+    onCancel: (event: any) => void
 };
 
-const ConfirmDelete: FC<OwnProps> = ({ onOK, onCancel }) => (
+const ConfirmDelete: FC<Props> = ({ onOK, onCancel }) => (
     <div className={["container", classes.ConfirmDelete].join(' ')}>
         <div className="row text-left">
             <div className="col-12">
