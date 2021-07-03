@@ -1,5 +1,6 @@
 using Common;
 using CRUD.APIService.Entities;
+using CRUD.APIService.Helpers;
 using CRUD.APIService.Models;
 using CRUD.APIService.Repository;
 using CRUD.APIService.Services;
@@ -26,20 +27,8 @@ namespace CRUD.APIService
         {
             string connectionString = Utility.GetConnectionString(this.Configuration, Constant.AppSettings_DefaultConnection);
             services.AddDbContext<CRUDDbContext>(options => options.UseSqlServer(connectionString));
-            
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IEntityService, EntityService>();
 
-            services.AddScoped(typeof(IBaseRepository<Bank, int>), typeof(BankRepository));
-            services.AddScoped(typeof(IBaseRepository<Branch, long>), typeof(BranchRepository));
-            //services.AddScoped(typeof(IBaseReadOnlyRepository<City, long>), typeof(CityRepository));
-            services.AddScoped(typeof(IBaseReadOnlyRepository<Country, short>), typeof(CountryRepository));
-
-            services.AddScoped(typeof(IBankService), typeof(BankService));
-            services.AddScoped(typeof(IBranchService), typeof(BranchService));
-            //services.AddScoped(typeof(ICityService), typeof(CityService));
-            services.AddScoped(typeof(ICountryService), typeof(CountryService));
-
+            DependencyInjection.SetInjection(services);
             services.AddControllers();
         }
 
@@ -50,13 +39,9 @@ namespace CRUD.APIService
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

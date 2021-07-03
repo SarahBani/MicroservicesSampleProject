@@ -7,11 +7,11 @@ namespace Identity.APIService.Services
     public interface IAuthService
     {
 
-        Task<TransactionResult> Register(User user, string password);
+        Task<TransactionResult> RegisterAsync(User user, string password);
 
-        Task<TransactionResult> Login(string username, string password);
+        Task<TransactionResult> ChangePasswordAsync(string username, string oldPassword, string newPassword);
 
-        Task<TransactionResult> ChangePassword(string username, string oldPassword, string newPassword);
+        Task<TransactionResult> LoginAsync(string email, string password);
 
     }
 }

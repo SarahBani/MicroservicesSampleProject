@@ -9,9 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CRUD.APIService.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
-    public class BankController : ControllerBase
+    public class BankController : BaseAPIController
     {
 
         #region Properties
@@ -34,9 +33,9 @@ namespace CRUD.APIService.Controllers
         // GET: api/Bank
         [HttpGet]
         [ProducesResponseType(typeof(IList<Bank>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllAsync()
+        public async Task<IActionResult> GetListAsync(short? pageNo, short? pageCount)
         {
-            var banks = await this._bankService.GetAllAsync();
+            var banks = await this._bankService.GetListAsync(GetPage(pageNo, pageCount));
             return Ok(banks);
         }
 

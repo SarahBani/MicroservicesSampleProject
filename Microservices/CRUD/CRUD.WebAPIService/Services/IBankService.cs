@@ -1,4 +1,5 @@
-﻿using CRUD.APIService.Entities;
+﻿using Common;
+using CRUD.APIService.Entities;
 using CRUD.APIService.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,6 +14,8 @@ namespace CRUD.APIService.Services
         Task<int> GetCountAsync();
 
         Task<IList<Bank>> GetAllAsync();
+
+        Task<IList<Bank>> GetListAsync(Page page = null);
 
         Task<TransactionResult> InsertAsync(Bank bank);
 

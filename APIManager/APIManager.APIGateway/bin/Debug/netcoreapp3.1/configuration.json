@@ -3,18 +3,18 @@
     /// Authentication
     {
       "DownstreamPathTemplate": "/api/authentication/register",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
           "Port": 8001
         }
       ],
-      "UpstreamPathTemplate": "/register",
+      "UpstreamPathTemplate": "/gateway/register",
       "UpstreamHttpMethod": [ "Post" ]
     },
     {
-      "DownstreamPathTemplate": "/api/authentication/changepassword",
+      "DownstreamPathTemplate": "/api/authentication/login",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -22,19 +22,7 @@
           "Port": 8001
         }
       ],
-      "UpstreamPathTemplate": "/changepassword",
-      "UpstreamHttpMethod": [ "Post" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/authentication/request",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 8001
-        }
-      ],
-      "UpstreamPathTemplate": "/auth",
+      "UpstreamPathTemplate": "/gateway/login",
       "UpstreamHttpMethod": [ "Post" ]
     },
     /// CRUD

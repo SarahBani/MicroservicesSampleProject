@@ -5,8 +5,8 @@
 
         #region AppSettings
 
+        public const string AppSettings_ConnectionString = "ConnectionString";
         public const string AppSettings_DefaultConnection = "DefaultConnection";
-
         public const string AppSettings_TokenSetting = "TokenSetting";
 
         #endregion /AppSettings
@@ -45,7 +45,6 @@
         public const string Exception_sql_HasDuplicateInfo = "The record has duplicate information!";
         public const string Exception_sql_KeyAlreadyExsits = "The record key already exists!";
         public const string Exception_sql_ArithmeticOverflow = "The record field value is too big!";
-
 
         public const string Exception_DuplicateUserName = "This username is already taken!";
         public const string Exception_EmailAlreadyRegistered = "This email has already registered!";

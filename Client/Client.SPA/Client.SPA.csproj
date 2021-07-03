@@ -36,8 +36,10 @@
 
   <ItemGroup>
     <TypeScriptCompile Remove="ClientApp\src\components\About\About.tsx" />
+    <TypeScriptCompile Remove="ClientApp\src\components\Auth\Auth.tsx" />
     <TypeScriptCompile Remove="ClientApp\src\components\Banks\BankDetail\BankDetail.tsx" />
     <TypeScriptCompile Remove="ClientApp\src\components\Banks\BankEdit\BankEdit.tsx" />
+    <TypeScriptCompile Remove="ClientApp\src\components\Banks\BankItemCard\BankItemCard.tsx" />
     <TypeScriptCompile Remove="ClientApp\src\components\Banks\BankItem\BankItem.tsx" />
     <TypeScriptCompile Remove="ClientApp\src\components\Banks\BankNew\BankNew.tsx" />
     <TypeScriptCompile Remove="ClientApp\src\components\Banks\BanksSummary\BanksSummary.tsx" />
@@ -45,6 +47,7 @@
     <TypeScriptCompile Remove="ClientApp\src\components\Banks\sss\sss.tsx" />
     <TypeScriptCompile Remove="ClientApp\src\components\NotFound\NotFound.tsx" />
     <TypeScriptCompile Remove="ClientApp\src\components\UI\Backdrop\Backdrop.tsx" />
+    <TypeScriptCompile Remove="ClientApp\src\components\UI\Button\Button.tsx" />
     <TypeScriptCompile Remove="ClientApp\src\components\UI\ConfirmDelete\ConfirmDelete.tsx" />
     <TypeScriptCompile Remove="ClientApp\src\components\UI\DropDown\DropDown.tsx" />
     <TypeScriptCompile Remove="ClientApp\src\components\UI\FormElement\FormControl\FormControl.tsx" />
@@ -65,8 +68,10 @@
 
   <ItemGroup>
     <None Include="ClientApp\src\components\About\About.tsx" />
+    <None Include="ClientApp\src\components\Auth\Auth.tsx" />
     <None Include="ClientApp\src\components\Banks\BankDetail\BankDetail.tsx" />
     <None Include="ClientApp\src\components\Banks\BankEdit\BankEdit.tsx" />
+    <None Include="ClientApp\src\components\Banks\BankItemCard\BankItemCard.tsx" />
     <None Include="ClientApp\src\components\Banks\BankItem\BankItem.tsx" />
     <None Include="ClientApp\src\components\Banks\BankNew\BankNew.tsx" />
     <None Include="ClientApp\src\components\Banks\BanksSummary\BanksSummary.tsx" />
@@ -74,6 +79,7 @@
     <None Include="ClientApp\src\components\Banks\sss\sss.tsx" />
     <None Include="ClientApp\src\components\NotFound\NotFound.tsx" />
     <None Include="ClientApp\src\components\UI\Backdrop\Backdrop.tsx" />
+    <None Include="ClientApp\src\components\UI\Button\Button.tsx" />
     <None Include="ClientApp\src\components\UI\ConfirmDelete\ConfirmDelete.tsx" />
     <None Include="ClientApp\src\components\UI\DropDown\DropDown.tsx" />
     <None Include="ClientApp\src\components\UI\FormElement\FormControl\FormControl.tsx" />

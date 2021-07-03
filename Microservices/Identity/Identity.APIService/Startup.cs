@@ -1,8 +1,7 @@
 ﻿using Common;
 using Identity.APIService.Entities;
+using Identity.APIService.Helpers;
 using Identity.APIService.Models;
-using Identity.APIService.Repository;
-using Identity.APIService.Services;
 using Identity.APIService.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,12 +36,13 @@ namespace Identity.APIService
         {
             string connectionString = Utility.GetConnectionString(this.Configuration, Constant.AppSettings_DefaultConnection);
             services.AddDbContext<IdentityDbContext>(options => options.UseSqlServer(connectionString));
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped(typeof(IAuthService), typeof(AuthService));
 
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection(Constant.AppSettings_TokenSetting);
             services.Configure<TokenSetting>(appSettingsSection);
+
+            DependencyInjection.SetInjection(services);
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,8 +57,14 @@ namespace Identity.APIService
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
             app.UseHttpsRedirection();
+            app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
 
         #endregion /Methods

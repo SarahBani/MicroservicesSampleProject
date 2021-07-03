@@ -13,7 +13,7 @@ namespace Identity.APIService.Controllers
     [EnableCors]
     [Authorize]
 
-    public class AuthenticationController : ControllerBase
+    public class AuthenticationController : BaseAPIController
     {
 
         #region Properties
@@ -34,17 +34,16 @@ namespace Identity.APIService.Controllers
         #region Actions
 
         // POST: api/Account/Login
-        [HttpPost]
-        [HttpPost, Route("Login")]
-        [Route("Login")]
         [AllowAnonymous]
+        [HttpPost]
+        [Route("Login")]
         public async Task<IActionResult> LoginAsync([FromBody] UserCredentialModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var transactionResult = await this._authService.Login(model.Username, model.Password);
+            var transactionResult = await this._authService.LoginAsync(model.Username, model.Password);
             if (transactionResult.IsSuccessful)
             {
                 string token = transactionResult.Content.ToString();
@@ -67,7 +66,7 @@ namespace Identity.APIService.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await this._authService.Register(model.ConvertToUser(), model.Password);
+            var result = await this._authService.RegisterAsync(model.ConvertToUser(), model.Password);
             if (result.IsSuccessful)
             {
                 return Ok();
@@ -88,7 +87,7 @@ namespace Identity.APIService.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await this._authService.ChangePassword(model.UsertName, model.OldPassword, model.NewPassword);
+            var result = await this._authService.ChangePasswordAsync(model.UsertName, model.OldPassword, model.NewPassword);
             if (result.IsSuccessful)
             {
                 return Ok();

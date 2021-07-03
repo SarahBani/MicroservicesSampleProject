@@ -24,13 +24,15 @@ namespace Identity.APIService.Services
 
         private readonly UserManager<User> _userManager;
 
+        private (string Email, string Password) _sampleLogin = ("sarah@yahoo.com", "123456");
+
         #endregion /Properties
 
         #region Constructors
 
         public AuthService(IUnitOfWork unitOfWork,
-            IOptions<TokenSetting> tokenSetting, 
-            UserManager<User> userManager):
+            IOptions<TokenSetting> tokenSetting,
+            UserManager<User> userManager) :
             base(unitOfWork)
         {
             this._tokenSetting = tokenSetting.Value;
@@ -41,7 +43,7 @@ namespace Identity.APIService.Services
 
         #region Methods
 
-        public async Task<TransactionResult> Register(User user, string password)
+        public async Task<TransactionResult> RegisterAsync(User user, string password)
         {
             try
             {
@@ -149,22 +151,7 @@ namespace Identity.APIService.Services
             }
         }
 
-        public async Task<TransactionResult> Login(string username, string password)
-        {
-            //var userId = this._httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var user = await this._userManager.FindByNameAsync(username);
-            if (user != null)
-            {
-                bool isCorrect = await this._userManager.CheckPasswordAsync(user, password);
-                if (isCorrect)
-                {
-                    return new TransactionResult();
-                }
-            }
-            return new TransactionResult(new CustomException(Constant.Exception_LoginFailed));
-        }
-
-        public async Task<TransactionResult> ChangePassword(string username, string oldPassword, string newPassword)
+        public async Task<TransactionResult> ChangePasswordAsync(string username, string oldPassword, string newPassword)
         {
             var user = await this._userManager.FindByNameAsync(username);
             if (user != null)
@@ -196,59 +183,53 @@ namespace Identity.APIService.Services
         //    {
         //        return new TransactionResult(new CustomException(Constant.Exception_RoleCreationFailed));
         //    }
-        //}
+        //}    
 
-        public async Task<bool> IsAuthenticated(string username, string password)
-        {
-            var result = await this.Login(username, password);
-            return result.IsSuccessful;
-        }
-
-        private async Task<TransactionResult> GetAuthenticationToken(string username)
+        public async Task<TransactionResult> LoginAsync(string email, string password)
         {
             try
             {
-                var user = await this._userManager.FindByNameAsync(username);
-                if (user == null)
+                await Task.Delay(3000); // for a delay to simulate real database fetch                
+                if (email.Equals(_sampleLogin.Email, StringComparison.OrdinalIgnoreCase) &&
+                    password.Equals(_sampleLogin.Password))
+                {
+                    var authenticationToken = GetAuthenticationResponse(email);
+                    return new TransactionResult(authenticationToken);
+                }
+                else
                 {
                     throw new CustomException(ExceptionKey.AuthenticationFailed);
                 }
-                var claims = await this._userManager.GetClaimsAsync(user);
-                if (claims == null)
-                {
-                    throw new CustomException(ExceptionKey.UserNotAccess);
-                }
-                var subSystems = claims.SingleOrDefault(q => q.Type == ClaimTypes.System);
-                if (subSystems == null)
-                {
-                    throw new CustomException(ExceptionKey.UserNotAccess);
-                }
-
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this._tokenSetting.SecretKey));
-                var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512Signature); //  HmacSha256Signature);
-
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Issuer = this._tokenSetting.Issuer,
-                    Audience = subSystems.Value,
-                    //Subject = new ClaimsIdentity(new Claim[]
-                    //{
-                    //    new Claim(ClaimTypes.Name, "crud")
-                    //}),
-                    Subject = new ClaimsIdentity(claims),
-                    Expires = DateTime.UtcNow.AddMinutes(double.Parse(this._tokenSetting.AccessExpiration)),
-                    SigningCredentials = credentials
-                };
-                string token = tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
-
-                return new TransactionResult(token);
             }
             catch (Exception ex)
             {
                 return GetTransactionException(ex);
             }
         }
+
+        private AuthenticationResponse GetAuthenticationResponse(string email)
+        {
+            DateTime expirationTime = DateTime.UtcNow.AddMinutes(double.Parse(this._tokenSetting.AccessExpiration));
+            string token = GenerateJwtToken(expirationTime);
+            return new AuthenticationResponse(email, token, expirationTime);
+        }
+
+        private string GenerateJwtToken(DateTime expirationTime)
+        {
+            //var tokenHandler = new JwtSecurityTokenHandler();
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this._tokenSetting.SecretKey));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512Signature); //  HmacSha256Signature);
+
+            var tokeOptions = new JwtSecurityToken(
+                issuer: this._tokenSetting.Issuer,
+                audience: this._tokenSetting.Audience,
+                // audience: subSystems.Value,
+                //claims: new List<Claim>(),
+                expires: expirationTime,
+                signingCredentials: credentials
+            );
+            return new JwtSecurityTokenHandler().WriteToken(tokeOptions);
+        }   
 
         #endregion /Methods
 

@@ -1,5 +1,8 @@
-﻿using CRUD.APIService.Entities;
+﻿using Common;
+using CRUD.APIService.Entities;
 using CRUD.APIService.Repository;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CRUD.APIService.Services
@@ -22,7 +25,17 @@ namespace CRUD.APIService.Services
 
         #region Methods
 
-        public Task<int> GetCountAsync() => base.GetCountAsync();    
+        public Task<int> GetCountAsync() => base.GetCountAsync();
+
+        public Task<IList<Bank>> GetListAsync(Page page = null)
+        {
+            var list = base.GetQueryable();
+            if (page != null)
+            {
+                list = list.Skip(page.FirstRowIndex).Take(page.Count);
+            }
+            return list.ToIListAsync();
+        }
 
         #endregion /Methods
     }
