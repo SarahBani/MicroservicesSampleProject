@@ -8,12 +8,13 @@ namespace Identity.APIService.Models
 
         #region Properties
 
-
         [Required(AllowEmptyStrings = false)]
-        [JsonProperty("username")]
-        public string Username { get; set; }
+        [DataType(DataType.EmailAddress)]
+        [JsonProperty("email")]
+        public string Email { get; set; }
 
         [Required]
+        [MinLength(6)]
         [DataType(DataType.Password)]
         [JsonProperty("password")]
         public string Password { get; set; }

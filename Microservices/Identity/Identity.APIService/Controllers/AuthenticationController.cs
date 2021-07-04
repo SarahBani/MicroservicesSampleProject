@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Cors;
 using Identity.APIService.Services;
 using Identity.APIService.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -9,8 +8,6 @@ using Authentication.WebAPIService.Models;
 namespace Identity.APIService.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
-    [EnableCors]
     [Authorize]
 
     public class AuthenticationController : BaseAPIController
@@ -33,17 +30,16 @@ namespace Identity.APIService.Controllers
 
         #region Actions
 
-        // POST: api/Account/Login
+        // POST: api/Authentication/Login
         [AllowAnonymous]
-        [HttpPost]
-        [Route("Login")]
+        [HttpPost, Route("Login")]
         public async Task<IActionResult> LoginAsync([FromBody] UserCredentialModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var transactionResult = await this._authService.LoginAsync(model.Username, model.Password);
+            var transactionResult = await this._authService.LoginAsync(model.Email, model.Password);
             if (transactionResult.IsSuccessful)
             {
                 string token = transactionResult.Content.ToString();
@@ -56,7 +52,7 @@ namespace Identity.APIService.Controllers
             }
         }
 
-        // POST: api/Account/Register
+        // POST: api/Authentication/Register
         [HttpPost]
         [Route("Register")]
         [Authorize(Roles = "Admin")]
@@ -77,7 +73,7 @@ namespace Identity.APIService.Controllers
             }
         }
 
-        // PUT api/Account/ChangePassword
+        // PUT api/Authentication/ChangePassword
         [HttpPut]
         [Route("ChangePassword")]
         [Authorize(Roles = "Admin")]
@@ -96,6 +92,15 @@ namespace Identity.APIService.Controllers
             {
                 return BadRequest(result.ExceptionContentResult);
             }
+        }
+
+        [AllowAnonymous]
+        //[Authorize]
+        [HttpGet, Route("GetTest")]
+        public IActionResult GetTest()
+        {
+            var data = new string[] { "value1", "value2", "value3", "value4", "value5" };
+            return Ok(data);
         }
 
         #endregion /Actions

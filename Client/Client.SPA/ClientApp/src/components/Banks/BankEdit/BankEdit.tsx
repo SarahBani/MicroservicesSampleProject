@@ -146,7 +146,7 @@ const BankEdit: FC<{ id: number }> = memo(({ id }) => {
 
     const deleteConfirmContent = useMemo((): ReactElement => {
         return (
-            <Modal isShown={isDeleteConfirmShown} type={ModalTypeEnum.COMPONENT}>
+            <Modal isShown={isDeleteConfirmShown} type={ModalTypeEnum.Component}>
                 <ConfirmDelete onOK={() => confirmDeleteHandler(true)}
                     onCancel={() => confirmDeleteHandler(false)} />
             </Modal>

@@ -5,6 +5,7 @@ using Identity.APIService.Models;
 using Identity.APIService.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,6 +37,20 @@ namespace Identity.APIService
         {
             string connectionString = Utility.GetConnectionString(this.Configuration, Constant.AppSettings_DefaultConnection);
             services.AddDbContext<IdentityDbContext>(options => options.UseSqlServer(connectionString));
+            /// custom user & Role with int key
+            services.AddIdentity<User, Role>(options =>
+            {
+                options.SignIn.RequireConfirmedEmail = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+            })
+                .AddRoles<Role>()
+                .AddEntityFrameworkStores<IdentityDbContext>()
+                //.AddDefaultUI()
+                .AddDefaultTokenProviders();
 
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection(Constant.AppSettings_TokenSetting);
@@ -51,11 +66,6 @@ namespace Identity.APIService
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
             }
             app.UseHttpsRedirection();
             app.UseRouting();

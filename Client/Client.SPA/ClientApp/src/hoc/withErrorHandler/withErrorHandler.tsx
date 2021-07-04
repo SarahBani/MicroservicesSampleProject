@@ -28,11 +28,11 @@ const withErrorHandler = (WrappedComponent: FC<any>, axios: AxiosInstance) => {
         useEffect(() => {
             if (axiosError) {
                 setError(axiosError + '!');
-                setErrorType(ModalTypeEnum.ERROR);
+                setErrorType(ModalTypeEnum.Error);
             }
             else if (customError) {
                 setError(customError);
-                setErrorType(ModalTypeEnum.WARNING);
+                setErrorType(ModalTypeEnum.Warning);
             }
             else {
                 setError(null);

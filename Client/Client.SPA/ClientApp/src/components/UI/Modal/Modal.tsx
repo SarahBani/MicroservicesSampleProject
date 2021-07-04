@@ -21,35 +21,35 @@ type ModalAction = { type: ModalTypeEnum };
 
 const modalReducer = (currentState: ModalState, action: ModalAction): ModalState => {
     switch (action.type) {
-        case ModalTypeEnum.INFO:
+        case ModalTypeEnum.Info:
             return {
                 ...currentState,
                 typeClass: classes.Info,
                 title: null,
                 icon: <span className="fa fa-info" ></span>
             };
-        case ModalTypeEnum.QUESTION:
+        case ModalTypeEnum.Question:
             return {
                 ...currentState,
                 typeClass: classes.Question,
                 title: null,
                 icon: <span className="fa fa-question" ></span>
             };
-        case ModalTypeEnum.WARNING:
+        case ModalTypeEnum.Warning:
             return {
                 ...currentState,
                 typeClass: classes.Warning,
                 title: 'Warning',
                 icon: <span className="fa fa-warning" ></span>
             };
-        case ModalTypeEnum.ERROR:
+        case ModalTypeEnum.Error:
             return {
                 ...currentState,
                 typeClass: classes.Error,
                 title: 'Error',
                 icon: <span className="fa fa-warning" ></span>
             };
-        case ModalTypeEnum.COMPONENT:
+        case ModalTypeEnum.Component:
             return {
                 ...currentState,
                 typeClass: classes.Component,
@@ -72,7 +72,7 @@ interface OwnProps {
     hide?: MouseEventHandler
 };
 
-type Props = OwnProps & { children: ReactNode };
+type Props = OwnProps & { children?: ReactNode };
 
 const Modal: FC<Props> = ({ children, type, isShown, hide }) => {
 
@@ -84,7 +84,7 @@ const Modal: FC<Props> = ({ children, type, isShown, hide }) => {
 
     return (
         <Fragment>
-            <Backdrop isShown={isShown} clicked={() => hide} type={type}>
+            <Backdrop isShown={isShown} onClick={() => hide} type={type}>
             </Backdrop>
             <div className={[classes.Modal, modalState.typeClass].join(' ')}
                 style=

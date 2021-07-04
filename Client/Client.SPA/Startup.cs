@@ -13,12 +13,23 @@ namespace Client.SPA
 {
     public class Startup
     {
+
+        #region Properties
+
+        public IConfiguration Configuration { get; }
+
+        #endregion /Properties
+
+        #region Cosntructors
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        #endregion /Cosntructors
+
+        #region Methods
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -45,7 +56,6 @@ namespace Client.SPA
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseStaticFiles(new StaticFileOptions()
@@ -56,14 +66,12 @@ namespace Client.SPA
             app.UseSpaStaticFiles();
 
             app.UseRouting();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
             });
-
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
@@ -75,5 +83,8 @@ namespace Client.SPA
                 }
             });
         }
+
+        #endregion /Methods
+
     }
 }

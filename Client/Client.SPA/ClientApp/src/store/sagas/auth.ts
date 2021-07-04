@@ -19,7 +19,7 @@ export function* signInSaga(action: any) {
         password: action.password
     };
     try {
-        const response: ResponseGenerator = yield axiosInstance.post('auth/SignIn', data);
+        const response: ResponseGenerator = yield axiosInstance.post('/login', data);
         if (response?.status === 200) {
             if (response.data.isSuccessful) {
                 //yield localStorage.setItem(authStorageKeyName, JSON.stringify(response.data));

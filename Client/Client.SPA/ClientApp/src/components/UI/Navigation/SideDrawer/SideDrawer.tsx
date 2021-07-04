@@ -25,7 +25,7 @@ const SideDrawer: FC<Props> = (props) => {
 
     return (
         <Fragment>
-            <Backdrop isShown={props.isShown} clicked={props.hide} />
+            <Backdrop isShown={props.isShown} onClick={props.hide} />
             <div className={attachedClasses} onClick={props.hide}>
                 <NavigationItems />
             </div>

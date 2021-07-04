@@ -29,11 +29,11 @@ export enum ElementConfigTypeEnum {
 };
 
 export enum ModalTypeEnum {
-    INFO,
-    QUESTION,
-    WARNING,
-    ERROR,
-    COMPONENT
+    Info,
+    Question,
+    Warning,
+    Error,
+    Component
 };
 
 export enum ButtonTypeEnum {

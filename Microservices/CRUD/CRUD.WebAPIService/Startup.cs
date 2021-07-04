@@ -2,8 +2,6 @@ using Common;
 using CRUD.APIService.Entities;
 using CRUD.APIService.Helpers;
 using CRUD.APIService.Models;
-using CRUD.APIService.Repository;
-using CRUD.APIService.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;

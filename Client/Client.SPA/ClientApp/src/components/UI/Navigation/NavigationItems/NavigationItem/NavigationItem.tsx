@@ -1,14 +1,16 @@
 ﻿import * as React from 'react';
-import { FC, MouseEventHandler } from 'react';
+import { FC, MouseEventHandler, ReactNode } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import * as classes from './NavigationItem.module.scss';
 
-interface Props {
+interface OwnProps {
     link?: string,
     exact?: boolean,
     clicked?: () => void
 };
+
+type Props = OwnProps & { children?: ReactNode };
 
 const navigationItem: FC<Props> = props => {
 

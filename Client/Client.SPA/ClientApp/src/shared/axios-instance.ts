@@ -1,7 +1,7 @@
 ﻿import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 const axiosInstance: AxiosInstance = axios.create({
-    baseURL: 'http://localhost:5100/gateway'
+    baseURL: 'https://localhost:5101/gateway'
 });
 
 //instance.default.headers.common['Authorization'] = 'Auth Token dgdfgdfg';

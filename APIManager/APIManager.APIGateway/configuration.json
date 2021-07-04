@@ -15,7 +15,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/authentication/login",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",

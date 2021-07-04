@@ -24,7 +24,7 @@ namespace Identity.APIService.Services
 
         private readonly UserManager<User> _userManager;
 
-        private (string Email, string Password) _sampleLogin = ("sarah@yahoo.com", "123456");
+        //private (string Email, string Password) _sampleLogin = ("sarah@yahoo.com", "123456");
 
         #endregion /Properties
 
@@ -189,9 +189,11 @@ namespace Identity.APIService.Services
         {
             try
             {
-                await Task.Delay(3000); // for a delay to simulate real database fetch                
-                if (email.Equals(_sampleLogin.Email, StringComparison.OrdinalIgnoreCase) &&
-                    password.Equals(_sampleLogin.Password))
+                //await Task.Delay(3000); // for a delay to simulate real database fetch                
+                //if (email.Equals(_sampleLogin.Email, StringComparison.OrdinalIgnoreCase) &&
+                //    password.Equals(_sampleLogin.Password))
+                var user = await this._userManager.FindByNameAsync(email);
+                if (user != null && await this._userManager.CheckPasswordAsync(user, password))
                 {
                     var authenticationToken = GetAuthenticationResponse(email);
                     return new TransactionResult(authenticationToken);
@@ -229,7 +231,7 @@ namespace Identity.APIService.Services
                 signingCredentials: credentials
             );
             return new JwtSecurityTokenHandler().WriteToken(tokeOptions);
-        }   
+        }
 
         #endregion /Methods
 

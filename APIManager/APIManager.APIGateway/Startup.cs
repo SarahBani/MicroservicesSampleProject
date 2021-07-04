@@ -49,8 +49,14 @@ namespace APIManager.WebAPIGateway
             {
                 app.UseDeveloperExceptionPage();
             }
-            //app.UseAuthentication();
+            else
+            {
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
 
+            app.UseHttpsRedirection();
+            //app.UseAuthentication();
             //app.UseRouting();
 
             // global cors policy
@@ -59,10 +65,7 @@ namespace APIManager.WebAPIGateway
                 .AllowAnyHeader()
                 .SetIsOriginAllowed(origin => true) // allow any origin
                 .AllowCredentials()); // allow credentials
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapControllers();
-            //});
+
             app.UseOcelot().Wait();
 
             app.Run(async (context) =>

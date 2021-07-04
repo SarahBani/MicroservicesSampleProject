@@ -1,22 +1,24 @@
 ﻿import * as React from 'react';
-import { FC, MouseEventHandler } from 'react';
+import { FC, MouseEventHandler, ReactNode } from 'react';
 
 import * as classes from './Backdrop.module.scss';
 import { ModalTypeEnum } from '../../../shared/enums';
 
-interface Props {
+interface OwnProps {
     isShown: boolean,
     type?: ModalTypeEnum,
-    clicked: MouseEventHandler
+    onClick: MouseEventHandler
 }
 
-const Backdrop: FC<Props> = ({ children, isShown, type, clicked }) => (
-    isShown ?
-    <div onClick={clicked}
-        className={[classes.Backdrop, type === ModalTypeEnum.COMPONENT ? '' : classes.Popup].join(' ')}>
-        {children}
-    </div>
-    : null
+type Props = OwnProps & { children?: ReactNode };
+
+const Backdrop: FC<Props> = (props) => (
+    props.isShown ?
+        <div onClick={props.onClick}
+            className={[classes.Backdrop, props.type === ModalTypeEnum.Component ? '' : classes.Popup].join(' ')}>
+            {props.children}
+        </div>
+        : null
 );
 
 export default Backdrop;

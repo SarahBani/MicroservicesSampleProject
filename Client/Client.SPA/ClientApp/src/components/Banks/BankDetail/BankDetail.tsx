@@ -68,7 +68,7 @@ const BankDetail: FC<Props> = memo(({ id }) => {
 
     const deleteConfirmContent = useMemo(() => {
         return (
-            <Modal isShown={isDeleteConfirmShown} type={ModalTypeEnum.COMPONENT}>
+            <Modal isShown={isDeleteConfirmShown} type={ModalTypeEnum.Component}>
                 <ConfirmDelete onOK={() => confirmDeleteHandler(true)}
                     onCancel={() => confirmDeleteHandler(false)} />
             </Modal>
