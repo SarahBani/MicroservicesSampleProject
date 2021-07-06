@@ -1,19 +1,19 @@
 ﻿import * as React from 'react';
 import { Fragment, useState, useEffect, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import axios, { AxiosInstance } from 'axios';
 
 import Modal from '../../components/UI/Modal/Modal';
 import useHttpErrorHandler from '../../hooks/http-error-handler';
 import * as actions from '../../store/actions/commonActions';
 import { ModalTypeEnum } from '../../shared/enums';
 import { AppState } from '../../store';
+import axiosInstance from '../../shared/axios-instance';
 
 interface StoreProps {
     customError: string
 }
 
-const withErrorHandler = (WrappedComponent: FC<any>, axios: AxiosInstance) => {
+const withErrorHandler = (WrappedComponent: FC<any>) => {
 
     return (props: any) => {
 
@@ -23,7 +23,7 @@ const withErrorHandler = (WrappedComponent: FC<any>, axios: AxiosInstance) => {
         const dispatch = useDispatch();
         const [error, setError] = useState<string | null>();
         const [errorType, setErrorType] = useState<ModalTypeEnum>();
-        const [axiosError, axiosClearErrorHandler] = useHttpErrorHandler(axios);
+        const [axiosError, axiosClearErrorHandler] = useHttpErrorHandler(axiosInstance);
 
         useEffect(() => {
             if (axiosError) {
@@ -58,4 +58,4 @@ const withErrorHandler = (WrappedComponent: FC<any>, axios: AxiosInstance) => {
     };
 };
 
-export default (WrappedComponent: FC<any>, axios: AxiosInstance) => withErrorHandler(WrappedComponent, axios);
+export default (WrappedComponent: FC<any>) => withErrorHandler(WrappedComponent);

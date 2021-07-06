@@ -9,7 +9,6 @@ import BankList from './BankList/BankList';
 import BankNew from './BankNew/BankNew';
 import SelectBank from './SelectBank/SelectBank';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
-import axiosInstance from '../../shared/crud-axios-instance';
 
 interface Props {
     add: boolean
@@ -55,4 +54,4 @@ const Banks: FC<Props> = ({ add }) => {
     );
 };
 
-export default withErrorHandler(Banks, axiosInstance);
+export default withErrorHandler(Banks);

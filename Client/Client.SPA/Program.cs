@@ -44,25 +44,25 @@ namespace Client.SPA
                     //        cfg.Protocols = HttpProtocols.Http1;
                     //    });
                     //});
-                    webBuilder.UseKestrel(options =>
-                    {
-                        options.ConfigureEndpointDefaults(listenOptions =>
-                        {
-                            listenOptions.Protocols = HttpProtocols.Http1;
-                        });
-                        options.Listen(IPAddress.Loopback, 5000);
-                        options.Listen(IPAddress.Loopback, 5001, options =>
-                        {
-                            options.UseHttps();
-                        });
-                        ////HTTP 5000
-                        //options.ListenLocalhost(5000);
-                        ////HTTPS 5001
-                        //options.ListenLocalhost(5001, options =>
-                        //{
-                        //    options.UseHttps();
-                        //});
-                    });
+                    //webBuilder.UseKestrel(options =>
+                    //{
+                    //    options.ConfigureEndpointDefaults(listenOptions =>
+                    //    {
+                    //        listenOptions.Protocols = HttpProtocols.Http1;
+                    //    });
+                    //    options.Listen(IPAddress.Loopback, 5000);
+                    //    options.Listen(IPAddress.Loopback, 5001, options =>
+                    //    {
+                    //        options.UseHttps();
+                    //    });
+                    //    ////HTTP 5000
+                    //    //options.ListenLocalhost(5000);
+                    //    ////HTTPS 5001
+                    //    //options.ListenLocalhost(5001, options =>
+                    //    //{
+                    //    //    options.UseHttps();
+                    //    //});
+                    //});
                     webBuilder.UseStartup<Startup>();
                 });
     }

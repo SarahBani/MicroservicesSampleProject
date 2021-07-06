@@ -10,7 +10,6 @@ var BankList_1 = require("./BankList/BankList");
 var BankNew_1 = require("./BankNew/BankNew");
 var SelectBank_1 = require("./SelectBank/SelectBank");
 var withErrorHandler_1 = require("../../hoc/withErrorHandler/withErrorHandler");
-var crud_axios_instance_1 = require("../../shared/crud-axios-instance");
 //const Banks: FC<{ add?: boolean }> = ({ add }) => {
 var Banks = function (_a) {
     var add = _a.add;
@@ -41,5 +40,5 @@ var Banks = function (_a) {
                 React.createElement(BankList_1.default, null)),
             React.createElement("div", { className: "col-5" }, detailContent))));
 };
-exports.default = withErrorHandler_1.default(Banks, crud_axios_instance_1.default);
+exports.default = withErrorHandler_1.default(Banks);
 //# sourceMappingURL=Banks.js.map

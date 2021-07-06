@@ -29,10 +29,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteBankSaga = exports.saveBankSaga = exports.fetchBankSaga = exports.fetchBanksCountSaga = exports.fetchBanksSaga = void 0;
 var effects_1 = require("redux-saga/effects");
-var crud_axios_instance_1 = require("../../shared/crud-axios-instance");
 var enums_1 = require("../../shared/enums");
 var actions = require("../actions/bankActions");
 var commonActions = require("../actions/commonActions");
+var axios_instance_1 = require("../../shared/axios-instance");
 function fetchBanksSaga(action) {
     var headers, filters, queryString, response, error_1;
     return __generator(this, function (_a) {
@@ -73,7 +73,7 @@ function fetchBanksSaga(action) {
             case 10: return [4 /*yield*/, (filters.length > 0 ? '?' + filters.join('&') : '')];
             case 11:
                 queryString = _a.sent();
-                return [4 /*yield*/, crud_axios_instance_1.default.get('/banks' + queryString, { headers: headers })];
+                return [4 /*yield*/, axios_instance_1.default.get('/banks' + queryString, { headers: headers })];
             case 12:
                 response = _a.sent();
                 if (!((response === null || response === void 0 ? void 0 : response.status) === 200)) return [3 /*break*/, 14];
@@ -124,7 +124,7 @@ function fetchBanksCountSaga(action) {
             case 6: return [4 /*yield*/, (filters.length > 0 ? '?' + filters.join('&') : '')];
             case 7:
                 queryString = _a.sent();
-                return [4 /*yield*/, crud_axios_instance_1.default.get('/bank/count' + queryString, { headers: headers })];
+                return [4 /*yield*/, axios_instance_1.default.get('/bank/count' + queryString, { headers: headers })];
             case 8:
                 response = _a.sent();
                 if (!((response === null || response === void 0 ? void 0 : response.status) === 200)) return [3 /*break*/, 10];
@@ -160,7 +160,7 @@ function fetchBankSaga(action) {
                 _a.label = 2;
             case 2:
                 _a.trys.push([2, 9, , 11]);
-                return [4 /*yield*/, crud_axios_instance_1.default.get('/bank/' + action.id, { headers: headers })];
+                return [4 /*yield*/, axios_instance_1.default.get('/bank/' + action.id, { headers: headers })];
             case 3:
                 response = _a.sent();
                 if (!((response === null || response === void 0 ? void 0 : response.status) === 200)) return [3 /*break*/, 5];
@@ -219,12 +219,12 @@ function saveBankSaga(action) {
                 response = void 0;
                 operation = void 0;
                 if (!!action.Bank.id) return [3 /*break*/, 4];
-                return [4 /*yield*/, crud_axios_instance_1.default.post('/bank', action.Bank, { headers: headers })];
+                return [4 /*yield*/, axios_instance_1.default.post('/bank', action.Bank, { headers: headers })];
             case 3:
                 response = _a.sent();
                 operation = enums_1.SuccessfulOperationEnum.Insert;
                 return [3 /*break*/, 6];
-            case 4: return [4 /*yield*/, crud_axios_instance_1.default.put('/bank' + action.Bank.id, action.Bank, { headers: headers })];
+            case 4: return [4 /*yield*/, axios_instance_1.default.put('/bank' + action.Bank.id, action.Bank, { headers: headers })];
             case 5:
                 response = _a.sent();
                 operation = enums_1.SuccessfulOperationEnum.Update;
@@ -264,7 +264,7 @@ function deleteBankSaga(action) {
                 _a.label = 2;
             case 2:
                 _a.trys.push([2, 7, , 9]);
-                return [4 /*yield*/, crud_axios_instance_1.default.delete('/bank' + action.id, { headers: headers })];
+                return [4 /*yield*/, axios_instance_1.default.delete('/bank' + action.id, { headers: headers })];
             case 3:
                 response = _a.sent();
                 if (!((response === null || response === void 0 ? void 0 : response.status) === 200)) return [3 /*break*/, 5];

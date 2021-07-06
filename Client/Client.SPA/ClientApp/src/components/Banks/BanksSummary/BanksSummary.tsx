@@ -8,7 +8,6 @@ import * as actions from '../../../store/actions/bankActions';
 import { Bank } from '../../../models/Bank.model';
 import { AppState } from '../../../store';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
-import axiosInstance from '../../../shared/crud-axios-instance';
 
 interface StoreProps {
     banks: Bank[]
@@ -36,4 +35,4 @@ const BanksSummary: FC = () => {
     );
 };
 
-export default withErrorHandler(BanksSummary, axiosInstance);
+export default withErrorHandler(BanksSummary);

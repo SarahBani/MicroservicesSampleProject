@@ -18,7 +18,8 @@ var Modal_1 = require("../../components/UI/Modal/Modal");
 var http_error_handler_1 = require("../../hooks/http-error-handler");
 var actions = require("../../store/actions/commonActions");
 var enums_1 = require("../../shared/enums");
-var withErrorHandler = function (WrappedComponent, axios) {
+var axios_instance_1 = require("../../shared/axios-instance");
+var withErrorHandler = function (WrappedComponent) {
     return function (props) {
         var customError = react_redux_1.useSelector(function (state) { return ({
             customError: state.common.error
@@ -26,7 +27,7 @@ var withErrorHandler = function (WrappedComponent, axios) {
         var dispatch = react_redux_1.useDispatch();
         var _a = react_1.useState(), error = _a[0], setError = _a[1];
         var _b = react_1.useState(), errorType = _b[0], setErrorType = _b[1];
-        var _c = http_error_handler_1.default(axios), axiosError = _c[0], axiosClearErrorHandler = _c[1];
+        var _c = http_error_handler_1.default(axios_instance_1.default), axiosError = _c[0], axiosClearErrorHandler = _c[1];
         react_1.useEffect(function () {
             if (axiosError) {
                 setError(axiosError + '!');
@@ -51,5 +52,5 @@ var withErrorHandler = function (WrappedComponent, axios) {
             React.createElement(WrappedComponent, __assign({}, props))));
     };
 };
-exports.default = (function (WrappedComponent, axios) { return withErrorHandler(WrappedComponent, axios); });
+exports.default = (function (WrappedComponent) { return withErrorHandler(WrappedComponent); });
 //# sourceMappingURL=withErrorHandler.js.map

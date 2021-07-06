@@ -12,7 +12,6 @@ import { ButtonTypeEnum, ElementConfigTypeEnum, ElementTypeEnum } from "../../sh
 import { AppState } from "../../store";
 import { Dictionary, FormControlElement, FormControlElementContent } from "../../shared/types";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
-import axiosInstance from '../../shared/identity-axios-instance';
 
 interface StoreProps {
     isLoggedIn: boolean,
@@ -113,4 +112,4 @@ export const Auth: FC = () => {
     );
 };
 
-export default withErrorHandler(Auth, axiosInstance);
+export default withErrorHandler(Auth);

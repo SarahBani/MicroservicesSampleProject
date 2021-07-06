@@ -15,7 +15,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/authentication/login",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
@@ -28,11 +28,11 @@
     /// CRUD
     {
       "DownstreamPathTemplate": "/api/bank",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 44337
+          "Port": 5301
         }
       ],
       "UpstreamPathTemplate": "/gateway/banks",
@@ -40,11 +40,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/{controller}/count",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 44337
+          "Port": 5301
         }
       ],
       "UpstreamPathTemplate": "/gateway/{controller}/count",
@@ -52,32 +52,32 @@
     },
     {
       "DownstreamPathTemplate": "/api/{controller}/{id}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 44337
+          "Port": 5301
         }
       ],
       "UpstreamPathTemplate": "/gateway/{controller}/{id}",
       "UpstreamHttpMethod": [ "Get" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/{controller}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 44337
-        }
-      ],
-      "UpstreamPathTemplate": "/gateway/{controller}",
-      "UpstreamHttpMethod": [ "Post", "Put", "Delete" ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "IdentityApiKey",
-        "AllowedScopes": []
-      }
-    }
+    }//,
+    //{
+    //  "DownstreamPathTemplate": "/api/{controller}",
+    //  "DownstreamScheme": "https",
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "localhost",
+    //      "Port": 5301
+    //    }
+    //  ],
+    //  "UpstreamPathTemplate": "/gateway/{controller}",
+    //  "UpstreamHttpMethod": [ "Post", "Put", "Delete" ],
+    //  "AuthenticationOptions": {
+    //    "AuthenticationProviderKey": "IdentityApiKey",
+    //    "AllowedScopes": []
+    //  }
+    //}
   ],
   "GlobalConfiguration": {
     "RequestIdKey": "OcRequestId",

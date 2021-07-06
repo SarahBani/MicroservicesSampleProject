@@ -12,7 +12,6 @@ var utility_1 = require("../../shared/utility");
 var actions = require("../../store/actions/authActions");
 var enums_1 = require("../../shared/enums");
 var withErrorHandler_1 = require("../../hoc/withErrorHandler/withErrorHandler");
-var identity_axios_instance_1 = require("../../shared/identity-axios-instance");
 var initialFormState = {
     email: {
         elementType: enums_1.ElementTypeEnum.Input,
@@ -82,5 +81,5 @@ var Auth = function () {
         form));
 };
 exports.Auth = Auth;
-exports.default = withErrorHandler_1.default(exports.Auth, identity_axios_instance_1.default);
+exports.default = withErrorHandler_1.default(exports.Auth);
 //# sourceMappingURL=Auth.js.map

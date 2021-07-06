@@ -29,7 +29,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.autoSignInSaga = exports.checkAuthTimeoutSaga = exports.signOutSaga = exports.signInSaga = exports.delay = void 0;
 var effects_1 = require("redux-saga/effects");
-var identity_axios_instance_1 = require("../../shared/identity-axios-instance");
+var axios_instance_1 = require("../../shared/axios-instance");
 var actions = require("../actions/authActions");
 var commonActions = require("../actions/commonActions");
 var authStorageKeyName = 'auth_token';
@@ -51,7 +51,7 @@ function signInSaga(action) {
                 _a.label = 2;
             case 2:
                 _a.trys.push([2, 11, , 13]);
-                return [4 /*yield*/, identity_axios_instance_1.default.post('/login', data)];
+                return [4 /*yield*/, axios_instance_1.default.post('/login', data)];
             case 3:
                 response = _a.sent();
                 if (!((response === null || response === void 0 ? void 0 : response.status) === 200)) return [3 /*break*/, 9];

@@ -1,12 +1,12 @@
 ﻿import { put } from 'redux-saga/effects';
 
-import axiosInstance from '../../shared/crud-axios-instance';
 import { SuccessfulOperationEnum, FailedOperationEnum } from '../../shared/enums';
 import * as actions from '../actions/bankActions';
 import * as commonActions from '../actions/commonActions';
 import * as uploadActions from '../actions/uploadActions';
 //import uploadFileChannel from './uploadFileChannel';
 import { ResponseGenerator } from '../../models/ResponseGenerator.model';
+import axiosInstance from '../../shared/axios-instance';
 
 export function* fetchBanksSaga(action: any) {
     yield put(commonActions.showLoader());

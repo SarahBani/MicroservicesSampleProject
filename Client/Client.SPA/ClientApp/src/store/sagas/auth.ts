@@ -1,6 +1,6 @@
 ﻿import { put, call, all } from 'redux-saga/effects';
 
-import axiosInstance from '../../shared/identity-axios-instance';
+import axiosInstance from '../../shared/axios-instance';
 import * as actions from '../actions/authActions';
 import * as commonActions from '../actions/commonActions';
 import { AuthToken } from '../../models/AuthToken';
