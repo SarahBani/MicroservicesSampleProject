@@ -1,4 +1,6 @@
 ﻿import { ChangeEvent, FormEvent, SyntheticEvent } from "react";
+import * as Constants from "./constants";
+import { HttpErrorEnum } from "./enums";
 import { Dictionary, FormControlElementContent, Validation, FormControlElement } from "./types";
 
 export const updateObject = <T>(oldObject: T, updatedProperties: any) => {
@@ -100,4 +102,20 @@ export const disableForm = (formControls: Dictionary<FormControlElementContent>,
         formControls[inputId].disabled = isDisabled;
     }
     return updatedForm;
+};
+
+export const getErrorMessage = (error: HttpErrorEnum): string => {
+    switch (error) {
+        case HttpErrorEnum.Unauthorized:
+            return Constants.ERROR_UNAUTHORIZED;
+        case HttpErrorEnum.Forbidden:
+            return Constants.ERROR_FORBIDDEN;
+        case HttpErrorEnum.BadRequest:
+            return Constants.ERROR_BAD_REQUEST;
+        case HttpErrorEnum.BadGateway:
+            return Constants.ERROR_BAD_GATEWAY;
+        case HttpErrorEnum.NotFound:
+        default:
+            return Constants.ERROR_UNKNOWN;
+    }
 };

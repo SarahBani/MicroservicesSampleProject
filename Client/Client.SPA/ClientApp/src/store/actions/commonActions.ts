@@ -1,9 +1,9 @@
 ﻿import * as actionTypes from './commonActionTypes';
-import { UNKNOWN_ERROR_MESSAGE } from '../../shared/constant';
+import * as Constants from '../../shared/constants';
 import { FailedOperationEnum, SuccessfulOperationEnum } from '../../shared/enums';
 
 const unknownError = {
-    message: UNKNOWN_ERROR_MESSAGE
+    message: Constants.ERROR_UNKNOWN
 };
 
 export const showLoader = () => {

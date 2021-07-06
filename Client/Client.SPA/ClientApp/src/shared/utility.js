@@ -11,7 +11,9 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.disableForm = exports.checkValidity = exports.ValidateForm = exports.getUpdatedForm = exports.getFormElements = exports.updateObject = void 0;
+exports.getErrorMessage = exports.disableForm = exports.checkValidity = exports.ValidateForm = exports.getUpdatedForm = exports.getFormElements = exports.updateObject = void 0;
+var Constants = require("./constants");
+var enums_1 = require("./enums");
 var updateObject = function (oldObject, updatedProperties) {
     return __assign(__assign({}, oldObject), { updatedProperties: updatedProperties });
 };
@@ -97,4 +99,20 @@ var disableForm = function (formControls, isDisabled) {
     return updatedForm;
 };
 exports.disableForm = disableForm;
+var getErrorMessage = function (error) {
+    switch (error) {
+        case enums_1.HttpErrorEnum.Unauthorized:
+            return Constants.ERROR_UNAUTHORIZED;
+        case enums_1.HttpErrorEnum.Forbidden:
+            return Constants.ERROR_FORBIDDEN;
+        case enums_1.HttpErrorEnum.BadRequest:
+            return Constants.ERROR_BAD_REQUEST;
+        case enums_1.HttpErrorEnum.BadGateway:
+            return Constants.ERROR_BAD_GATEWAY;
+        case enums_1.HttpErrorEnum.NotFound:
+        default:
+            return Constants.ERROR_UNKNOWN;
+    }
+};
+exports.getErrorMessage = getErrorMessage;
 //# sourceMappingURL=utility.js.map

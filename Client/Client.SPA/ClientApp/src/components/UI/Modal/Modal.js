@@ -39,13 +39,13 @@ var modalReducer = function (currentState, action) {
 };
 ;
 var Modal = function (_a) {
-    var children = _a.children, type = _a.type, isShown = _a.isShown, hide = _a.hide;
+    var children = _a.children, type = _a.type, isShown = _a.isShown, onHide = _a.onHide;
     var _b = react_1.useReducer(modalReducer, initialModalState), modalState = _b[0], dispatch = _b[1];
     react_1.useEffect(function () {
         dispatch({ type: type });
     }, [type]);
     return (React.createElement(react_1.Fragment, null,
-        React.createElement(Backdrop_1.default, { isShown: isShown, onClick: function () { return hide; }, type: type }),
+        React.createElement(Backdrop_1.default, { isShown: isShown, onClick: onHide, type: type }),
         React.createElement("div", { className: [classes.Modal, modalState.typeClass].join(' '), style: {
                 transform: isShown ? 'translateY(0)' : 'translateY(-100vh)',
                 opacity: isShown ? '1' : '0'

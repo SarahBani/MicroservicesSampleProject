@@ -1,4 +1,4 @@
-﻿export interface AuthToken {
+﻿export interface AuthResponse {
     email: string;
     token: string;
     tokenExpiration: string;

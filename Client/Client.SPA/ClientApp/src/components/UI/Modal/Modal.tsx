@@ -69,12 +69,12 @@ const modalReducer = (currentState: ModalState, action: ModalAction): ModalState
 interface OwnProps {
     type: ModalTypeEnum,
     isShown: boolean,
-    hide?: MouseEventHandler
+    onHide?: MouseEventHandler
 };
 
 type Props = OwnProps & { children?: ReactNode };
 
-const Modal: FC<Props> = ({ children, type, isShown, hide }) => {
+const Modal: FC<Props> = ({ children, type, isShown, onHide }) => {
 
     const [modalState, dispatch] = useReducer(modalReducer, initialModalState);
 
@@ -84,7 +84,7 @@ const Modal: FC<Props> = ({ children, type, isShown, hide }) => {
 
     return (
         <Fragment>
-            <Backdrop isShown={isShown} onClick={() => hide} type={type}>
+            <Backdrop isShown={isShown} onClick={onHide!!} type={type}>
             </Backdrop>
             <div className={[classes.Modal, modalState.typeClass].join(' ')}
                 style=

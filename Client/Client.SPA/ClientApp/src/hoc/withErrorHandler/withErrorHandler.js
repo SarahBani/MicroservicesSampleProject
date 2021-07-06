@@ -19,6 +19,8 @@ var http_error_handler_1 = require("../../hooks/http-error-handler");
 var actions = require("../../store/actions/commonActions");
 var enums_1 = require("../../shared/enums");
 var axios_instance_1 = require("../../shared/axios-instance");
+var react_2 = require("react");
+;
 var withErrorHandler = function (WrappedComponent) {
     return function (props) {
         var customError = react_redux_1.useSelector(function (state) { return ({
@@ -30,7 +32,7 @@ var withErrorHandler = function (WrappedComponent) {
         var _c = http_error_handler_1.default(axios_instance_1.default), axiosError = _c[0], axiosClearErrorHandler = _c[1];
         react_1.useEffect(function () {
             if (axiosError) {
-                setError(axiosError + '!');
+                setError(axiosError);
                 setErrorType(enums_1.ModalTypeEnum.Error);
             }
             else if (customError) {
@@ -41,14 +43,14 @@ var withErrorHandler = function (WrappedComponent) {
                 setError(null);
             }
         }, [axiosError, customError, setError]);
-        var hideErrorHandler = function () {
+        var onHideErrorHandler = react_2.useCallback(function () {
             if (axiosError) {
                 axiosClearErrorHandler();
             }
             dispatch(actions.clearError());
-        };
+        }, [axiosError, axiosClearErrorHandler]);
         return (React.createElement(react_1.Fragment, null,
-            React.createElement(Modal_1.default, { type: errorType, isShown: !!error, hide: hideErrorHandler }, error),
+            React.createElement(Modal_1.default, { type: errorType, isShown: !!error, onHide: onHideErrorHandler }, error),
             React.createElement(WrappedComponent, __assign({}, props))));
     };
 };

@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import { Fragment, useState, useEffect, FC } from 'react';
+import { Fragment, useState, useEffect, FC, useMemo, MouseEventHandler } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Modal from '../../components/UI/Modal/Modal';
@@ -8,10 +8,11 @@ import * as actions from '../../store/actions/commonActions';
 import { ModalTypeEnum } from '../../shared/enums';
 import { AppState } from '../../store';
 import axiosInstance from '../../shared/axios-instance';
+import { useCallback } from 'react';
 
 interface StoreProps {
     customError: string
-}
+};
 
 const withErrorHandler = (WrappedComponent: FC<any>) => {
 
@@ -27,7 +28,7 @@ const withErrorHandler = (WrappedComponent: FC<any>) => {
 
         useEffect(() => {
             if (axiosError) {
-                setError(axiosError + '!');
+                setError(axiosError);
                 setErrorType(ModalTypeEnum.Error);
             }
             else if (customError) {
@@ -39,16 +40,16 @@ const withErrorHandler = (WrappedComponent: FC<any>) => {
             }
         }, [axiosError, customError, setError]);
 
-        const hideErrorHandler = () => {
+        const onHideErrorHandler = useCallback(() => {
             if (axiosError) {
                 axiosClearErrorHandler();
             }
             dispatch(actions.clearError());
-        };
+        }, [axiosError, axiosClearErrorHandler]);
 
         return (
             <Fragment>
-                <Modal type={errorType as ModalTypeEnum} isShown={!!error} hide={hideErrorHandler} >
+                <Modal type={errorType as ModalTypeEnum} isShown={!!error} onHide={onHideErrorHandler} >
                     {error}
                 </Modal>
                 <WrappedComponent {...props} />

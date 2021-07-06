@@ -54,28 +54,28 @@ function signInSaga(action) {
                 return [4 /*yield*/, axios_instance_1.default.post('/login', data)];
             case 3:
                 response = _a.sent();
-                if (!((response === null || response === void 0 ? void 0 : response.status) === 200)) return [3 /*break*/, 9];
-                if (!response.data.isSuccessful) return [3 /*break*/, 7];
-                authResponse = response.data.content;
+                if (!((response === null || response === void 0 ? void 0 : response.status) === 200)) return [3 /*break*/, 8];
+                return [4 /*yield*/, localStorage.setItem(authStorageKeyName, JSON.stringify(response.data))];
+            case 4:
+                _a.sent();
+                authResponse = response.data;
                 user = {
                     email: authResponse.email
                 };
                 return [4 /*yield*/, effects_1.call([localStorage, 'setItem'], authStorageKeyName, JSON.stringify(authResponse))];
-            case 4:
-                _a.sent();
-                return [4 /*yield*/, effects_1.put(actions.signInSucceeded(authResponse.token, user))];
             case 5:
                 _a.sent();
-                return [4 /*yield*/, effects_1.put(actions.checkAuthTimeout(authResponse.tokenExpiration))];
+                return [4 /*yield*/, effects_1.put(actions.signInSucceeded(authResponse.token, user))];
             case 6:
                 _a.sent();
-                return [3 /*break*/, 9];
-            case 7: return [4 /*yield*/, effects_1.put(commonActions.raiseError({
-                    message: response.data.customExceptionMessage
-                }))];
-            case 8:
+                return [4 /*yield*/, effects_1.put(actions.checkAuthTimeout(authResponse.tokenExpiration))];
+            case 7:
                 _a.sent();
-                return [2 /*return*/];
+                return [3 /*break*/, 9];
+            case 8:
+                console.log(3333333);
+                console.log(response);
+                _a.label = 9;
             case 9: return [4 /*yield*/, effects_1.put(commonActions.hideLoader())];
             case 10:
                 _a.sent();
@@ -127,24 +127,24 @@ function checkAuthTimeoutSaga(action) {
 }
 exports.checkAuthTimeoutSaga = checkAuthTimeoutSaga;
 function autoSignInSaga() {
-    var authToken, _a, _b, expirationDateTime, user;
+    var authResponse, _a, _b, expirationDateTime, user;
     return __generator(this, function (_c) {
         switch (_c.label) {
             case 0:
                 _b = (_a = JSON).parse;
                 return [4 /*yield*/, effects_1.call([localStorage, 'getItem'], authStorageKeyName)];
             case 1:
-                authToken = _b.apply(_a, [_c.sent()]);
-                if (!authToken) return [3 /*break*/, 6];
-                expirationDateTime = new Date(authToken.tokenExpiration);
+                authResponse = _b.apply(_a, [_c.sent()]);
+                if (!authResponse) return [3 /*break*/, 6];
+                expirationDateTime = new Date(authResponse.tokenExpiration);
                 if (!(expirationDateTime > new Date())) return [3 /*break*/, 4];
                 user = {
-                    email: authToken.email
+                    email: authResponse.email
                 };
-                return [4 /*yield*/, effects_1.put(actions.signInSucceeded(authToken.token, user))];
+                return [4 /*yield*/, effects_1.put(actions.signInSucceeded(authResponse.token, user))];
             case 2:
                 _c.sent();
-                return [4 /*yield*/, effects_1.put(actions.checkAuthTimeout(authToken.tokenExpiration))];
+                return [4 /*yield*/, effects_1.put(actions.checkAuthTimeout(authResponse.tokenExpiration))];
             case 3:
                 _c.sent();
                 return [3 /*break*/, 6];

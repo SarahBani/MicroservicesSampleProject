@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.operationFailed = exports.operationSucceeded = exports.clearError = exports.raiseError = exports.hideLoader = exports.showLoader = void 0;
 var actionTypes = require("./commonActionTypes");
-var constant_1 = require("../../shared/constant");
+var Constants = require("../../shared/constants");
 var unknownError = {
-    message: constant_1.UNKNOWN_ERROR_MESSAGE
+    message: Constants.ERROR_UNKNOWN
 };
 var showLoader = function () {
     return {

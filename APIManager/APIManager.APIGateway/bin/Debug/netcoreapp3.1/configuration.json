@@ -7,7 +7,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 8001
+          "Port": 5201
         }
       ],
       "UpstreamPathTemplate": "/gateway/register",
@@ -19,7 +19,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 8001
+          "Port": 5201
         }
       ],
       "UpstreamPathTemplate": "/gateway/login",

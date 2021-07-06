@@ -3,9 +3,10 @@
 import axiosInstance from '../../shared/axios-instance';
 import * as actions from '../actions/authActions';
 import * as commonActions from '../actions/commonActions';
-import { AuthToken } from '../../models/AuthToken';
 import { ResponseGenerator } from '../../models/ResponseGenerator.model';
 import { User } from '../../models/User.model';
+import { AuthResponse } from '../../models/AuthResponse';
+import * as Constants from "../../../constants";
 
 const authStorageKeyName: string = 'auth_token';
 
@@ -21,22 +22,19 @@ export function* signInSaga(action: any) {
     try {
         const response: ResponseGenerator = yield axiosInstance.post('/login', data);
         if (response?.status === 200) {
-            if (response.data.isSuccessful) {
-                //yield localStorage.setItem(authStorageKeyName, JSON.stringify(response.data));
-                const authResponse = response.data.content;
-                const user: User = {
-                    email: authResponse.email
-                };
-                yield call([localStorage, 'setItem'], authStorageKeyName, JSON.stringify(authResponse));
-                yield put(actions.signInSucceeded(authResponse.token, user));
-                yield put(actions.checkAuthTimeout(authResponse.tokenExpiration));
-            }
-            else {
-                yield put(commonActions.raiseError({
-                    message: response.data.customExceptionMessage
-                }));
-                return;
-            }
+            yield localStorage.setItem(authStorageKeyName, JSON.stringify(response.data));
+            const authResponse: AuthResponse = response.data;
+            const user: User = {
+                email: authResponse.email
+            };
+            yield call([localStorage, 'setItem'], authStorageKeyName, JSON.stringify(authResponse));
+            yield put(actions.signInSucceeded(authResponse.token, user));
+            yield put(actions.checkAuthTimeout(authResponse.tokenExpiration));
+        }
+        else {
+            yield put(commonActions.raiseError({
+                message: response?.data ?? Constants.UNKNOWN_ERROR
+            }));
         }
         yield put(commonActions.hideLoader());
     } catch (error) {
@@ -60,16 +58,16 @@ export function* checkAuthTimeoutSaga(action: any) {
 }
 
 export function* autoSignInSaga() {
-    //const authToken = yield JSON.parse(localStorage.getItem(authStorageKeyName));
-    const authToken: AuthToken = JSON.parse(yield call([localStorage, 'getItem'], authStorageKeyName));
-    if (authToken) {
-        const expirationDateTime = new Date(authToken.tokenExpiration);
+    //const authResponse = yield JSON.parse(localStorage.getItem(authStorageKeyName));
+    const authResponse: AuthResponse = JSON.parse(yield call([localStorage, 'getItem'], authStorageKeyName));
+    if (authResponse) {
+        const expirationDateTime = new Date(authResponse.tokenExpiration);
         if (expirationDateTime > new Date()) {
             const user: User = {
-                email: authToken.email
+                email: authResponse.email
             };
-            yield put(actions.signInSucceeded(authToken.token, user));
-            yield put(actions.checkAuthTimeout(authToken.tokenExpiration));
+            yield put(actions.signInSucceeded(authResponse.token, user));
+            yield put(actions.checkAuthTimeout(authResponse.tokenExpiration));
         }
         else {
             yield put(actions.signOut());

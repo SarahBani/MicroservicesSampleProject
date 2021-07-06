@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ButtonTypeEnum = exports.ModalTypeEnum = exports.ElementConfigTypeEnum = exports.ElementTypeEnum = exports.FailedOperationEnum = exports.SuccessfulOperationEnum = void 0;
+exports.HttpErrorEnum = exports.ButtonTypeEnum = exports.ModalTypeEnum = exports.ElementConfigTypeEnum = exports.ElementTypeEnum = exports.FailedOperationEnum = exports.SuccessfulOperationEnum = void 0;
 var SuccessfulOperationEnum;
 (function (SuccessfulOperationEnum) {
     SuccessfulOperationEnum[SuccessfulOperationEnum["Insert"] = 0] = "Insert";
@@ -49,5 +49,20 @@ var ButtonTypeEnum;
     ButtonTypeEnum[ButtonTypeEnum["Success"] = 0] = "Success";
     ButtonTypeEnum[ButtonTypeEnum["Danger"] = 1] = "Danger";
 })(ButtonTypeEnum = exports.ButtonTypeEnum || (exports.ButtonTypeEnum = {}));
+;
+var HttpErrorEnum;
+(function (HttpErrorEnum) {
+    HttpErrorEnum[HttpErrorEnum["BadRequest"] = 400] = "BadRequest";
+    HttpErrorEnum[HttpErrorEnum["Unauthorized"] = 401] = "Unauthorized";
+    HttpErrorEnum[HttpErrorEnum["Forbidden"] = 403] = "Forbidden";
+    HttpErrorEnum[HttpErrorEnum["NotFound"] = 404] = "NotFound";
+    HttpErrorEnum[HttpErrorEnum["MethodNotAllowed"] = 405] = "MethodNotAllowed";
+    HttpErrorEnum[HttpErrorEnum["RequestTimeout"] = 408] = "RequestTimeout";
+    HttpErrorEnum[HttpErrorEnum["TooManyRequests"] = 429] = "TooManyRequests";
+    HttpErrorEnum[HttpErrorEnum["InternalServerError"] = 500] = "InternalServerError";
+    HttpErrorEnum[HttpErrorEnum["BadGateway"] = 502] = "BadGateway";
+    HttpErrorEnum[HttpErrorEnum["ServiceUnavailable"] = 503] = "ServiceUnavailable";
+    HttpErrorEnum[HttpErrorEnum["GatewayTimeout"] = 504] = "GatewayTimeout";
+})(HttpErrorEnum = exports.HttpErrorEnum || (exports.HttpErrorEnum = {}));
 ;
 //# sourceMappingURL=enums.js.map
