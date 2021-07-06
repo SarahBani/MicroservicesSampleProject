@@ -42,8 +42,7 @@ namespace Identity.APIService.Controllers
             var transactionResult = await this._authService.LoginAsync(model.Email, model.Password);
             if (transactionResult.IsSuccessful)
             {
-                string token = transactionResult.Content.ToString();
-                return Ok(token);
+                return Ok(transactionResult.Content);
             }
             else
             {

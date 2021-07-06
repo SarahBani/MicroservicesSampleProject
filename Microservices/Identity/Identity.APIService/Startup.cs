@@ -35,6 +35,9 @@ namespace Identity.APIService
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // configure strongly typed settings objects
+            services.Configure<TokenSetting>(Configuration.GetSection(Constant.AppSettings_TokenSetting));
+
             string connectionString = Utility.GetConnectionString(this.Configuration, Constant.AppSettings_DefaultConnection);
             services.AddDbContext<IdentityDbContext>(options => options.UseSqlServer(connectionString));
             /// custom user & Role with int key
