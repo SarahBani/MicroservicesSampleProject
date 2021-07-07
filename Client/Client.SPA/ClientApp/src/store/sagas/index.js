@@ -78,16 +78,6 @@ exports.watchAuth = watchAuth;
 //function* watchCheckAuthTimeout() {
 //    yield takeLatest(authActionTypes.CHECK_AUTH_TIMEOUT, checkAuthTimeoutSaga);
 //}
-function cancelWorkerSaga(task) {
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, effects_1.cancel(task)];
-            case 1:
-                _a.sent();
-                return [2 /*return*/];
-        }
-    });
-}
 //export function* watchLocation() {
 //    yield all([
 //        takeLatest(locationActionTypes.FETCH_COUNTRIES, fetchCountriesSaga),
@@ -120,4 +110,14 @@ function watchBank() {
     });
 }
 exports.watchBank = watchBank;
+function cancelWorkerSaga(task) {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, effects_1.cancel(task)];
+            case 1:
+                _a.sent();
+                return [2 /*return*/];
+        }
+    });
+}
 //# sourceMappingURL=index.js.map

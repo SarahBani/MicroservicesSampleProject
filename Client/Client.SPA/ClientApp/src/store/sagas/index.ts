@@ -9,7 +9,6 @@ import {
 import * as authActionTypes from '../actions/authActionTypes';
 //import * as locationActionTypes from '../actions/locationActionTypes';
 import * as bankActionTypes from '../actions/bankActionTypes';
-import { ResponseGenerator } from '../../models/ResponseGenerator.model';
 
 export function* watchAuth() {
     yield all([
@@ -44,10 +43,6 @@ export function* watchAuth() {
 //    yield takeLatest(authActionTypes.CHECK_AUTH_TIMEOUT, checkAuthTimeoutSaga);
 //}
 
-function* cancelWorkerSaga(task: any) {
-    yield cancel(task);
-}
-
 //export function* watchLocation() {
 //    yield all([
 //        takeLatest(locationActionTypes.FETCH_COUNTRIES, fetchCountriesSaga),
@@ -73,4 +68,8 @@ export function* watchBank() {
         //    yield call(uploadFileSaga, file);
         //})
     ]);
+}
+
+function* cancelWorkerSaga(task: any) {
+    yield cancel(task);
 }

@@ -16,6 +16,12 @@ export const setBanks = (banks: Bank[]) => {
     };
 };
 
+export const resetBanks = () => {
+    return {
+        type: actionTypes.RESET_BANKS
+    };
+};
+
 export const fetchBanksCount = () => {
     return {
         type: actionTypes.FETCH_BANKS_COUNT

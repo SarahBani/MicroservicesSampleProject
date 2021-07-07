@@ -33,6 +33,7 @@ var enums_1 = require("../../shared/enums");
 var actions = require("../actions/bankActions");
 var commonActions = require("../actions/commonActions");
 var axios_instance_1 = require("../../shared/axios-instance");
+//const cancelSource = axios.CancelToken.source();
 function fetchBanksSaga(action) {
     var headers, filters, queryString, response, error_1;
     return __generator(this, function (_a) {
@@ -73,7 +74,10 @@ function fetchBanksSaga(action) {
             case 10: return [4 /*yield*/, (filters.length > 0 ? '?' + filters.join('&') : '')];
             case 11:
                 queryString = _a.sent();
-                return [4 /*yield*/, axios_instance_1.default.get('/banks' + queryString, { headers: headers })];
+                return [4 /*yield*/, axios_instance_1.default.get('/banks' + queryString, {
+                        headers: headers,
+                        //cancelToken: cancelSource.token
+                    })];
             case 12:
                 response = _a.sent();
                 if (!((response === null || response === void 0 ? void 0 : response.status) === 200)) return [3 /*break*/, 14];

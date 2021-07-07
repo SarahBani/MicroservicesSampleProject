@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import { useMemo, useEffect, FC } from 'react';
+import { useMemo, useEffect, FC, ReactElement, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as classes from './BanksSummary.module.scss';
@@ -21,12 +21,12 @@ const BanksSummary: FC = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(actions.fetchBanks(1, 6))
+        dispatch(actions.fetchBanks(1, 6));
     }, []);
 
-    const bankItemCards = useMemo(() => banks?.map(bank =>
-        <BankItemCard key={bank.id} bank={bank} />)
-        , [banks]);
+    const bankItemCards = useMemo(() => (
+        banks?.map(bank => <BankItemCard key={bank.id} bank={bank} />)
+    ), [banks]);
 
     return (
         <div className={["card-deck", classes.BanksSummary].join(' ')}>

@@ -1,4 +1,4 @@
-﻿import { put } from 'redux-saga/effects';
+﻿import { call, cancelled, put } from 'redux-saga/effects';
 
 import { SuccessfulOperationEnum, FailedOperationEnum } from '../../shared/enums';
 import * as actions from '../actions/bankActions';
@@ -7,6 +7,9 @@ import * as uploadActions from '../actions/uploadActions';
 //import uploadFileChannel from './uploadFileChannel';
 import { ResponseGenerator } from '../../models/ResponseGenerator.model';
 import axiosInstance from '../../shared/axios-instance';
+import axios from 'axios';
+
+//const cancelSource = axios.CancelToken.source();
 
 export function* fetchBanksSaga(action: any) {
     yield put(commonActions.showLoader());
@@ -28,7 +31,11 @@ export function* fetchBanksSaga(action: any) {
             yield filters.push(`pageCount=${action.pageCount}`);
         }
         const queryString: string = yield (filters.length > 0 ? '?' + filters.join('&') : '');
-        const response: ResponseGenerator = yield axiosInstance.get('/banks' + queryString, { headers: headers });
+        const response: ResponseGenerator = yield axiosInstance.get('/banks' + queryString,
+            {
+                headers: headers,
+                //cancelToken: cancelSource.token
+            });
         if (response?.status === 200) {
             yield put(actions.setBanks(response.data));
         }

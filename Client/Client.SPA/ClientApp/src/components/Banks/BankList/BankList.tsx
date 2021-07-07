@@ -66,7 +66,7 @@ const BankList: FC = () => {
     }, [setPageNo]);
 
     const bankItems = useMemo(() => {
-        return banks.map((bank: Bank) =>
+        return banks?.map((bank: Bank) =>
             <BankItem key={bank.id} bank={bank} />);
     }, [banks]);
 
@@ -84,7 +84,7 @@ const BankList: FC = () => {
     );
 
     const listContent = (
-        (banks!.length > 0 && banksCount! > 0) ?
+        (banks?.length > 0 && banksCount > 0) ?
             <div className="list-group">
                 {bankItems}
                 {/*footerContent */}

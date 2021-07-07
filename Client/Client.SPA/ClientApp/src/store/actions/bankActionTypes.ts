@@ -1,5 +1,6 @@
 ﻿export const FETCH_BANKS: string = 'FETCH_BANKS';
 export const SET_BANKS: string = 'SET_BANKS';
+export const RESET_BANKS: string = 'RESET_BANKS';
 export const FETCH_BANKS_COUNT: string = 'FETCH_BANKS_COUNT';
 export const SET_BANKS_COUNT: string = 'SET_BANKS_COUNT';
 export const FETCH_BANK: string = 'FETCH_BANK';

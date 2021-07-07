@@ -32,6 +32,7 @@ var effects_1 = require("redux-saga/effects");
 var axios_instance_1 = require("../../shared/axios-instance");
 var actions = require("../actions/authActions");
 var commonActions = require("../actions/commonActions");
+var Constants = require("../../shared/constants");
 var authStorageKeyName = 'auth_token';
 var delay = function (ms) {
     return new Promise(function (res) { return setTimeout(res, ms); });
@@ -39,54 +40,57 @@ var delay = function (ms) {
 exports.delay = delay;
 function signInSaga(action) {
     var data, response, authResponse, user, error_1;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+    var _a;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0: return [4 /*yield*/, effects_1.put(commonActions.showLoader())];
             case 1:
-                _a.sent();
+                _b.sent();
                 data = {
                     email: action.email,
                     password: action.password
                 };
-                _a.label = 2;
+                _b.label = 2;
             case 2:
-                _a.trys.push([2, 11, , 13]);
+                _b.trys.push([2, 12, , 14]);
                 return [4 /*yield*/, axios_instance_1.default.post('/login', data)];
             case 3:
-                response = _a.sent();
+                response = _b.sent();
                 if (!((response === null || response === void 0 ? void 0 : response.status) === 200)) return [3 /*break*/, 8];
                 return [4 /*yield*/, localStorage.setItem(authStorageKeyName, JSON.stringify(response.data))];
             case 4:
-                _a.sent();
+                _b.sent();
                 authResponse = response.data;
                 user = {
                     email: authResponse.email
                 };
                 return [4 /*yield*/, effects_1.call([localStorage, 'setItem'], authStorageKeyName, JSON.stringify(authResponse))];
             case 5:
-                _a.sent();
+                _b.sent();
                 return [4 /*yield*/, effects_1.put(actions.signInSucceeded(authResponse.token, user))];
             case 6:
-                _a.sent();
+                _b.sent();
                 return [4 /*yield*/, effects_1.put(actions.checkAuthTimeout(authResponse.tokenExpiration))];
             case 7:
-                _a.sent();
-                return [3 /*break*/, 9];
-            case 8:
-                console.log(3333333);
-                console.log(response);
-                _a.label = 9;
-            case 9: return [4 /*yield*/, effects_1.put(commonActions.hideLoader())];
-            case 10:
-                _a.sent();
-                return [3 /*break*/, 13];
+                _b.sent();
+                return [3 /*break*/, 10];
+            case 8: return [4 /*yield*/, effects_1.put(commonActions.raiseError({
+                    message: (_a = response === null || response === void 0 ? void 0 : response.data) !== null && _a !== void 0 ? _a : Constants.ERROR_UNKNOWN
+                }))];
+            case 9:
+                _b.sent();
+                _b.label = 10;
+            case 10: return [4 /*yield*/, effects_1.put(commonActions.hideLoader())];
             case 11:
-                error_1 = _a.sent();
-                return [4 /*yield*/, effects_1.put(commonActions.raiseError(error_1))];
+                _b.sent();
+                return [3 /*break*/, 14];
             case 12:
-                _a.sent();
-                return [3 /*break*/, 13];
-            case 13: return [2 /*return*/];
+                error_1 = _b.sent();
+                return [4 /*yield*/, effects_1.put(commonActions.raiseError(error_1))];
+            case 13:
+                _b.sent();
+                return [3 /*break*/, 14];
+            case 14: return [2 /*return*/];
         }
     });
 }

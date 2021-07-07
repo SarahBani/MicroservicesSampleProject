@@ -4,9 +4,11 @@ import { getErrorMessage } from './utility';
 //import * as https from 'https';
 
 //const httpsAgent = new https.Agent({ rejectUnauthorized: false });
+const cancelSource = axios.CancelToken.source();
 
 const axiosInstance: AxiosInstance = axios.create({
     baseURL: 'https://localhost:5101/gateway',
+    //cancelToken: cancelSource.token
     //httpsAgent: httpsAgent
 });
 
@@ -24,6 +26,7 @@ axiosInstance.interceptors.request.use((requestConfig: AxiosRequestConfig) => {
     console.log(httpErrorMessage);
     return Promise.reject(httpErrorMessage);
 });
+
 axiosInstance.interceptors.response.use((responseConfig: AxiosResponse) => {
     return responseConfig;
 }, (error: any) => {

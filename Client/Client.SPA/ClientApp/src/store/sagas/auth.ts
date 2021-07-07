@@ -6,7 +6,7 @@ import * as commonActions from '../actions/commonActions';
 import { ResponseGenerator } from '../../models/ResponseGenerator.model';
 import { User } from '../../models/User.model';
 import { AuthResponse } from '../../models/AuthResponse';
-import * as Constants from "../../../constants";
+import * as Constants from "../../shared/constants";
 
 const authStorageKeyName: string = 'auth_token';
 
@@ -33,7 +33,7 @@ export function* signInSaga(action: any) {
         }
         else {
             yield put(commonActions.raiseError({
-                message: response?.data ?? Constants.UNKNOWN_ERROR
+                message: response?.data ?? Constants.ERROR_UNKNOWN
             }));
         }
         yield put(commonActions.hideLoader());

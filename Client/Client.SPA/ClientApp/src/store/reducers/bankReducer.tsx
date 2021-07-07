@@ -1,5 +1,4 @@
-﻿import { Action } from 'redux';
-import { Bank } from '../../models/Bank.model';
+﻿import { Bank } from '../../models/Bank.model';
 import * as actionTypes from '../actions/bankActionTypes';
 
 export interface State {
@@ -20,6 +19,12 @@ export const bankReducer = (state: State = initialState, action: any): any => {
             return {
                 ...state,
                 banks: action.banks
+            };
+        case actionTypes.RESET_BANKS: 
+            return {
+                ...state,
+                banks: null,
+                count: 0
             };
         case actionTypes.SET_BANKS_COUNT:
             return {

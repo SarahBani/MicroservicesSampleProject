@@ -23,6 +23,8 @@ var bankReducer = function (state, action) {
     switch (action.type) {
         case actionTypes.SET_BANKS:
             return __assign(__assign({}, state), { banks: action.banks });
+        case actionTypes.RESET_BANKS:
+            return __assign(__assign({}, state), { banks: null, count: 0 });
         case actionTypes.SET_BANKS_COUNT:
             return __assign(__assign({}, state), { count: action.count });
         case actionTypes.SET_BANK:

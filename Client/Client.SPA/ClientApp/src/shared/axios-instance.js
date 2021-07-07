@@ -4,8 +4,10 @@ var axios_1 = require("axios");
 var utility_1 = require("./utility");
 //import * as https from 'https';
 //const httpsAgent = new https.Agent({ rejectUnauthorized: false });
+var cancelSource = axios_1.default.CancelToken.source();
 var axiosInstance = axios_1.default.create({
     baseURL: 'https://localhost:5101/gateway',
+    //cancelToken: cancelSource.token
     //httpsAgent: httpsAgent
 });
 //instance.default.headers.common['Authorization'] = 'Auth Token dgdfgdfg';

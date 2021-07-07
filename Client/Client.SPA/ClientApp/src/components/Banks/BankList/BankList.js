@@ -47,7 +47,7 @@ var BankList = function () {
         setPageNo(no);
     }, [setPageNo]);
     var bankItems = react_1.useMemo(function () {
-        return banks.map(function (bank) {
+        return banks === null || banks === void 0 ? void 0 : banks.map(function (bank) {
             return React.createElement(BankItem_1.default, { key: bank.id, bank: bank });
         });
     }, [banks]);
@@ -58,7 +58,7 @@ var BankList = function () {
             React.createElement("div", { className: "float-right" },
                 React.createElement("b", null, "Count: "),
                 React.createElement("span", null, banksCount))));
-    var listContent = ((banks.length > 0 && banksCount > 0) ?
+    var listContent = (((banks === null || banks === void 0 ? void 0 : banks.length) > 0 && banksCount > 0) ?
         React.createElement("div", { className: "list-group" }, bankItems)
         : React.createElement(NoBank_1.default, null));
     return (React.createElement("div", { className: classes.BankList },

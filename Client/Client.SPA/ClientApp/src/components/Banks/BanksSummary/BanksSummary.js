@@ -16,9 +16,7 @@ var BanksSummary = function () {
     react_1.useEffect(function () {
         dispatch(actions.fetchBanks(1, 6));
     }, []);
-    var bankItemCards = react_1.useMemo(function () { return banks === null || banks === void 0 ? void 0 : banks.map(function (bank) {
-        return React.createElement(BankItemCard_1.default, { key: bank.id, bank: bank });
-    }); }, [banks]);
+    var bankItemCards = react_1.useMemo(function () { return (banks === null || banks === void 0 ? void 0 : banks.map(function (bank) { return React.createElement(BankItemCard_1.default, { key: bank.id, bank: bank }); })); }, [banks]);
     return (React.createElement("div", { className: ["card-deck", classes.BanksSummary].join(' ') }, bankItemCards));
 };
 exports.default = withErrorHandler_1.default(BanksSummary);

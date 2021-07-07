@@ -38,6 +38,10 @@ const withErrorHandler = (WrappedComponent: FC<any>) => {
             else {
                 setError(null);
             }
+            //cleanup function:
+            return () => {
+                setError(null);
+            }
         }, [axiosError, customError, setError]);
 
         const onHideErrorHandler = useCallback(() => {

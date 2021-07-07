@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteBank = exports.saveBank = exports.clearSelectedBank = exports.setBank = exports.fetchBank = exports.setBanksCount = exports.fetchBanksCount = exports.setBanks = exports.fetchBanks = void 0;
+exports.deleteBank = exports.saveBank = exports.clearSelectedBank = exports.setBank = exports.fetchBank = exports.setBanksCount = exports.fetchBanksCount = exports.resetBanks = exports.setBanks = exports.fetchBanks = void 0;
 var actionTypes = require("./bankActionTypes");
 var fetchBanks = function (pageNo, pageCount) {
     return {
@@ -17,6 +17,12 @@ var setBanks = function (banks) {
     };
 };
 exports.setBanks = setBanks;
+var resetBanks = function () {
+    return {
+        type: actionTypes.RESET_BANKS
+    };
+};
+exports.resetBanks = resetBanks;
 var fetchBanksCount = function () {
     return {
         type: actionTypes.FETCH_BANKS_COUNT

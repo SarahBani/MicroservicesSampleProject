@@ -42,6 +42,10 @@ var withErrorHandler = function (WrappedComponent) {
             else {
                 setError(null);
             }
+            //cleanup function:
+            return function () {
+                setError(null);
+            };
         }, [axiosError, customError, setError]);
         var onHideErrorHandler = react_2.useCallback(function () {
             if (axiosError) {
