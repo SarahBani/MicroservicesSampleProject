@@ -27,11 +27,14 @@ var initialFormState = {
     grade: {
         elementType: enums_1.ElementTypeEnum.Input,
         elementConfig: {
-            type: enums_1.ElementConfigTypeEnum.Text,
+            type: enums_1.ElementConfigTypeEnum.Number,
+            placeholder: 'Grade',
+            maxLength: 1
         },
         value: '',
         validation: {
-            required: true
+            maxLength: 1,
+            max: 5
         },
         valid: false
     }

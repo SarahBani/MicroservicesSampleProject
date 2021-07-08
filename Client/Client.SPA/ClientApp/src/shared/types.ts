@@ -27,6 +27,8 @@ export type DropDownItem = {
 export type ElementConfig = {
     type?: ElementConfigTypeEnum,
     placeholder?: string,
+    maxLength?: number,
+    pattern? : string,
     options?: ElementConfigOption[]
 };
 

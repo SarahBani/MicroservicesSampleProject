@@ -18,7 +18,7 @@ var enums_1 = require("../../../../shared/enums");
 var enums_2 = require("../../../../shared/enums");
 ;
 var FormControl = function (props) {
-    var _a, _b;
+    var _a, _b, _c;
     var formElement;
     var controlClasses = [classes.FormElement];
     var validationError = null;
@@ -44,14 +44,34 @@ var FormControl = function (props) {
             break;
         case enums_1.ElementTypeEnum.Input:
         default:
-            var inputType = enums_2.ElementConfigTypeEnum[props.elementConfig.type].toLowerCase();
+            //let patternConfig: { pattern: string } | undefined;
+            //if (props.elementConfig!.type === ElementConfigTypeEnum.Number &&
+            //    props.elementConfig!.maxLength &&
+            //    !props.elementConfig!.pattern) {
+            //    props.elementConfig!.type = ElementConfigTypeEnum.Text;
+            //    patternConfig = { pattern: "\\d".repeat(props.elementConfig!.maxLength!) };
+            //}
+            var keyPressHandler = void 0;
+            if (props.elementConfig.type === enums_2.ElementConfigTypeEnum.Number &&
+                props.elementConfig.maxLength) {
+                keyPressHandler = {
+                    onKeyPress: numberInputHandler
+                };
+            }
+            var inputType = (_c = enums_2.ElementConfigTypeEnum[props.elementConfig.type]) === null || _c === void 0 ? void 0 : _c.toLowerCase();
             formElement =
-                React.createElement("input", __assign({}, props.elementConfig, { type: inputType, name: props.id, value: props.value, className: controlClasses.join(' '), onChange: props.onChange, onBlur: props.onLostFocus, disabled: props.disabled, autoComplete: props.autoComplete ? 'on' : undefined }));
+                React.createElement("input", __assign({}, props.elementConfig, { type: inputType, name: props.id, value: props.value, className: controlClasses.join(' '), onChange: props.onChange, onBlur: props.onLostFocus, disabled: props.disabled, autoComplete: props.autoComplete ? 'on' : undefined }, keyPressHandler));
     }
     return (React.createElement("div", { className: classes.FormControl },
         props.label && React.createElement("label", null, props.label),
         formElement,
         validationError));
+};
+var numberInputHandler = function (e) {
+    var _a = e.target, value = _a.value, maxLength = _a.maxLength;
+    if (String(value).length >= maxLength) {
+        e.preventDefault();
+    }
 };
 exports.default = FormControl;
 //# sourceMappingURL=FormControl.js.map

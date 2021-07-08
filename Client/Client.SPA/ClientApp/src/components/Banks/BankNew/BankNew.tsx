@@ -36,11 +36,14 @@ const initialFormState: Dictionary<FormControlElementContent> = {
     grade: {
         elementType: ElementTypeEnum.Input,
         elementConfig: {
-            type: ElementConfigTypeEnum.Text,
+            type: ElementConfigTypeEnum.Number,
+            placeholder: 'Grade',
+            maxLength: 1
         },
         value: '',
         validation: {
-            required: true
+            maxLength: 1,
+            max: 5
         },
         valid: false
     }
@@ -95,14 +98,14 @@ const BankNew = memo(props => {
         };
         dispatch(actions.saveBank(bank, token));
     };
- 
+
     const formElements = getFormElements(formControls).map((formElement: FormControlElement) => (
-            <FormElement formElement={formElement}
-                key={formElement.id}
-                onChange={(event) => elementHandler(event, formElement.id)}
-                onLostFocus={(event) => elementHandler(event, formElement.id)}
-            />
-        ));
+        <FormElement formElement={formElement}
+            key={formElement.id}
+            onChange={(event) => elementHandler(event, formElement.id)}
+            onLostFocus={(event) => elementHandler(event, formElement.id)}
+        />
+    ));
 
     return (
         <div>

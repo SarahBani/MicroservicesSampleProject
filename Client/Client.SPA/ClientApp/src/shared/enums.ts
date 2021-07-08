@@ -20,6 +20,7 @@ export enum ElementTypeEnum {
 
 export enum ElementConfigTypeEnum {
     Text,
+    Number,
     Email,
     Password,
     Button,

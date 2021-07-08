@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import { ChangeEventHandler, FC, FocusEventHandler, ReactElement } from 'react';
+import { ChangeEventHandler, FC, FocusEventHandler, KeyboardEventHandler, ReactElement } from 'react';
 
 import * as classes from './FormControl.module.scss';
 import DropDown from '../../DropDown/DropDown';
@@ -80,7 +80,21 @@ const FormControl: FC<Props> = props => {
             break;
         case ElementTypeEnum.Input:
         default:
-            const inputType: string = ElementConfigTypeEnum[props.elementConfig!.type!].toLowerCase();
+            //let patternConfig: { pattern: string } | undefined;
+            //if (props.elementConfig!.type === ElementConfigTypeEnum.Number &&
+            //    props.elementConfig!.maxLength &&
+            //    !props.elementConfig!.pattern) {
+            //    props.elementConfig!.type = ElementConfigTypeEnum.Text;
+            //    patternConfig = { pattern: "\\d".repeat(props.elementConfig!.maxLength!) };
+            //}
+            let keyPressHandler: { onKeyPress: any } | undefined;
+            if (props.elementConfig!.type === ElementConfigTypeEnum.Number &&
+                props.elementConfig!.maxLength) {
+                keyPressHandler = {
+                    onKeyPress: numberInputHandler
+                };
+            }
+            const inputType: string = ElementConfigTypeEnum[props.elementConfig!.type!]?.toLowerCase();
             formElement =
                 <input
                     {...props.elementConfig}
@@ -91,7 +105,9 @@ const FormControl: FC<Props> = props => {
                     onChange={props.onChange}
                     onBlur={props.onLostFocus}
                     disabled={props.disabled}
-                    autoComplete={props.autoComplete ? 'on' : undefined} />;
+                    autoComplete={props.autoComplete ? 'on' : undefined}
+                    {...keyPressHandler}
+                />;
     }
 
     return (
@@ -101,6 +117,13 @@ const FormControl: FC<Props> = props => {
             {validationError}
         </div>
     );
+};
+
+const numberInputHandler = (e: KeyboardEvent): void => {
+    const { value, maxLength } = e.target as HTMLInputElement;
+    if (String(value).length >= maxLength) {
+        e.preventDefault();
+    }
 };
 
 export default FormControl;

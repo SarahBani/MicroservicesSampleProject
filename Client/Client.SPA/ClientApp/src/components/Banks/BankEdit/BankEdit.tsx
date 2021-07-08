@@ -40,7 +40,8 @@ const initialFormState: Dictionary<FormControlElementContent> = {
     grade: {
         elementType: ElementTypeEnum.Input,
         elementConfig: {
-            type: ElementConfigTypeEnum.Text,
+            type: ElementConfigTypeEnum.Number,
+            placeholder: 'Grade',
         },
         value: '',
         validation: {
