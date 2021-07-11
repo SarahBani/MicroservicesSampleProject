@@ -34,6 +34,7 @@ namespace Client.SPA
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddControllers(options => options.SuppressAsyncSuffixInActionNames = false);
             services.AddControllers();
 
             // In production, the React files will be served from this directory
@@ -68,9 +69,10 @@ namespace Client.SPA
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
+                //endpoints.MapControllerRoute(
+                //    name: "default",
+                //    pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapDefaultControllerRoute();
             });
             app.UseSpa(spa =>
             {

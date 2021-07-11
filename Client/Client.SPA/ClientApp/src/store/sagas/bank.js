@@ -207,7 +207,7 @@ exports.fetchBankSaga = fetchBankSaga;
 //    }
 //}
 function saveBankSaga(action) {
-    var headers, response, operation, error_4;
+    var headers, response, error_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, effects_1.put(commonActions.showLoader())];
@@ -219,37 +219,39 @@ function saveBankSaga(action) {
                 };
                 _a.label = 2;
             case 2:
-                _a.trys.push([2, 10, , 12]);
+                _a.trys.push([2, 11, , 13]);
                 response = void 0;
-                operation = void 0;
-                if (!!action.Bank.id) return [3 /*break*/, 4];
-                return [4 /*yield*/, axios_instance_1.default.post('/bank', action.Bank, { headers: headers })];
+                if (!!action.bank.id) return [3 /*break*/, 6];
+                return [4 /*yield*/, axios_instance_1.default.post('/bank', action.bank, { headers: headers })];
             case 3:
                 response = _a.sent();
-                operation = enums_1.SuccessfulOperationEnum.Insert;
-                return [3 /*break*/, 6];
-            case 4: return [4 /*yield*/, axios_instance_1.default.put('/bank' + action.Bank.id, action.Bank, { headers: headers })];
-            case 5:
-                response = _a.sent();
-                operation = enums_1.SuccessfulOperationEnum.Update;
-                _a.label = 6;
-            case 6:
-                if (!((response === null || response === void 0 ? void 0 : response.status) === 200)) return [3 /*break*/, 8];
-                return [4 /*yield*/, effects_1.put(commonActions.operationSucceeded(operation))];
+                if (!((response === null || response === void 0 ? void 0 : response.status) === 201)) return [3 /*break*/, 5];
+                return [4 /*yield*/, effects_1.put(commonActions.operationSucceeded(enums_1.SuccessfulOperationEnum.Insert))];
+            case 4:
+                _a.sent();
+                _a.label = 5;
+            case 5: return [3 /*break*/, 9];
+            case 6: return [4 /*yield*/, axios_instance_1.default.put('/bank', action.bank, { headers: headers })];
             case 7:
+                response = _a.sent();
+                if (!((response === null || response === void 0 ? void 0 : response.status) === 200)) return [3 /*break*/, 9];
+                return [4 /*yield*/, effects_1.put(commonActions.operationSucceeded(enums_1.SuccessfulOperationEnum.Update))];
+            case 8:
                 _a.sent();
-                _a.label = 8;
-            case 8: return [4 /*yield*/, effects_1.put(commonActions.hideLoader())];
-            case 9:
-                _a.sent();
-                return [3 /*break*/, 12];
+                _a.label = 9;
+            case 9: return [4 /*yield*/, effects_1.put(commonActions.hideLoader())];
             case 10:
-                error_4 = _a.sent();
-                return [4 /*yield*/, effects_1.put(commonActions.raiseError(error_4))];
-            case 11:
                 _a.sent();
-                return [3 /*break*/, 12];
-            case 12: return [2 /*return*/];
+                return [3 /*break*/, 13];
+            case 11:
+                error_4 = _a.sent();
+                console.log(3333333);
+                console.log(error_4);
+                return [4 /*yield*/, effects_1.put(commonActions.raiseError(error_4))];
+            case 12:
+                _a.sent();
+                return [3 /*break*/, 13];
+            case 13: return [2 /*return*/];
         }
     });
 }
@@ -268,7 +270,7 @@ function deleteBankSaga(action) {
                 _a.label = 2;
             case 2:
                 _a.trys.push([2, 7, , 9]);
-                return [4 /*yield*/, axios_instance_1.default.delete('/bank' + action.id, { headers: headers })];
+                return [4 /*yield*/, axios_instance_1.default.delete('/bank/' + action.id, { headers: headers })];
             case 3:
                 response = _a.sent();
                 if (!((response === null || response === void 0 ? void 0 : response.status) === 200)) return [3 /*break*/, 5];

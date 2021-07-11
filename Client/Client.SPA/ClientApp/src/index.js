@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
-require("bootstrap/dist/css/bootstrap.min.css");
-require("font-awesome/css/font-awesome.min.css");
-//import 'react-app-polyfill/ie11'
 var ReactDOM = require("react-dom");
 var react_redux_1 = require("react-redux");
 var connected_react_router_1 = require("connected-react-router");
+require("bootstrap/dist/css/bootstrap.min.css");
+require("font-awesome/css/font-awesome.min.css");
+//import 'react-app-polyfill/ie11'';
+require("bootstrap");
 var App_1 = require("./components/App");
 var registerServiceWorker_1 = require("./registerServiceWorker");
 var browserHistory_1 = require("./browserHistory");

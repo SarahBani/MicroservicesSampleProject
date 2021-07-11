@@ -67,11 +67,8 @@ var BankDetail = react_1.memo(function (_a) {
             React.createElement("div", { className: "col-12" },
                 React.createElement("div", { className: "btn-group" },
                     React.createElement("button", { className: "btn btn-primary", onClick: cancelHandler }, "Back"),
-                    React.createElement("button", { className: "btn btn-primary dropdown-toggle", "data-toggle": "dropdown", disabled: !loggedIn },
-                        "Manage",
-                        React.createElement("span", { className: "caret" })),
-                    React.createElement("div", { className: "dropdown-menu" }, loggedIn && (React.createElement(react_1.Fragment, null,
-                        React.createElement("div", { className: "dropdown-divider" }),
+                    React.createElement("button", { className: "btn btn-primary dropdown-toggle", type: "button", "data-bs-toggle": "dropdown", disabled: !loggedIn }, "Manage"),
+                    React.createElement("ul", { className: "dropdown-menu" }, !!loggedIn && (React.createElement(react_1.Fragment, null,
                         React.createElement("a", { className: "dropdown-item", onClick: editHandler }, "Edit"),
                         React.createElement("a", { className: "dropdown-item", onClick: deleteHandler }, "Delete")))))))));
 });

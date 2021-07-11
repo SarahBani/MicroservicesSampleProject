@@ -45,7 +45,7 @@ const initialFormState: Dictionary<FormControlElementContent> = {
             maxLength: 1,
             max: 5
         },
-        valid: false
+        valid: true
     }
 };
 
@@ -94,7 +94,7 @@ const BankNew = memo(props => {
         const bank: Bank = {
             id: 0,
             name: formControls.name.value.toString(),
-            grade: 0
+            grade: (formControls.grade.value ? parseInt(formControls.grade.value.toString()) : 0)
         };
         dispatch(actions.saveBank(bank, token));
     };

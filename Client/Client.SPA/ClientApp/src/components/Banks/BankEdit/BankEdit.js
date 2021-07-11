@@ -78,20 +78,20 @@ var BankEdit = react_1.memo(function (_a) {
         }
     }, [loggedIn]);
     react_1.useEffect(function () {
-        var _a;
-        var _b, _c;
-        var updatedForm = __assign({}, formControls);
-        if (updatedForm && isInitializing) {
-            updatedForm = __assign(__assign({}, updatedForm), (_a = {}, _a['name'] = __assign(__assign({}, updatedForm['name']), { value: bank.name, valid: true }), _a['grade'] = __assign(__assign({}, updatedForm['grade']), { value: (_c = (_b = bank.grade) === null || _b === void 0 ? void 0 : _b.toString()) !== null && _c !== void 0 ? _c : '', valid: true }), _a));
-            setIsInitializing(false);
-        }
-        setFormControls(updatedForm);
-    }, []);
-    react_1.useEffect(function () {
         if (!bank) {
             dispatch(actions.fetchBank(id));
         }
     }, [id]);
+    react_1.useEffect(function () {
+        var _a;
+        var _b, _c;
+        var updatedForm = __assign({}, formControls);
+        if (bank && updatedForm && isInitializing) {
+            updatedForm = __assign(__assign({}, updatedForm), (_a = {}, _a['name'] = __assign(__assign({}, updatedForm['name']), { value: bank.name, valid: true }), _a['grade'] = __assign(__assign({}, updatedForm['grade']), { value: (_c = (_b = bank.grade) === null || _b === void 0 ? void 0 : _b.toString()) !== null && _c !== void 0 ? _c : '', valid: true }), _a));
+            setIsInitializing(false);
+        }
+        setFormControls(updatedForm);
+    }, [bank]);
     react_1.useEffect(function () {
         setIsFormValid(utility_1.ValidateForm(formControls));
     }, [formControls]);
@@ -144,7 +144,6 @@ var BankEdit = react_1.memo(function (_a) {
                 React.createElement("div", { className: "col-12 text-center" },
                     React.createElement("button", { className: "btn btn-primary", type: "reset" }, "Clear"),
                     React.createElement("button", { className: "btn btn-success", type: "submit", disabled: !isFormValid || loading }, "Save"),
-                    React.createElement("button", { className: "btn btn-info", type: "button" }, "Photos"),
                     React.createElement("button", { className: "btn btn-danger", type: "button", onClick: deleteHandler }, " Delete"),
                     React.createElement("button", { className: "btn btn-warning", type: "button", onClick: cancelHandler }, " Cancel"))))));
 });

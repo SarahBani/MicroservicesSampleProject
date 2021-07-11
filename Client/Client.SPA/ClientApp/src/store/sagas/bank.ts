@@ -112,20 +112,22 @@ export function* saveBankSaga(action: any) {
     };
     try {
         let response: ResponseGenerator;
-        let operation;
-        if (!action.Bank.id) {
-            response = yield axiosInstance.post('/bank', action.Bank, { headers: headers });
-            operation = SuccessfulOperationEnum.Insert;
+        if (!action.bank.id) {
+            response = yield axiosInstance.post('/bank', action.bank, { headers: headers });
+            if (response?.status === 201) {
+                yield put(commonActions.operationSucceeded(SuccessfulOperationEnum.Insert));
+            }
         }
         else {
-            response = yield axiosInstance.put('/bank' + action.Bank.id, action.Bank, { headers: headers });
-            operation = SuccessfulOperationEnum.Update;
-        }
-        if (response?.status === 200) {
-            yield put(commonActions.operationSucceeded(operation));
+            response = yield axiosInstance.put('/bank', action.bank, { headers: headers });
+            if (response?.status === 200) {
+                yield put(commonActions.operationSucceeded(SuccessfulOperationEnum.Update));
+            }
         }
         yield put(commonActions.hideLoader());
     } catch (error) {
+        console.log(3333333);
+        console.log(error);
         yield put(commonActions.raiseError(error));
     }
 }
@@ -137,7 +139,7 @@ export function* deleteBankSaga(action: any) {
         Authorization: `Bearer ${action.token}`
     };
     try {
-        const response: ResponseGenerator = yield axiosInstance.delete('/bank' + action.id, { headers: headers });
+        const response: ResponseGenerator = yield axiosInstance.delete('/bank/' + action.id, { headers: headers });
         if (response?.status === 200) {
             yield put(commonActions.operationSucceeded(SuccessfulOperationEnum.Delete));
         }

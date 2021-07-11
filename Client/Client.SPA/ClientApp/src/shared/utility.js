@@ -110,6 +110,7 @@ var getErrorMessage = function (error) {
         case enums_1.HttpErrorEnum.BadGateway:
             return Constants.ERROR_BAD_GATEWAY;
         case enums_1.HttpErrorEnum.NotFound:
+        case enums_1.HttpErrorEnum.InternalServerError:
         default:
             return Constants.ERROR_UNKNOWN;
     }

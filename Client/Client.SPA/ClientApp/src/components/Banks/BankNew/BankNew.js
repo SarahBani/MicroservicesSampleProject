@@ -36,7 +36,7 @@ var initialFormState = {
             maxLength: 1,
             max: 5
         },
-        valid: false
+        valid: true
     }
 };
 var BankNew = react_1.memo(function (props) {
@@ -76,7 +76,7 @@ var BankNew = react_1.memo(function (props) {
         var bank = {
             id: 0,
             name: formControls.name.value.toString(),
-            grade: 0
+            grade: (formControls.grade.value ? parseInt(formControls.grade.value.toString()) : 0)
         };
         dispatch(actions.saveBank(bank, token));
     };

@@ -103,19 +103,17 @@ const BankDetail: FC<Props> = memo(({ id }) => {
                         <button className="btn btn-primary" onClick={cancelHandler}>
                             Back
                         </button>
-                        <button className="btn btn-primary dropdown-toggle" data-toggle="dropdown" disabled={!loggedIn} >
-                            Manage<span className="caret"></span>
+                        <button className="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" disabled={!loggedIn} >
+                            Manage
                         </button>
-                        <div className="dropdown-menu">
-                            {
-                                loggedIn && (
-                                    <Fragment>
-                                        <div className="dropdown-divider"></div>
-                                        <a className="dropdown-item" onClick={editHandler}>Edit</a>
-                                        <a className="dropdown-item" onClick={deleteHandler}>Delete</a>
-                                    </Fragment>
-                                )}
-                        </div>
+                        <ul className="dropdown-menu">
+                            {!!loggedIn && (
+                                <Fragment>
+                                    <a className="dropdown-item" onClick={editHandler}>Edit</a>
+                                    <a className="dropdown-item" onClick={deleteHandler}>Delete</a>
+                                </Fragment>
+                            )}
+                        </ul>
                     </div>
                 </div>
             </div>

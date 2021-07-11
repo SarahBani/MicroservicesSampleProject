@@ -115,6 +115,7 @@ export const getErrorMessage = (error: HttpErrorEnum): string => {
         case HttpErrorEnum.BadGateway:
             return Constants.ERROR_BAD_GATEWAY;
         case HttpErrorEnum.NotFound:
+        case HttpErrorEnum.InternalServerError:
         default:
             return Constants.ERROR_UNKNOWN;
     }

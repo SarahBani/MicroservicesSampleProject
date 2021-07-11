@@ -83,10 +83,16 @@ const BankEdit: FC<{ id: number }> = memo(({ id }) => {
     }, [loggedIn]);
 
     useEffect(() => {
+        if (!bank) {
+            dispatch(actions.fetchBank(id));
+        }
+    }, [id]);
+
+    useEffect(() => {
         let updatedForm = {
             ...formControls
         };
-        if (updatedForm && isInitializing) {
+        if (bank && updatedForm && isInitializing) {
             updatedForm = {
                 ...updatedForm,
                 ['name']: {
@@ -103,13 +109,7 @@ const BankEdit: FC<{ id: number }> = memo(({ id }) => {
             setIsInitializing(false);
         }
         setFormControls(updatedForm);
-    }, []);
-
-    useEffect(() => {
-        if (!bank) {
-            dispatch(actions.fetchBank(id));
-        }
-    }, [id]);
+    }, [bank]);
 
     useEffect(() => {
         setIsFormValid(ValidateForm(formControls));
@@ -184,7 +184,6 @@ const BankEdit: FC<{ id: number }> = memo(({ id }) => {
                     <div className="col-12 text-center">
                         <button className="btn btn-primary" type="reset" >Clear</button>
                         <button className="btn btn-success" type="submit" disabled={!isFormValid || loading}>Save</button>
-                        <button className="btn btn-info" type="button">Photos</button>
                         <button className="btn btn-danger" type="button" onClick={deleteHandler}> Delete</button >
                         <button className="btn btn-warning" type="button" onClick={cancelHandler}> Cancel</button >
                     </div>
