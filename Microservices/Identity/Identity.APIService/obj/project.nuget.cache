@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "u4fy0xtuCUP9bxMUUGM9zAjJ13FLmXKlvCcBak8f3R4xekhzCZBaygBPS+E7q5Ti2lYPVAostVBIklNWkj/N8g==",
+  "dgSpecHash": "WiwC9X44bBLShnA7pJX3yFa8E95DLNwypdJub6fcGlePpkT0k6Nfg+4TzBiHsX4nQhUn3+vRE1U6Iw7T/p7CgA==",
   "success": true,
   "projectFilePath": "H:\\Project\\Microservices\\MicroservicesSampleProject\\Microservices\\Identity\\Identity.APIService\\Identity.APIService.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Sarah\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.14\\microsoft.aspnetcore.authentication.jwtbearer.3.1.14.nupkg.sha512",
     "C:\\Users\\Sarah\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\3.1.16\\microsoft.aspnetcore.cryptography.internal.3.1.16.nupkg.sha512",
     "C:\\Users\\Sarah\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\3.1.16\\microsoft.aspnetcore.cryptography.keyderivation.3.1.16.nupkg.sha512",
     "C:\\Users\\Sarah\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\3.1.16\\microsoft.aspnetcore.identity.entityframeworkcore.3.1.16.nupkg.sha512",

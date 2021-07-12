@@ -61,6 +61,7 @@ namespace Identity.APIService.Entities
             });
 
             //modelBuilder.Seed();
+            //modelBuilder.Seed2();
         }
 
         #endregion /Methods
@@ -89,9 +90,10 @@ namespace Identity.APIService.Entities
             modelBuilder.Entity<User>().HasData(new User
             {
                 Id = userId,
-                UserName = "sarah@yahoo.com",
+                UserName = "sarah",
                 Email = "sarah@yahoo.com",
-                NormalizedUserName = "sarah@yahoo.com".ToUpper(),
+                NormalizedUserName = "sarah".ToUpper(),
+                NormalizedEmail = "sarah@yahoo.com".ToUpper(),
                 PasswordHash = hasher.HashPassword(null, "123456")
             }
             );
@@ -105,6 +107,55 @@ namespace Identity.APIService.Entities
             );
         }
 
+        public static void Seed2(this ModelBuilder modelBuilder)
+        {
+            int roleId = 2;
+            int userId = 2;
+
+            modelBuilder.Entity<Role>().HasData(new Role
+            {
+                Id = 2,
+                Name = "Clerk",
+                NormalizedName = "Clerk".ToUpper()
+            });
+
+            modelBuilder.Entity<Role>().HasData(new Role
+            {
+                Id = 3,
+                Name = "Client",
+                NormalizedName = "Client".ToUpper()
+            });
+
+            modelBuilder.Entity<Role>().HasData(new Role
+            {
+                Id = 4,
+                Name = "Guest",
+                NormalizedName = "Guest".ToUpper()
+            });
+
+            //a hasher to hash the password before seeding the user to the db
+            var hasher = new PasswordHasher<User>();
+
+            //Seeding the User to AspNetUsers table
+            modelBuilder.Entity<User>().HasData(new User
+            {
+                Id = userId,
+                UserName = "john",
+                Email = "john@gmail.com",
+                NormalizedUserName = "john".ToUpper(),
+                NormalizedEmail = "john@gmail.com".ToUpper(),
+                PasswordHash = hasher.HashPassword(null, "123456")
+            }
+            );
+
+            //Seeding the relation between our user and role to AspNetUserRoles table
+            modelBuilder.Entity<IdentityUserRole<int>>().HasData(new IdentityUserRole<int>
+            {
+                RoleId = roleId,
+                UserId = userId
+            }
+            );
+        }
     }
 
     //public static class ApplicationDbInitializer

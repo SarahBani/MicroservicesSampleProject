@@ -1,8 +1,8 @@
-﻿using Common;
-using Identity.APIService.Entities;
+﻿using Identity.APIService.Entities;
 using Identity.APIService.Helpers;
 using Identity.APIService.Models;
 using Identity.APIService.Settings;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -10,6 +10,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+using System.Threading.Tasks;
+using Utility = Common.Utility;
 
 namespace Identity.APIService
 {
@@ -36,7 +42,8 @@ namespace Identity.APIService
         public void ConfigureServices(IServiceCollection services)
         {
             // configure strongly typed settings objects
-            services.Configure<TokenSetting>(Configuration.GetSection(Constant.AppSettings_TokenSetting));
+            var tokenSetting = this.Configuration.GetSection(Constant.AppSettings_TokenSetting);
+            services.Configure<TokenSetting>(tokenSetting);
 
             string connectionString = Utility.GetConnectionString(this.Configuration, Constant.AppSettings_DefaultConnection);
             services.AddDbContext<IdentityDbContext>(options => options.UseSqlServer(connectionString));
@@ -55,9 +62,7 @@ namespace Identity.APIService
                 //.AddDefaultUI()
                 .AddDefaultTokenProviders();
 
-            // configure strongly typed settings objects
-            var appSettingsSection = Configuration.GetSection(Constant.AppSettings_TokenSetting);
-            services.Configure<TokenSetting>(appSettingsSection);
+            ConfigureAuthentication(services, tokenSetting.Get<TokenSetting>());
 
             DependencyInjection.SetInjection(services);
             services.AddControllers();
@@ -82,6 +87,60 @@ namespace Identity.APIService
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+        }
+
+        private void ConfigureAuthentication(IServiceCollection services, TokenSetting tokenSetting)
+        {
+            // configure jwt authentication
+            var key = Encoding.ASCII.GetBytes(tokenSetting.SecretKey);
+
+            // prevent from mapping "sub" claim to nameidentifier.
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateAudience = true,
+                    ValidAudience = tokenSetting.Audience,
+                    ValidateIssuer = true,
+                    ValidIssuer = tokenSetting.Issuer,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
+                    ClockSkew = TimeSpan.Zero
+                };
+                options.Events = new JwtBearerEvents()
+                {
+                    OnAuthenticationFailed = async ctx =>
+                    {
+                        int i = 0;
+                    },
+                    OnTokenValidated = context =>
+                    {
+                        var identity = context.Principal.Identity;
+                        // var user = context.Principal.Identity.Name;
+                        //Grab the http context user and validate the things you need to
+                        //if you are not satisfied with the validation, fail the request using the below commented code
+                        //context.Fail(Constant.Exception_UnAuthorized);
+
+                        //otherwise succeed the request
+                        return Task.CompletedTask;
+                    },
+                    OnMessageReceived = async ctx =>
+                    {
+                        int i = 0;
+                    }
+                };
             });
         }
 

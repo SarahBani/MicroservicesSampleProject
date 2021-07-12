@@ -15,7 +15,7 @@ namespace Identity.APIService.Migrations
             migrationBuilder.InsertData(
                 table: "User",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CustomTag", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { 1, 0, "87643bd9-2f47-4b29-bbcc-40c1d35adca0", null, "sarah@yahoo.com", false, false, null, "SARAH@YAHOO.COM", "SARAH@YAHOO.COM", "AQAAAAEAACcQAAAAEPymewqSxyYfXJZkAokGZa4EXeqmqUQh4viqFVLuhInTIRGniCGwD3Dnp5/gJgr06Q==", null, false, null, false, "sarah@yahoo.com" });
+                values: new object[] { 1, 0, "87643bd9-2f47-4b29-bbcc-40c1d35adca0", null, "sarah@yahoo.com", false, false, null, "SARAH@YAHOO.COM", "SARAH", "AQAAAAEAACcQAAAAEPymewqSxyYfXJZkAokGZa4EXeqmqUQh4viqFVLuhInTIRGniCGwD3Dnp5/gJgr06Q==", null, false, null, false, "sarah" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -79,12 +79,12 @@ namespace Identity.APIService.Migrations
             migrationBuilder.InsertData(
                 table: "IdentityRole<int>",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { 1, "a2a545e1-72e1-4587-a2e8-1130e358a7b5", "Admin", null });
+                values: new object[] { 1, "a2a545e1-72e1-4587-a2e8-1130e358a7b5", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "IdentityUser<int>",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { 1, 0, "cd5f0839-fe70-497f-b83e-6dc1917a825a", "sarah@yahoo.com", false, false, null, null, null, "AQAAAAEAACcQAAAAEGVIKqtBS7VqTJ3DMJsGUsDSaGEGt71uo7l7Cm6Lr3yn692AtG/usWdG357mFqUa9w==", null, false, null, false, "sarah@yahoo.com" });
+                values: new object[] { 1, 0, "cd5f0839-fe70-497f-b83e-6dc1917a825a", "sarah@yahoo.com", false, false, null, "SARAH@YAHOO.COM", "SARAH", "AQAAAAEAACcQAAAAEGVIKqtBS7VqTJ3DMJsGUsDSaGEGt71uo7l7Cm6Lr3yn692AtG/usWdG357mFqUa9w==", null, false, null, false, "sarah" });
 
             migrationBuilder.InsertData(
                 table: "UserRole",
