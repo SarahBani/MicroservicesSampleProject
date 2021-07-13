@@ -59,8 +59,8 @@ namespace Identity.APIService.Services
                 var identityResult = await this._userManager.CreateAsync(user, password);
                 if (identityResult.Succeeded)
                 {
-                    await AddRole(user, RoleEnum.Member.ToString());
-                    await AddClaims(user, RoleEnum.Member);
+                    await AddRole(user, RoleEnum.Guest.ToString());
+                    await AddClaims(user, RoleEnum.Guest);
                 }
                 else
                 {
@@ -107,29 +107,24 @@ namespace Identity.APIService.Services
 
         private async Task<TransactionResult> AddClaims(User user, RoleEnum role)
         {
-            string subSystems = string.Empty;
-            switch (role)
+            string subSystems = role switch
             {
-                case RoleEnum.Admin:
-                    subSystems = string.Join(";", SubSystemEnum.Auth.ToString().ToLower(), SubSystemEnum.CRUD.ToString().ToLower(), SubSystemEnum.CQRS.ToString().ToLower());
-                    break;
-                case RoleEnum.Manager:
-                    subSystems = string.Join(";", SubSystemEnum.CRUD.ToString().ToLower(), SubSystemEnum.CQRS.ToString().ToLower());
-                    break;
-                case RoleEnum.Employee:
-                case RoleEnum.Member:
-                default:
-                    subSystems = SubSystemEnum.CRUD.ToString();
-                    break;
-            }
+                RoleEnum.Admin =>
+                   string.Join(";", SubSystemEnum.Auth.ToString().ToLower(), SubSystemEnum.CRUD.ToString().ToLower(), SubSystemEnum.CQRS.ToString().ToLower()),
+                RoleEnum.Clerk =>
+                   string.Join(";", SubSystemEnum.CRUD.ToString().ToLower(), SubSystemEnum.CQRS.ToString().ToLower()),
+                var x when x == RoleEnum.Client || x == RoleEnum.Guest =>
+                    SubSystemEnum.CRUD.ToString(),
+                _ =>
+                    string.Empty
+            };
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.System, subSystems)
-
             };
-            //claims.Add(new Claim(ClaimTypes.Role, role.ToString()));
+            claims.Add(new Claim(ClaimTypes.Role, role.ToString()));
 
             var result = await this._userManager.AddClaimsAsync(user, claims);
             if (result.Succeeded)
@@ -192,10 +187,11 @@ namespace Identity.APIService.Services
                 //await Task.Delay(3000); // for a delay to simulate real database fetch                
                 //if (email.Equals(_sampleLogin.Email, StringComparison.OrdinalIgnoreCase) &&
                 //    password.Equals(_sampleLogin.Password))
-                var user = await this._userManager.FindByNameAsync(email);
+                var user = await this._userManager.FindByEmailAsync(email);
                 if (user != null && await this._userManager.CheckPasswordAsync(user, password))
                 {
-                    var authenticationToken = GetAuthenticationResponse(email);
+                    var roles = await this._userManager.GetRolesAsync(user);
+                    var authenticationToken = GetAuthenticationResponse(user, roles);
                     return new TransactionResult(authenticationToken);
                 }
                 else
@@ -209,24 +205,34 @@ namespace Identity.APIService.Services
             }
         }
 
-        private AuthenticationResponse GetAuthenticationResponse(string email)
+        private AuthenticationResponse GetAuthenticationResponse(User user, IList<string> roles)
         {
             DateTime expirationTime = DateTime.UtcNow.AddMinutes(double.Parse(this._tokenSetting.AccessExpiration));
-            string token = GenerateJwtToken(expirationTime);
-            return new AuthenticationResponse(email, token, expirationTime);
+            string token = GenerateJwtToken(user, roles,  expirationTime);
+            return new AuthenticationResponse(user.Email, token, expirationTime);
         }
 
-        private string GenerateJwtToken(DateTime expirationTime)
+        private string GenerateJwtToken(User user, IList<string> roles, DateTime expirationTime)
         {
             //var tokenHandler = new JwtSecurityTokenHandler();
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this._tokenSetting.SecretKey));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512Signature); //  HmacSha256Signature);
 
+            var claims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.Email, user.Email),
+            };           
+            // Add roles as multiple claims
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
+
             var tokeOptions = new JwtSecurityToken(
                 issuer: this._tokenSetting.Issuer,
                 audience: this._tokenSetting.Audience,
-                // audience: subSystems.Value,
-                //claims: new List<Claim>(),
+                claims: claims,
                 expires: expirationTime,
                 signingCredentials: credentials
             );

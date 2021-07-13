@@ -131,7 +131,7 @@ namespace Identity.APIService
                         // var user = context.Principal.Identity.Name;
                         //Grab the http context user and validate the things you need to
                         //if you are not satisfied with the validation, fail the request using the below commented code
-                        //context.Fail(Constant.Exception_UnAuthorized);
+                        //context.Fail(Constant.Exception_Forbidden);
 
                         //otherwise succeed the request
                         return Task.CompletedTask;

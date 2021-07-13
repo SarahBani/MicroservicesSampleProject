@@ -3,9 +3,12 @@
     public enum RoleEnum
     {
         Admin,
-        Manager,
-        Employee,
-        Member,
+        Clerk,
+        Client,
+        Guest
+        //Manager,
+        //Employee,
+        //Member,
     }
 
     public enum SubSystemEnum

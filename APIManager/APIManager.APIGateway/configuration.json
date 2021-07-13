@@ -36,7 +36,7 @@
         }
       ],
       "UpstreamPathTemplate": "/gateway/banks",
-      "UpstreamHttpMethod": [ "POST", "PUT", "GET" ]
+      "UpstreamHttpMethod": [ "GET" ]
     },
     {
       "DownstreamPathTemplate": "/api/{controller}/count",
@@ -61,25 +61,38 @@
       ],
       "UpstreamPathTemplate": "/gateway/{controller}/{id}",
       "UpstreamHttpMethod": [ "Get" ]
-    }//,
-    //{
-    //  "DownstreamPathTemplate": "/api/{controller}",
-    //  "DownstreamScheme": "https",
-    //  "DownstreamHostAndPorts": [
-    //    {
-    //      "Host": "localhost",
-    //      "Port": 5301
-    //    }
-    //  ],
-    //  "UpstreamPathTemplate": "/gateway/{controller}",
-    //  "UpstreamHttpMethod": [ "Post", "Put", "Delete" ],
-    //  "AuthenticationOptions": {
-    //    "AuthenticationProviderKey": "IdentityApiKey",
-    //    "AllowedScopes": []
-    //  }
-    //}
+    },
+    {
+      "DownstreamPathTemplate": "/api/{controller}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5301
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/{controller}",
+      "UpstreamHttpMethod": [ "POST", "PUT", "DELETE" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": []
+      },
+      "UpstreamHeaderTransform": {
+        "Microservice": "crud"
+      }
+      //"AddHeadersToRequest": {
+      //  "Audience": "fdfffffff"
+      //},
+      //"AddClaimsToRequest": {
+      //  "aud": "SALESMANS"
+      //}
+      //"RouteClaimsRequirement": {
+      //  "userType": "SALESMAN"
+      //}
+    }
   ],
   "GlobalConfiguration": {
+    //"BaseUrl": "https://localhost:5000",
     "RequestIdKey": "OcRequestId",
     "AdministrationPath": "/administration"
   }

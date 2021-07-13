@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using System.Net;
-using System.Security.Authentication;
 
 namespace APIManager.WebAPIGateway
 {
@@ -28,6 +25,17 @@ namespace APIManager.WebAPIGateway
             {
                 webBuilder.UseStartup<Startup>();
             })
+             //.ConfigureServices(s =>
+             //{
+             //    s.AddAuthentication(options =>
+             //    {
+             //        options.DefaultScheme = "CustomAuth";
+             //        //options.DefaultAuthenticateScheme = "CustomScheme";
+             //        //options.DefaultChallengeScheme = "CustomScheme";
+             //    });
+             //    // .AddCustomAuth("CustomAuth", o => { });
+             //    s.AddOcelot();
+             //})
             //.ConfigureWebHostDefaults(webBuilder =>
             //{
             //    webBuilder.ConfigureKestrel((context, options) =>

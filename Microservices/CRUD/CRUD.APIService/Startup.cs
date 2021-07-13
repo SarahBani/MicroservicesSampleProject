@@ -1,18 +1,21 @@
-using Common.Settings;
 using CRUD.APIService.Entities;
 using CRUD.APIService.Helpers;
 using CRUD.APIService.Models;
+using CRUD.APIService.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 using System;
-using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Utility = Common.Utility;
@@ -82,54 +85,73 @@ namespace CRUD.APIService
             // configure jwt authentication
             var key = Encoding.ASCII.GetBytes(tokenSetting.SecretKey);
 
-            // prevent from mapping "sub" claim to nameidentifier.
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            //// prevent from mapping "sub" claim to nameidentifier.
+            //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })               
-            .AddJwtBearer(options =>
-            {
-                options.RequireHttpsMetadata = false;
-                options.SaveToken = true;
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateAudience = false,
-                    //ValidAudience = tokenSetting.Audience,
-                    ValidateIssuer = false,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
-                    ClockSkew = TimeSpan.Zero
-                };
-                options.Events = new JwtBearerEvents()
-                {
-                    OnAuthenticationFailed = async ctx =>
-                    {
-                        int i = 0;
-                    },
-                    OnTokenValidated = context =>
-                    {
-                        var identity = context.Principal.Identity;
-                        // var user = context.Principal.Identity.Name;
-                        //Grab the http context user and validate the things you need to
-                        //if you are not satisfied with the validation, fail the request using the below commented code
-                        //context.Fail(Constant.Exception_UnAuthorized);
+            })
+           .AddJwtBearer(options =>
+           {
+               options.RequireHttpsMetadata = false;
+               options.TokenValidationParameters = new TokenValidationParameters
+               {
+                   ValidateAudience = false,
+                   ValidateIssuer = false,
+                   ValidateLifetime = true,
+                   ValidateIssuerSigningKey = true,
+                   IssuerSigningKey = new SymmetricSecurityKey(key),
+                   // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
+                   ClockSkew = TimeSpan.Zero
+               };
+               options.Events = new JwtBearerEvents()
+               {
+                   OnAuthenticationFailed = context =>
+                   {
+                       context.NoResult();
+                       context.Response.StatusCode = 500;
+                       context.Response.ContentType = "text/plain";
+                       context.Response.WriteAsync(context.Exception.ToString()).Wait();
+                       return Task.CompletedTask;
+                   },
+                   OnTokenValidated = context =>
+                       {
+                           var identity = context.Principal.Identity;
+                           var claimsIdentity = (ClaimsIdentity)context.Principal.Identity;
+                           if (context.Request.Headers.ContainsKey("Microservice"))
+                           {
+                               string service = context.Request.Headers["Microservice"].First();
+                               if (service != tokenSetting.Audience)
+                               {
+                                   context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                                   context.Fail(Constant.Exception_Forbidden);
+                               }
+                           }
+                           //otherwise succeed the request
+                           return Task.CompletedTask;
+                       },
+                   OnChallenge = context =>
+                   {
+                       // Skip the default logic.
+                       context.HandleResponse();
 
+                       var payload = new JObject
+                       {
+                           ["error"] = context.Error,
+                           ["error_description"] = context.AuthenticateFailure.Message,// context.ErrorDescription,
+                           ["error_uri"] = context.ErrorUri
+                       };
 
-
-                        //otherwise succeed the request
-                        return Task.CompletedTask;
-                    },
-                    OnMessageReceived = async ctx =>
-                    {
-                        int i = 0;
-                    }
-                };
-            });
+                       return context.Response.WriteAsync(payload.ToString());
+                   },
+                   OnMessageReceived = async ctx =>
+                   {
+                       int i = 0;
+                   }
+               };
+           });
         }
 
         #endregion /Methods

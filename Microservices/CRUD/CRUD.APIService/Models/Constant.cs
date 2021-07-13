@@ -1,4 +1,6 @@
-﻿namespace CRUD.APIService.Models
+﻿using System;
+
+namespace CRUD.APIService.Models
 {
     public static class Constant
     {
@@ -58,10 +60,12 @@
         public const string Exception_AuthenticationFailed = "Username or password is incorrect!";
         public const string Exception_UserNotAccess = "The user does not have the required access!";
         public const string Exception_AuthenticationRequired = "Please sign in!";
-
-        #endregion /Exceptions
+        public const string Exception_UnAuthorized = "Please Login!";
+        public const string Exception_Forbidden = "You don't have the permission!";
 
         public const string ActionResult_Successful = "Successful";
+
+        #endregion /Exceptions
 
     }
 }

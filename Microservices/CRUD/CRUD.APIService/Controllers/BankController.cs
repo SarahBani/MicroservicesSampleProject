@@ -67,7 +67,8 @@ namespace CRUD.APIService.Controllers
         }
 
         // POST: api/Bank
-        [Authorize]
+        //[Authorize(Roles =nameof(RoleEnum.Admin))]
+        [Authorize(Roles ="Admin")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -101,7 +102,7 @@ namespace CRUD.APIService.Controllers
         }
 
         // PUT: api/Bank
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -130,7 +131,7 @@ namespace CRUD.APIService.Controllers
         }
 
         // DELETE: api/Bank/5
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK)]

@@ -30,9 +30,6 @@ H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGat
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard1.3\System.Net.Http.WinHttpHandler.dll
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\APIManager.APIGateway.AssemblyInfoInputs.cache
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\APIManager.APIGateway.AssemblyInfo.cs
-H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\APIManager.APIGateway.csproj.CoreCompileInputs.cache
-H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\APIManager.APIGateway.MvcApplicationPartsAssemblyInfo.cs
-H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\APIManager.APIGateway.MvcApplicationPartsAssemblyInfo.cache
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\APIManager.APIGateway.RazorTargetAssemblyInfo.cache
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\APIManager.APIGateway.csproj.CopyComplete
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\staticwebassets\APIManager.APIGateway.StaticWebAssets.Manifest.cache
@@ -41,3 +38,6 @@ H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGat
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\APIManager.APIGateway.pdb
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\APIManager.APIGateway.genruntimeconfig.cache
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\APIManager.APIGateway.csprojAssemblyReference.cache
+H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\APIManager.APIGateway.csproj.CoreCompileInputs.cache
+H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\APIManager.APIGateway.MvcApplicationPartsAssemblyInfo.cs
+H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\APIManager.APIGateway.MvcApplicationPartsAssemblyInfo.cache
