@@ -228,6 +228,8 @@ namespace Identity.APIService.Services
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
+            //claims.Add(new Claim("Role", "Admin")); // customized claim
+            claims.Add(new Claim("sss", "ddd"));
 
             var tokeOptions = new JwtSecurityToken(
                 issuer: this._tokenSetting.Issuer,

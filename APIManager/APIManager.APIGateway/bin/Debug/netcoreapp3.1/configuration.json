@@ -79,16 +79,21 @@
       },
       "UpstreamHeaderTransform": {
         "Microservice": "crud"
-      }
+      },
       //"AddHeadersToRequest": {
-      //  "Audience": "fdfffffff"
+      //  "X-CLAIMS-NAME-IDENTIFIER": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value > |",
+      //  "X-CLAIMS-NAME": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name] > value > |",
+      //  "X-CLAIMS-EMAIL": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress] > value > |",
+      //  "X-CLAIMS-ROLE": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value > |"
       //},
-      //"AddClaimsToRequest": {
-      //  "aud": "SALESMANS"
-      //}
-      //"RouteClaimsRequirement": {
-      //  "userType": "SALESMAN"
-      //}
+      "RouteClaimsRequirement": {
+        //"http://schemas.microsoft.com/ws/2008/06/identity/claims/role": "Admin", // not work because of : colon
+        //"Role": "Admin", // customized claim
+        "sss": "ddd"
+      },
+      "AddClaimsToRequest": {
+        "fff": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value > |"
+      }
     }
   ],
   "GlobalConfiguration": {

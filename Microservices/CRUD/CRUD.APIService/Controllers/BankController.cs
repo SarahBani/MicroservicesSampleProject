@@ -67,8 +67,9 @@ namespace CRUD.APIService.Controllers
         }
 
         // POST: api/Bank
-        //[Authorize(Roles =nameof(RoleEnum.Admin))]
-        [Authorize(Roles ="Admin")]
+        //[Authorize(Roles = nameof(RoleEnum.Admin))]
+        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = "ApiUser")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

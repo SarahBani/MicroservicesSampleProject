@@ -9,7 +9,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-using Ocelot.Configuration.Creator;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using System;
@@ -66,6 +65,7 @@ namespace APIManager.WebAPIGateway
             }
             app.UseHttpsRedirection();
             app.UseAuthentication();
+            //app.UseAuthorization();
 
             // global cors policy
             app.UseCors(x => x
@@ -76,27 +76,35 @@ namespace APIManager.WebAPIGateway
 
             //var ocelotConfig = new OcelotPipelineConfiguration
             //{
-            //    AuthenticationMiddleware = async (ctx, next) =>
-            //    {
-            //        try
-            //        {
-            //            string sss = ctx.Items.DownstreamRoute().DownstreamPathTemplate.Value;
-            //            ctx.Items.DownstreamRoute().AddHeadersToUpstream.Add(new AddHeader("dddddd", "22222"));
-            //        }
-            //        //catch (ApiGateway.Core.Exceptions.ForbiddenException e)
-            //        //{
-            //        //    ctx.Errors.Add(new ApiGateway.WebApi.Exceptions.ForbiddenException(e.Message, Ocelot.Errors.OcelotErrorCode.UnauthorizedError));
-            //        //}
-            //        catch (Exception e)
-            //        {
-            //            //ctx.Response.Add(new UnauthenticatedError(e.Message));
-            //            new UnauthenticatedError(e.Message);
-            //        }
-            //        await next.Invoke();
-            //    },
+            //    //AuthenticationMiddleware = async (ctx, next) =>
+            //    //{
+            //    //    try
+            //    //    {
+            //    //        string sss = ctx.Items.DownstreamRoute().DownstreamPathTemplate.Value;
+            //    //        ctx.Items.DownstreamRoute().AddHeadersToUpstream.Add(new AddHeader("dddddd", "22222"));
+            //    //    }
+            //    //    //catch (ApiGateway.Core.Exceptions.ForbiddenException e)
+            //    //    //{
+            //    //    //    ctx.Errors.Add(new ApiGateway.WebApi.Exceptions.ForbiddenException(e.Message, Ocelot.Errors.OcelotErrorCode.UnauthorizedError));
+            //    //    //}
+            //    //    catch (Exception e)
+            //    //    {
+            //    //        //ctx.Response.Add(new UnauthenticatedError(e.Message));
+            //    //        new UnauthenticatedError(e.Message);
+            //    //    }
+            //    //    await next.Invoke();
+            //    //},
             //    AuthorisationMiddleware = async (ctx, next) =>
             //    {
             //        await next.Invoke();
+            //        //if (this.Authorize(ctx))
+            //        //{
+            //        //    await next.Invoke();
+            //        //}
+            //        //else
+            //        //{
+            //        //    ctx.Items.SetError(new UnauthorisedError($"Fail to authorize"));
+            //        //}
             //    }
             //};
             //app.UseOcelot(ocelotConfig).Wait();
@@ -162,13 +170,38 @@ namespace APIManager.WebAPIGateway
                            //otherwise succeed the request
                            return Task.CompletedTask;
                        },
+                       OnChallenge = context =>
+                       {
+                           // Skip the default logic.
+                           context.HandleResponse();
+                           return Task.CompletedTask;
+                       },
                        OnMessageReceived = async context =>
                         {
                             int i = 0;
                         }
                    };
                });
+            //services.AddAuthorization(options =>
+            //   {
+            //       options.AddPolicy("admin", builder => builder.RequireRole("Admin"));
+            //       options.AddPolicy("superadmin", builder => builder.RequireRole("superadmin"));
+            //   });
         }
+
+        //private bool Authorize(HttpContext ctx)
+        //{
+        //    if (ctx.Items.DownstreamRoute().AuthenticationOptions.AuthenticationProviderKey == null)
+        //    {
+        //        return true;
+        //    }
+        //    else
+        //    {
+        //        bool auth = false;
+        //        var claims = ctx.User.Claims;                
+        //        return auth;
+        //    }
+        //}
 
         #endregion /Methods
 

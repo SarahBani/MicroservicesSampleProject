@@ -152,6 +152,13 @@ namespace CRUD.APIService
                    }
                };
            });
+            // api user claim policy
+            services.AddAuthorization(options =>
+            {
+                //       options.AddPolicy("admin", builder => builder.RequireRole("Admin"));
+                //       options.AddPolicy("superadmin", builder => builder.RequireRole("superadmin"));
+                options.AddPolicy("ApiUser", policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
+            });
         }
 
         #endregion /Methods

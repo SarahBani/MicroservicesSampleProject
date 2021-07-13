@@ -7,8 +7,6 @@
 
         public virtual string SecretKey { get; set; }
 
-        public virtual string ProviderKey { get; set; }
-
         public virtual string Audience { get; set; }
 
         #endregion /Properties
