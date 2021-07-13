@@ -24,7 +24,7 @@ var BankList = function () {
     }); }), banks = _a.banks, banksCount = _a.banksCount, successfulOperation = _a.successfulOperation, loggedIn = _a.loggedIn;
     var dispatch = react_redux_1.useDispatch();
     var _b = react_1.useState(1), pageNo = _b[0], setPageNo = _b[1];
-    var _c = react_1.useState(1), pagesCount = _c[0], setPagesCount = _c[1];
+    var _c = react_1.useState(0), pagesCount = _c[0], setPagesCount = _c[1];
     react_1.useEffect(function () {
         dispatch(actions.fetchBanks(pageNo, pageCount));
     }, [pageNo, pageCount]);
@@ -32,10 +32,10 @@ var BankList = function () {
         dispatch(actions.fetchBanksCount());
     }, []);
     react_1.useEffect(function () {
-        setPagesCount((banksCount / pageCount) + ((banksCount % pageCount) === 0 ? 0 : 1));
+        setPagesCount(Math.ceil(banksCount / pageCount));
     }, [banksCount]);
     react_1.useEffect(function () {
-        if (successfulOperation) {
+        if (!!successfulOperation) {
             refreshHandler();
         }
     }, [successfulOperation]);
@@ -55,11 +55,13 @@ var BankList = function () {
         React.createElement("div", { className: classes.Counter },
             React.createElement("div", null,
                 React.createElement(Pagination_1.default, { pageNo: pageNo, pagesCount: pagesCount, onChange: changePageHandler })),
-            React.createElement("div", { className: "float-right" },
+            React.createElement("div", { className: classes.Count },
                 React.createElement("b", null, "Count: "),
                 React.createElement("span", null, banksCount))));
     var listContent = (((banks === null || banks === void 0 ? void 0 : banks.length) > 0 && banksCount > 0) ?
-        React.createElement("div", { className: "list-group" }, bankItems)
+        React.createElement("div", { className: "list-group" },
+            bankItems,
+            footerContent)
         : React.createElement(NoBank_1.default, null));
     return (React.createElement("div", { className: classes.BankList },
         listContent,

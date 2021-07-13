@@ -1,9 +1,9 @@
 ﻿export enum SuccessfulOperationEnum {
-    Insert,
-    Update,
-    Delete,
-    Upload,
-    Remove
+    Insert = 1,
+    Update = 2,
+    Delete = 3,
+    Upload = 4,
+    Remove = 5
 };
 
 export enum FailedOperationEnum {

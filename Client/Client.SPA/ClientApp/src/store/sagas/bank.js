@@ -191,21 +191,6 @@ function fetchBankSaga(action) {
     });
 }
 exports.fetchBankSaga = fetchBankSaga;
-//export function* fetchBankPhotosSaga(action: any) {
-//    yield put(commonActions.showLoader());
-//    const headers = {
-//        'Content-Type': 'application/json; charset=utf-8'
-//    };
-//    try {
-//        const response: ResponseGenerator  = yield axiosInstance.get('/Bank/GetPhotos/' + action.BankId, { headers: headers });
-//        if (response?.status === 200) {
-//            yield put(actions.setBankPhotos(response.data));
-//        }
-//        yield put(commonActions.hideLoader());
-//    } catch (error) {
-//        yield put(commonActions.raiseError(error));
-//    }
-//}
 function saveBankSaga(action) {
     var headers, response, error_4;
     return __generator(this, function (_a) {
@@ -245,7 +230,6 @@ function saveBankSaga(action) {
                 return [3 /*break*/, 13];
             case 11:
                 error_4 = _a.sent();
-                console.log(3333333);
                 console.log(error_4);
                 return [4 /*yield*/, effects_1.put(commonActions.raiseError(error_4))];
             case 12:

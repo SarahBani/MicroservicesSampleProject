@@ -3,11 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.HttpErrorEnum = exports.ButtonTypeEnum = exports.ModalTypeEnum = exports.ElementConfigTypeEnum = exports.ElementTypeEnum = exports.FailedOperationEnum = exports.SuccessfulOperationEnum = void 0;
 var SuccessfulOperationEnum;
 (function (SuccessfulOperationEnum) {
-    SuccessfulOperationEnum[SuccessfulOperationEnum["Insert"] = 0] = "Insert";
-    SuccessfulOperationEnum[SuccessfulOperationEnum["Update"] = 1] = "Update";
-    SuccessfulOperationEnum[SuccessfulOperationEnum["Delete"] = 2] = "Delete";
-    SuccessfulOperationEnum[SuccessfulOperationEnum["Upload"] = 3] = "Upload";
-    SuccessfulOperationEnum[SuccessfulOperationEnum["Remove"] = 4] = "Remove";
+    SuccessfulOperationEnum[SuccessfulOperationEnum["Insert"] = 1] = "Insert";
+    SuccessfulOperationEnum[SuccessfulOperationEnum["Update"] = 2] = "Update";
+    SuccessfulOperationEnum[SuccessfulOperationEnum["Delete"] = 3] = "Delete";
+    SuccessfulOperationEnum[SuccessfulOperationEnum["Upload"] = 4] = "Upload";
+    SuccessfulOperationEnum[SuccessfulOperationEnum["Remove"] = 5] = "Remove";
 })(SuccessfulOperationEnum = exports.SuccessfulOperationEnum || (exports.SuccessfulOperationEnum = {}));
 ;
 var FailedOperationEnum;

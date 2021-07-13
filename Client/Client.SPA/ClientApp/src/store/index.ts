@@ -34,7 +34,7 @@ const reducers = {
 // correctly typed to match your store.
 export interface AppThunkAction<TAction> {
     (dispatch: (action: TAction) => void, getState: () => AppState): void;
-}
+};
 
 const sagaMiddleware = createSagaMiddleware();
 

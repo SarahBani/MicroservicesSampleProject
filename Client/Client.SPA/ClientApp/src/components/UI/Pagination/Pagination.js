@@ -5,7 +5,6 @@ var react_1 = require("react");
 var classes = require("./Pagination.module.scss");
 ;
 var Pagination = react_1.memo(function (_a) {
-    //const Pagination = memo((props: any) => {
     var pageNo = _a.pageNo, pagesCount = _a.pagesCount, onChange = _a.onChange;
     var prevPages = react_1.useMemo(function () {
         if (pageNo > 1) {

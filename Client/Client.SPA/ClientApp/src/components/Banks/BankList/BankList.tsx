@@ -36,7 +36,7 @@ const BankList: FC = () => {
     const dispatch = useDispatch();
 
     const [pageNo, setPageNo] = useState(1);
-    const [pagesCount, setPagesCount] = useState(1);
+    const [pagesCount, setPagesCount] = useState(0);
 
     useEffect(() => {
         dispatch(actions.fetchBanks(pageNo, pageCount));
@@ -47,11 +47,11 @@ const BankList: FC = () => {
     }, []);
 
     useEffect(() => {
-        setPagesCount((banksCount! / pageCount) + ((banksCount! % pageCount) === 0 ? 0 : 1));
+        setPagesCount(Math.ceil(banksCount / pageCount));
     }, [banksCount]);
 
     useEffect(() => {
-        if (successfulOperation) {
+        if (!!successfulOperation) {
             refreshHandler();
         }
     }, [successfulOperation]);
@@ -77,7 +77,7 @@ const BankList: FC = () => {
                 <Pagination pageNo={pageNo} pagesCount={pagesCount}
                     onChange={changePageHandler} />
             </div>
-            <div className="float-right">
+            <div className={classes.Count}>
                 <b>Count: </b><span>{banksCount}</span>
             </div>
         </div>
@@ -87,7 +87,7 @@ const BankList: FC = () => {
         (banks?.length > 0 && banksCount > 0) ?
             <div className="list-group">
                 {bankItems}
-                {/*footerContent */}
+                {footerContent}
             </div>
             : <NoBank />
     );

@@ -29,6 +29,7 @@ var reducers = {
     bank: bankReducer_1.default,
     //upload: uploadReducer
 };
+;
 var sagaMiddleware = redux_saga_1.default();
 exports.store = configureStore_1.default(reducers, sagaMiddleware);
 sagaMiddleware.run(sagas_1.watchAuth);

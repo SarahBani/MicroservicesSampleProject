@@ -14,11 +14,17 @@
             display: inline-block;
             left: 50%; /* left-align your element to center */
             transform: translateX(-50%); /* offset left by half the width of your element */
-            position: absolute; /* use or dont' use depending on element parent */
+            position: relative; /* use or dont use depending on element parent */
         }
 
         > div:last-child {
             padding-right: 10px;
         }
+    }
+
+    .Count {
+        display: flex;
+        float: right;
+        margin-left:100px;
     }
 }

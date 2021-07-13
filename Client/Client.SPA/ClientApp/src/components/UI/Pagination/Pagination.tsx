@@ -10,7 +10,6 @@ interface PropsType {
 };
 
 const Pagination: FC<PropsType> = memo(({ pageNo, pagesCount, onChange }: PropsType) => {
-    //const Pagination = memo((props: any) => {
 
     let prevPages = useMemo(() => {
         if (pageNo > 1) {
