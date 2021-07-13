@@ -7,7 +7,7 @@ import * as classes from './BankList.module.scss';
 import BankItem from '../BankItem/BankItem';
 import NoBank from '../NoBank/NoBank';
 import * as actions from '../../../store/actions/bankActions';
-import Pagination from '../../UI/Pagination/Pagination';
+import ListFooter from '../../UI/ListFooter/ListFooter';
 import { Bank } from '../../../models/Bank.model';
 import { AppState } from '../../../store';
 
@@ -59,6 +59,7 @@ const BankList: FC = () => {
     const refreshHandler = useCallback(() => {
         dispatch(actions.fetchBanks(pageNo, pageCount));
         dispatch(actions.fetchBanksCount());
+        setPageNo(1);
     }, []);
 
     const changePageHandler = useCallback((no) => {
@@ -70,18 +71,10 @@ const BankList: FC = () => {
             <BankItem key={bank.id} bank={bank} />);
     }, [banks]);
 
-    const footerContent = (
-        banksCount! > 0 &&
-        <div className={classes.Counter}>
-            <div>
-                <Pagination pageNo={pageNo} pagesCount={pagesCount}
-                    onChange={changePageHandler} />
-            </div>
-            <div className={classes.Count}>
-                <b>Count: </b><span>{banksCount}</span>
-            </div>
-        </div>
-    );
+    const footerContent = useMemo(() => (
+        <ListFooter listCount={banksCount} pageNo={pageNo} pagesCount={pagesCount}
+            onChangePage={changePageHandler} />
+    ), [banksCount, pageNo, pagesCount, changePageHandler]);
 
     const listContent = (
         (banks?.length > 0 && banksCount > 0) ?

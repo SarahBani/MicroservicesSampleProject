@@ -3,13 +3,13 @@ import { useMemo, Fragment, memo, FC } from 'react';
 
 import * as classes from './Pagination.module.scss';
 
-interface PropsType {
+interface Props {
     pageNo: number,
     pagesCount: number,
     onChange: (pageIndex: number) => void
 };
 
-const Pagination: FC<PropsType> = memo(({ pageNo, pagesCount, onChange }: PropsType) => {
+const Pagination: FC<Props> = memo(({ pageNo, pagesCount, onChange }) => {
 
     let prevPages = useMemo(() => {
         if (pageNo > 1) {

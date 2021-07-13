@@ -8,7 +8,7 @@ var classes = require("./BankList.module.scss");
 var BankItem_1 = require("../BankItem/BankItem");
 var NoBank_1 = require("../NoBank/NoBank");
 var actions = require("../../../store/actions/bankActions");
-var Pagination_1 = require("../../UI/Pagination/Pagination");
+var ListFooter_1 = require("../../UI/ListFooter/ListFooter");
 var pageCount = 10;
 ;
 //interface DispatchProps {
@@ -42,6 +42,7 @@ var BankList = function () {
     var refreshHandler = react_1.useCallback(function () {
         dispatch(actions.fetchBanks(pageNo, pageCount));
         dispatch(actions.fetchBanksCount());
+        setPageNo(1);
     }, []);
     var changePageHandler = react_1.useCallback(function (no) {
         setPageNo(no);
@@ -51,13 +52,7 @@ var BankList = function () {
             return React.createElement(BankItem_1.default, { key: bank.id, bank: bank });
         });
     }, [banks]);
-    var footerContent = (banksCount > 0 &&
-        React.createElement("div", { className: classes.Counter },
-            React.createElement("div", null,
-                React.createElement(Pagination_1.default, { pageNo: pageNo, pagesCount: pagesCount, onChange: changePageHandler })),
-            React.createElement("div", { className: classes.Count },
-                React.createElement("b", null, "Count: "),
-                React.createElement("span", null, banksCount))));
+    var footerContent = react_1.useMemo(function () { return (React.createElement(ListFooter_1.default, { listCount: banksCount, pageNo: pageNo, pagesCount: pagesCount, onChangePage: changePageHandler })); }, [banksCount, pageNo, pagesCount, changePageHandler]);
     var listContent = (((banks === null || banks === void 0 ? void 0 : banks.length) > 0 && banksCount > 0) ?
         React.createElement("div", { className: "list-group" },
             bankItems,

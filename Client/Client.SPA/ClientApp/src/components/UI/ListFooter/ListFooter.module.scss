@@ -1,0 +1,29 @@
+﻿@import "../../_globals";
+@import "../../colors";
+
+.ListFooter {
+    color: $dark-green;
+    padding: 10px;
+    @include bottom-border(#ccc);
+    margin-bottom: 5px;
+    background-color: $light-yellow;
+
+    & > div:first-child {
+        display: inline-block;
+        left: 50%; /* left-align your element to center */
+        transform: translateX(-50%); /* offset left by half the width of your element */
+        position: relative; /* use or dont use depending on element parent */
+    }
+
+    & > div:last-child {
+        display: flex;
+        float: right;
+        margin-left: 100px;
+        padding-right: 10px;
+
+        > b {
+            margin-right: 5px;
+        }
+    }
+
+}
