@@ -6,4 +6,4 @@ H:\Project\Microservices\MicroservicesSampleProject\Common\obj\Debug\netcoreapp3
 H:\Project\Microservices\MicroservicesSampleProject\Common\obj\Debug\netcoreapp3.1\Common.csproj.CoreCompileInputs.cache
 H:\Project\Microservices\MicroservicesSampleProject\Common\obj\Debug\netcoreapp3.1\Common.dll
 H:\Project\Microservices\MicroservicesSampleProject\Common\obj\Debug\netcoreapp3.1\Common.pdb
-H:\Project\Microservices\MicroservicesSampleProject\Common\obj\Debug\netcoreapp3.1\Common.csprojAssemblyReference.cache
+H:\Project\Microservices\MicroservicesSampleProject\Common\obj\Debug\netcoreapp3.1\Common.csproj.AssemblyReference.cache

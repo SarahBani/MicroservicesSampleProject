@@ -1,7 +1,6 @@
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\bin\Debug\netcoreapp3.1\appsettings.Development.json
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\bin\Debug\netcoreapp3.1\appsettings.json
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\bin\Debug\netcoreapp3.1\configuration.json
-H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\bin\Debug\netcoreapp3.1\APIManager.APIGateway.exe
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\bin\Debug\netcoreapp3.1\APIManager.APIGateway.deps.json
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\bin\Debug\netcoreapp3.1\APIManager.APIGateway.runtimeconfig.json
@@ -37,7 +36,8 @@ H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGat
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\APIManager.APIGateway.dll
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\APIManager.APIGateway.pdb
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\APIManager.APIGateway.genruntimeconfig.cache
-H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\APIManager.APIGateway.csprojAssemblyReference.cache
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\APIManager.APIGateway.csproj.CoreCompileInputs.cache
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\APIManager.APIGateway.MvcApplicationPartsAssemblyInfo.cs
 H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\APIManager.APIGateway.MvcApplicationPartsAssemblyInfo.cache
+H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\APIManager.APIGateway.csproj.AssemblyReference.cache
+H:\Project\Microservices\MicroservicesSampleProject\APIManager\APIManager.APIGateway\obj\Debug\netcoreapp3.1\scopedcss\bundle\APIManager.APIGateway.styles.css

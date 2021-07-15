@@ -90,9 +90,6 @@
         //"http://schemas.microsoft.com/ws/2008/06/identity/claims/role": "Admin", // not work because of : colon
         //"Role": "Admin", // customized claim
         "sss": "ddd"
-      },
-      "AddClaimsToRequest": {
-        "fff": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value > |"
       }
     }
   ],
