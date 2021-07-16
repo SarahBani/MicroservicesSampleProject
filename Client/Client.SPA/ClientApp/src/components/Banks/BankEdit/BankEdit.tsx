@@ -37,17 +37,35 @@ const initialFormState: Dictionary<FormControlElementContent> = {
         },
         valid: false
     },
+    //grade: {
+    //    elementType: ElementTypeEnum.Input,
+    //    elementConfig: {
+    //        type: ElementConfigTypeEnum.Number,
+    //        placeholder: 'Grade',
+    //    },
+    //    value: '',
+    //    validation: {
+    //        required: true
+    //    },
+    //    valid: false
+    //}
     grade: {
-        elementType: ElementTypeEnum.Input,
+        elementType: ElementTypeEnum.Select,
         elementConfig: {
-            type: ElementConfigTypeEnum.Number,
             placeholder: 'Grade',
+            options: [
+                { value: '', text: '---' },
+                { value: '1', text: 'A' },
+                { value: '2', text: 'B' },
+                { value: '3', text: 'C' },
+                { value: '4', text: 'D' },
+                { value: '5', text: 'E' }
+            ],
         },
         value: '',
         validation: {
-            required: true
         },
-        valid: false
+        valid: true
     }
 };
 
@@ -140,7 +158,7 @@ const BankEdit: FC<{ id: number }> = memo(({ id }) => {
         const bank: Bank = {
             id: id,
             name: formControls.name.value.toString(),
-            grade: parseInt(formControls.grade.value.toString())
+            grade: (formControls.grade.value ? parseInt(formControls.grade.value.toString()) : undefined)
         };
         dispatch(actions.saveBank(bank, token));
     };

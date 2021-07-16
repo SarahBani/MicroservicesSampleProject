@@ -36,7 +36,7 @@ var FormControl = function (props) {
             break;
         case enums_1.ElementTypeEnum.Select:
             formElement =
-                React.createElement("select", { name: props.id, className: controlClasses.join(' '), title: props.value.toString(), onChange: props.onChange, onBlur: props.onLostFocus, disabled: props.disabled }, (_b = (_a = props.elementConfig) === null || _a === void 0 ? void 0 : _a.options) === null || _b === void 0 ? void 0 : _b.map(function (option) { return (React.createElement("option", { key: option.value, value: option.value }, option.text)); }));
+                React.createElement("select", { name: props.id, className: controlClasses.join(' '), title: props.title, value: props.value.toString(), onChange: props.onChange, onBlur: props.onLostFocus, disabled: props.disabled }, (_b = (_a = props.elementConfig) === null || _a === void 0 ? void 0 : _a.options) === null || _b === void 0 ? void 0 : _b.map(function (option) { return (React.createElement("option", { key: option.value, value: option.value }, option.text)); }));
             break;
         case enums_1.ElementTypeEnum.DropDown:
             formElement =

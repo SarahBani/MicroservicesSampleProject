@@ -54,7 +54,8 @@ const FormControl: FC<Props> = props => {
                 <select
                     name={props.id}
                     className={controlClasses.join(' ')}
-                    title={props.value.toString()}
+                    title={props.title}
+                    value={props.value.toString()}
                     onChange={props.onChange}
                     onBlur={props.onLostFocus}
                     disabled={props.disabled}>

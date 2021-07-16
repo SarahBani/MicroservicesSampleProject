@@ -36,17 +36,34 @@ var initialFormState = {
         },
         valid: false
     },
+    //grade: {
+    //    elementType: ElementTypeEnum.Input,
+    //    elementConfig: {
+    //        type: ElementConfigTypeEnum.Number,
+    //        placeholder: 'Grade',
+    //    },
+    //    value: '',
+    //    validation: {
+    //        required: true
+    //    },
+    //    valid: false
+    //}
     grade: {
-        elementType: enums_1.ElementTypeEnum.Input,
+        elementType: enums_1.ElementTypeEnum.Select,
         elementConfig: {
-            type: enums_1.ElementConfigTypeEnum.Number,
             placeholder: 'Grade',
+            options: [
+                { value: '', text: '---' },
+                { value: '1', text: 'A' },
+                { value: '2', text: 'B' },
+                { value: '3', text: 'C' },
+                { value: '4', text: 'D' },
+                { value: '5', text: 'E' }
+            ],
         },
         value: '',
-        validation: {
-            required: true
-        },
-        valid: false
+        validation: {},
+        valid: true
     }
 };
 var BankEdit = react_1.memo(function (_a) {
@@ -117,7 +134,7 @@ var BankEdit = react_1.memo(function (_a) {
         var bank = {
             id: id,
             name: formControls.name.value.toString(),
-            grade: parseInt(formControls.grade.value.toString())
+            grade: (formControls.grade.value ? parseInt(formControls.grade.value.toString()) : undefined)
         };
         dispatch(actions.saveBank(bank, token));
     };

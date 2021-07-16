@@ -33,17 +33,35 @@ const initialFormState: Dictionary<FormControlElementContent> = {
         },
         valid: false
     },
+    //grade: {
+    //    elementType: ElementTypeEnum.Input,
+    //    elementConfig: {
+    //        type: ElementConfigTypeEnum.Number,
+    //        placeholder: 'Grade',
+    //        maxLength: 1
+    //    },
+    //    value: '',
+    //    validation: {
+    //        maxLength: 1,
+    //        max: 5
+    //    },
+    //    valid: true
+    //}
     grade: {
-        elementType: ElementTypeEnum.Input,
+        elementType: ElementTypeEnum.Select,
         elementConfig: {
-            type: ElementConfigTypeEnum.Number,
             placeholder: 'Grade',
-            maxLength: 1
+            options: [
+                { value: '', text: '---' },
+                { value: '1', text: 'A' },
+                { value: '2', text: 'B' },
+                { value: '3', text: 'C' },
+                { value: '4', text: 'D' },
+                { value: '5', text: 'E' }
+            ],
         },
         value: '',
         validation: {
-            maxLength: 1,
-            max: 5
         },
         valid: true
     }
@@ -94,7 +112,7 @@ const BankNew = memo(props => {
         const bank: Bank = {
             id: 0,
             name: formControls.name.value.toString(),
-            grade: (formControls.grade.value ? parseInt(formControls.grade.value.toString()) : 0)
+            grade: (formControls.grade.value ? parseInt(formControls.grade.value.toString()) : undefined)
         };
         dispatch(actions.saveBank(bank, token));
     };
