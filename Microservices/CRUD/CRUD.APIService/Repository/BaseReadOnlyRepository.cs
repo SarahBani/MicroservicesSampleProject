@@ -1,6 +1,6 @@
-﻿using Common;
-using Common.Entities;
-using CRUD.APIService.Entities;
+﻿using CRUD.APIService.Entities;
+using CRUD.APIService.Helpers;
+using CRUD.APIService.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

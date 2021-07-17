@@ -1,4 +1,4 @@
-﻿using Common.Entities;
+﻿using CRUD.APIService.Entities;
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;

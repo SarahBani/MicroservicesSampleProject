@@ -13,11 +13,11 @@ const authStorageKeyName: string = 'auth_token';
 export const delay = (ms: number): Promise<NodeJS.Timeout> =>
     new Promise(res => setTimeout(res, ms));
 
-export function* signInSaga(action: any) {
+export function* signInSaga(payload: ReturnType<typeof actions.signIn>) {
     yield put(commonActions.showLoader());
     const data = {
-        email: action.email,
-        password: action.password
+        email: payload.email,
+        password: payload.password
     };
     try {
         const response: ResponseGenerator = yield axiosInstance.post('/login', data);
@@ -50,8 +50,8 @@ export function* signOutSaga() {
     ]);
 }
 
-export function* checkAuthTimeoutSaga(action: any) {
-    const duration: number = yield (new Date(action.tokenExpiration).getTime() - new Date().getTime());
+export function* checkAuthTimeoutSaga(payload: ReturnType<typeof actions.checkAuthTimeout>) {
+    const duration: number = yield (new Date(payload.tokenExpiration).getTime() - new Date().getTime());
     //delay(duration);
     yield call(delay, duration);
     yield put(actions.signOut());

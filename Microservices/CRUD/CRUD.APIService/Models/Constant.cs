@@ -50,7 +50,6 @@ namespace CRUD.APIService.Models
         public const string Exception_sql_KeyAlreadyExsits = "The record key already exists!";
         public const string Exception_sql_ArithmeticOverflow = "The record field value is too big!";
 
-
         public const string Exception_DuplicateUserName = "This username is already taken!";
         public const string Exception_EmailAlreadyRegistered = "This email has already registered!";
         public const string Exception_RegistrationFailed = "An error occured in registeration!";
@@ -62,6 +61,8 @@ namespace CRUD.APIService.Models
         public const string Exception_AuthenticationRequired = "Please sign in!";
         public const string Exception_UnAuthorized = "Please Login!";
         public const string Exception_Forbidden = "You don't have the permission!";
+        public const string Exception_EmptyFile = "The file is empty!";
+        public const string Exception_UploadFileProblem = "The file cannot be uploaded!";
 
         public const string ActionResult_Successful = "Successful";
 

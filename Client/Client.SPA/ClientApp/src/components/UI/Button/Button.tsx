@@ -1,8 +1,8 @@
 ﻿import * as React from 'react';
 import { FC, MouseEventHandler, ReactNode } from 'react';
-import { ButtonTypeEnum } from '../../../shared/enums';
 
 import * as classes from './Button.module.scss';
+import { ButtonTypeEnum } from '../../../shared/enums';
 
 interface OwnProps {
     type: ButtonTypeEnum,

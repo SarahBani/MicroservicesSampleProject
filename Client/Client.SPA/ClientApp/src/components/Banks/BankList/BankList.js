@@ -26,7 +26,7 @@ var BankList = function () {
     var _b = react_1.useState(1), pageNo = _b[0], setPageNo = _b[1];
     var _c = react_1.useState(0), pagesCount = _c[0], setPagesCount = _c[1];
     react_1.useEffect(function () {
-        dispatch(actions.fetchBanks(pageNo, pageCount));
+        dispatch(actions.fetchBanks(null, null, pageNo, pageCount));
     }, [pageNo, pageCount]);
     react_1.useEffect(function () {
         dispatch(actions.fetchBanksCount());

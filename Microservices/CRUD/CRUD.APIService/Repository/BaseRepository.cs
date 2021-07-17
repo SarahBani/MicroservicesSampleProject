@@ -1,5 +1,4 @@
-﻿using Common.Entities;
-using CRUD.APIService.Entities;
+﻿using CRUD.APIService.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq.Expressions;

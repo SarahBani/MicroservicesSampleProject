@@ -1,14 +1,15 @@
 import * as React from 'react';
-import { useState, useEffect, useCallback, memo, ReactElement, FormEventHandler, FormEvent } from 'react';
+import { useState, useEffect, useCallback, memo, ReactElement, FormEvent } from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getUpdatedForm, getFormElements, ValidateForm, checkValidity } from '../../../shared/utility';
+import { getUpdatedForm, getFormElements, ValidateForm } from '../../../shared/utility';
 import FormElement from '../../UI/FormElement/FormElement';
 import { ElementConfigTypeEnum, ElementTypeEnum, SuccessfulOperationEnum } from '../../../shared/enums';
 import * as actions from '../../../store/actions/bankActions';
 //import * as locationActions from '../../../store/actions/locationActions';
 import * as authActions from '../../../store/actions/authActions';
+import * as uploadActions from '../../../store/actions/uploadActions';
 import { AppState } from '../../../store';
 import { Bank } from '../../../models/Bank.model';
 import { Dictionary, FormControlElement, FormControlElementContent } from '../../../shared/types';
@@ -16,6 +17,7 @@ import { Dictionary, FormControlElement, FormControlElementContent } from '../..
 interface StoreProps {
     loggedIn: boolean
     token: string,
+    uploadedPercentage: number,
     loading: boolean,
     successfulOperation: SuccessfulOperationEnum,
 };
@@ -67,11 +69,12 @@ const initialFormState: Dictionary<FormControlElementContent> = {
     }
 };
 
-const BankNew = memo(props => {
+const BankNew = memo(() => {
 
-    const { loggedIn, token, loading, successfulOperation }: StoreProps = useSelector((state: AppState) => ({
+    const { loggedIn, token, uploadedPercentage, loading, successfulOperation }: StoreProps = useSelector((state: AppState) => ({
         loggedIn: state.auth.loggedIn,
         token: state.auth.token,
+        uploadedPercentage: state.upload.fileUploadPercentage,
         loading: state.common.isLoading,
         successfulOperation: state.common.successfulOperation
     }));
@@ -103,11 +106,19 @@ const BankNew = memo(props => {
         setFormControls(getUpdatedForm(event, formControls, id));
     };
 
+    const uploadImageHandler = useCallback((event) => {
+        const files = event.target.files;
+        if (files.length == 0) {
+            return;
+        }
+        dispatch(actions.uploadBankLogo(files[0], token))
+    }, []);
+
     const cancelHandler = useCallback(() => {
         setRedirect(<Redirect to="/banks/" />);
     }, [setRedirect]);
 
-    const saveHandler: FormEventHandler = (event: FormEvent) => {
+    const saveHandler = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
         const bank: Bank = {
             id: 0,
@@ -130,6 +141,12 @@ const BankNew = memo(props => {
             {redirect}
             <form onSubmit={saveHandler}>
                 {formElements}
+                <div className="row">
+                    <div className="col-12 ">
+                        <input type="file" id="customFile" className="form-control-file border"
+                            accept="image/*" onChange={uploadImageHandler} />
+                    </div>
+                </div>
                 <div className="row">
                     <div className="col-12 text-center">
                         <button className="btn btn-primary" type="reset">Clear</button>

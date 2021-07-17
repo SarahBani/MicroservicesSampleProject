@@ -56,13 +56,14 @@ var initialFormState = {
         valid: true
     }
 };
-var BankNew = react_1.memo(function (props) {
+var BankNew = react_1.memo(function () {
     var _a = react_redux_1.useSelector(function (state) { return ({
         loggedIn: state.auth.loggedIn,
         token: state.auth.token,
+        uploadedPercentage: state.upload.fileUploadPercentage,
         loading: state.common.isLoading,
         successfulOperation: state.common.successfulOperation
-    }); }), loggedIn = _a.loggedIn, token = _a.token, loading = _a.loading, successfulOperation = _a.successfulOperation;
+    }); }), loggedIn = _a.loggedIn, token = _a.token, uploadedPercentage = _a.uploadedPercentage, loading = _a.loading, successfulOperation = _a.successfulOperation;
     var dispatch = react_redux_1.useDispatch();
     var location = react_router_dom_1.useLocation();
     var _b = react_1.useState(initialFormState), formControls = _b[0], setFormControls = _b[1];
@@ -85,6 +86,13 @@ var BankNew = react_1.memo(function (props) {
     var elementHandler = function (event, id) {
         setFormControls(utility_1.getUpdatedForm(event, formControls, id));
     };
+    var uploadImageHandler = react_1.useCallback(function (event) {
+        var files = event.target.files;
+        if (files.length == 0) {
+            return;
+        }
+        dispatch(actions.uploadBankLogo(files[0], token));
+    }, []);
     var cancelHandler = react_1.useCallback(function () {
         setRedirect(React.createElement(react_router_dom_1.Redirect, { to: "/banks/" }));
     }, [setRedirect]);
@@ -102,6 +110,9 @@ var BankNew = react_1.memo(function (props) {
         redirect,
         React.createElement("form", { onSubmit: saveHandler },
             formElements,
+            React.createElement("div", { className: "row" },
+                React.createElement("div", { className: "col-12 " },
+                    React.createElement("input", { type: "file", id: "customFile", className: "form-control-file border", accept: "image/*", onChange: uploadImageHandler }))),
             React.createElement("div", { className: "row" },
                 React.createElement("div", { className: "col-12 text-center" },
                     React.createElement("button", { className: "btn btn-primary", type: "reset" }, "Clear"),

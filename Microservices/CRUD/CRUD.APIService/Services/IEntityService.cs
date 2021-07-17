@@ -1,4 +1,4 @@
-﻿using Common.Entities;
+﻿using CRUD.APIService.Entities;
 using CRUD.APIService.Repository;
 
 namespace CRUD.APIService.Services

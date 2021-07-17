@@ -18,17 +18,17 @@ var initialState = {
     count: 0,
     selectedBank: null
 };
-var bankReducer = function (state, action) {
+var bankReducer = function (state, payload) {
     if (state === void 0) { state = initialState; }
-    switch (action.type) {
+    switch (payload.type) {
         case actionTypes.SET_BANKS:
-            return __assign(__assign({}, state), { banks: action.banks });
+            return __assign(__assign({}, state), { banks: payload.banks });
         case actionTypes.RESET_BANKS:
             return __assign(__assign({}, state), { banks: null, count: 0 });
         case actionTypes.SET_BANKS_COUNT:
-            return __assign(__assign({}, state), { count: action.count });
+            return __assign(__assign({}, state), { count: payload.count });
         case actionTypes.SET_BANK:
-            return __assign(__assign({}, state), { selectedBank: action.bank });
+            return __assign(__assign({}, state), { selectedBank: payload.bank });
         case actionTypes.CLEAR_SELECTED_BANK:
             return __assign(__assign({}, state), { selectedBank: null });
         default:

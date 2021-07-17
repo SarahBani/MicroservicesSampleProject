@@ -15,6 +15,7 @@ namespace CRUD.APIService.Models
         ArithmeticOverflow = 8115,
 
         NoActiveTransaction,
+        EmptyFile,
         ImpossibleOperation,
         [Description(Constant.Validation_Address_City_Required)]
         Invalid_Address_City_Required,
@@ -104,6 +105,9 @@ namespace CRUD.APIService.Models
                 {
                     case ExceptionKey.NoActiveTransaction:
                         result = Constant.Exception_NoActiveTransaction;
+                        break;
+                    case ExceptionKey.EmptyFile:
+                        result = Constant.Exception_EmptyFile;
                         break;
                     case ExceptionKey.NotDefined:
                     default:

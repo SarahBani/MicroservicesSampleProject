@@ -1,8 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
+using System.IO;
 using System.Linq.Expressions;
 
-namespace Common
+namespace CRUD.APIService.Models
 {
     public static class Utility
     {
@@ -26,6 +27,10 @@ namespace Common
 
             return lambda;
         }
+
+
+
+
 
     }
 }

@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import { FC, useMemo, useState, useCallback, useEffect, InputHTMLAttributes } from 'react';
+import { FC, useMemo, useState, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -39,7 +39,7 @@ const BankList: FC = () => {
     const [pagesCount, setPagesCount] = useState(0);
 
     useEffect(() => {
-        dispatch(actions.fetchBanks(pageNo, pageCount));
+        dispatch(actions.fetchBanks(null, null, pageNo, pageCount));
     }, [pageNo, pageCount]);
 
     useEffect(() => {

@@ -1,14 +1,15 @@
-﻿import { takeEvery, all, takeLatest, cancel, take, fork, call, TakeEffect, ForkEffect } from 'redux-saga/effects';
+﻿import { all, takeLatest, cancel, take, fork, call, TakeEffect, ForkEffect } from 'redux-saga/effects';
 
 import { autoSignInSaga, checkAuthTimeoutSaga, signInSaga, signOutSaga } from './auth';
 //import { fetchCountriesSaga, selectCountrySaga, selectCitySaga } from './location';
 import {
-    fetchBanksSaga, fetchBankSaga, fetchBanksCountSaga,
-    deleteBankSaga, saveBankSaga
+    fetchBanksSaga, fetchBankSaga, fetchBanksCountSaga, deleteBankSaga, saveBankSaga,
+    uploadBankLogoSaga, removeBankLogoSaga
 } from './bank';
 import * as authActionTypes from '../actions/authActionTypes';
 //import * as locationActionTypes from '../actions/locationActionTypes';
 import * as bankActionTypes from '../actions/bankActionTypes';
+import * as authActions from '../actions/authActions';
 
 export function* watchAuth() {
     yield all([
@@ -24,10 +25,10 @@ export function* watchAuth() {
     //    yield takeLatest(authActionTypes.STOP_AUTH_TIMER, cancelWorkerSaga, bgSyncTask);
     //}
     // Or
-    let payload: TakeEffect;
+    let payload: ReturnType<typeof authActions.checkAuthTimeout> | undefined;
     while (payload = yield take(authActionTypes.CHECK_AUTH_TIMEOUT)) {
         // starts the task in the background
-        const bgSyncTask: ForkEffect = yield fork(checkAuthTimeoutSaga, payload);
+        const bgSyncTask: ReturnType<typeof authActions.checkAuthTimeout> | undefined = yield fork(checkAuthTimeoutSaga, payload);
 
         //// wait for the user to sign out
         //yield take(authActionTypes.STOP_AUTH_TIMER);
@@ -56,17 +57,10 @@ export function* watchBank() {
         takeLatest(bankActionTypes.FETCH_BANKS, fetchBanksSaga),
         takeLatest(bankActionTypes.FETCH_BANKS_COUNT, fetchBanksCountSaga),
         takeLatest(bankActionTypes.FETCH_BANK, fetchBankSaga),
+        takeLatest(bankActionTypes.UPLOAD_BANK_LOGO, uploadBankLogoSaga),
+        takeLatest(bankActionTypes.REMOVE_BANK_PHOTO, removeBankLogoSaga),
         takeLatest(bankActionTypes.SAVE_BANK, saveBankSaga),
         takeLatest(bankActionTypes.DELETE_BANK, deleteBankSaga),
-        //takeLatest(bankActionTypes.UPLOAD_BANK_PHOTO, uploadBankPhotoSaga),
-        //takeLatest(bankActionTypes.REMOVE_BANK_PHOTO, removeBankPhotoSaga),
-        //takeLatest(bankActionTypes.SAVE_BANK_PHOTO, saveBankPhotoSaga),
-        //takeLatest(bankActionTypes.DELETE_BANK_PHOTO, deleteBankPhotoSaga),
-
-        //takeEvery(bankActionTypes.UPLOAD_BANK_PHOTO, function* (action) {
-        //    const file = action.payload;
-        //    yield call(uploadFileSaga, file);
-        //})
     ]);
 }
 

@@ -1,4 +1,5 @@
 ﻿import { ChangeEvent, FormEvent, SyntheticEvent } from "react";
+import { ResponseHeaders } from "../models/ResponseHeaders";
 import * as Constants from "./constants";
 import { HttpErrorEnum } from "./enums";
 import { Dictionary, FormControlElementContent, Validation, FormControlElement } from "./types";
@@ -120,3 +121,12 @@ export const getErrorMessage = (error: HttpErrorEnum): string => {
             return Constants.ERROR_UNKNOWN;
     }
 };
+
+export const getHeaders = () => ({
+    'Content-Type': 'application/json; charset=utf-8',
+});
+
+export const getTokenHeaders = (token: string): ResponseHeaders => ({
+    'Content-Type': 'application/json; charset=utf-8',
+    Authorization: `Bearer ${token}`
+});

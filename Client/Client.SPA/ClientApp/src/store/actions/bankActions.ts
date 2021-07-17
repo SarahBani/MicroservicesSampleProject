@@ -1,11 +1,14 @@
 ﻿import * as actionTypes from './bankActionTypes';
 import { Bank } from '../../models/Bank.model';
 
-export const fetchBanks = (pageNo: number, pageCount: number) => {
+export const fetchBanks = (cityId: number | null = null, countryId: number | null = null,
+    pageNo: number | null = null, pageCount: number | null = null) => {
     return {
         type: actionTypes.FETCH_BANKS,
+        cityId: cityId,
+        countryId: countryId,
         pageNo: pageNo,
-        pageCount: pageCount
+        pageCount: pageCount,
     };
 };
 
@@ -22,9 +25,11 @@ export const resetBanks = () => {
     };
 };
 
-export const fetchBanksCount = () => {
+export const fetchBanksCount = (cityId: number | null = null, countryId: number | null = null) => {
     return {
-        type: actionTypes.FETCH_BANKS_COUNT
+        type: actionTypes.FETCH_BANKS_COUNT,
+        cityId: cityId,
+        countryId: countryId
     };
 };
 
@@ -52,6 +57,24 @@ export const setBank = (bank: Bank) => {
 export const clearSelectedBank = () => {
     return {
         type: actionTypes.CLEAR_SELECTED_BANK
+    };
+};
+
+export const uploadBankLogo = (file: any, token: string) => {
+    console.log(232323);
+    console.log(file);
+    return {
+        type: actionTypes.UPLOAD_BANK_LOGO,
+        file: file,
+        token: token
+    };
+};
+
+export const removeBankLogo = (filePath: string, token: string) => {
+    return {
+        type: actionTypes.REMOVE_BANK_PHOTO,
+        filePath: filePath,
+        token: token
     };
 };
 

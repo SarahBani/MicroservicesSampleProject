@@ -123,7 +123,6 @@ var BankEdit = react_1.memo(function (_a) {
         }
     }, [successfulOperation]);
     var elementHandler = function (event, id) {
-        console.log(event);
         setFormControls(utility_1.getUpdatedForm(event, formControls, id));
     };
     var cancelHandler = react_1.useCallback(function () {

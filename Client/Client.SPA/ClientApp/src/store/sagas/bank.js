@@ -27,47 +27,47 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteBankSaga = exports.saveBankSaga = exports.fetchBankSaga = exports.fetchBanksCountSaga = exports.fetchBanksSaga = void 0;
+exports.deleteBankSaga = exports.saveBankSaga = exports.removeBankLogoSaga = exports.uploadBankLogoSaga = exports.fetchBankSaga = exports.fetchBanksCountSaga = exports.fetchBanksSaga = void 0;
 var effects_1 = require("redux-saga/effects");
 var enums_1 = require("../../shared/enums");
 var actions = require("../actions/bankActions");
 var commonActions = require("../actions/commonActions");
+var uploadActions = require("../actions/uploadActions");
 var axios_instance_1 = require("../../shared/axios-instance");
+var uploadFileChannel_1 = require("./uploadFileChannel");
+var utility_1 = require("../../shared/utility");
 //const cancelSource = axios.CancelToken.source();
-function fetchBanksSaga(action) {
-    var headers, filters, queryString, response, error_1;
+function fetchBanksSaga(payload) {
+    var filters, queryString, response, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, effects_1.put(commonActions.showLoader())];
             case 1:
                 _a.sent();
-                headers = {
-                    'Content-Type': 'application/json; charset=utf-8'
-                };
                 _a.label = 2;
             case 2:
                 _a.trys.push([2, 16, , 18]);
                 filters = [];
-                if (!action.cityId) return [3 /*break*/, 4];
-                return [4 /*yield*/, filters.push("cityId=" + action.cityId)];
+                if (!payload.cityId) return [3 /*break*/, 4];
+                return [4 /*yield*/, filters.push("cityId=" + payload.cityId)];
             case 3:
                 _a.sent();
                 _a.label = 4;
             case 4:
-                if (!action.countryId) return [3 /*break*/, 6];
-                return [4 /*yield*/, filters.push("countryId=" + action.countryId)];
+                if (!payload.countryId) return [3 /*break*/, 6];
+                return [4 /*yield*/, filters.push("countryId=" + payload.countryId)];
             case 5:
                 _a.sent();
                 _a.label = 6;
             case 6:
-                if (!action.pageNo) return [3 /*break*/, 8];
-                return [4 /*yield*/, filters.push("pageNo=" + action.pageNo)];
+                if (!payload.pageNo) return [3 /*break*/, 8];
+                return [4 /*yield*/, filters.push("pageNo=" + payload.pageNo)];
             case 7:
                 _a.sent();
                 _a.label = 8;
             case 8:
-                if (!action.pageCount) return [3 /*break*/, 10];
-                return [4 /*yield*/, filters.push("pageCount=" + action.pageCount)];
+                if (!payload.pageCount) return [3 /*break*/, 10];
+                return [4 /*yield*/, filters.push("pageCount=" + payload.pageCount)];
             case 9:
                 _a.sent();
                 _a.label = 10;
@@ -75,7 +75,7 @@ function fetchBanksSaga(action) {
             case 11:
                 queryString = _a.sent();
                 return [4 /*yield*/, axios_instance_1.default.get('/banks' + queryString, {
-                        headers: headers,
+                        headers: utility_1.getHeaders(),
                         //cancelToken: cancelSource.token
                     })];
             case 12:
@@ -100,35 +100,34 @@ function fetchBanksSaga(action) {
     });
 }
 exports.fetchBanksSaga = fetchBanksSaga;
-function fetchBanksCountSaga(action) {
-    var headers, filters, queryString, response, error_2;
+function fetchBanksCountSaga(payload) {
+    var filters, queryString, response, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, effects_1.put(commonActions.showLoader())];
             case 1:
                 _a.sent();
-                headers = {
-                    'Content-Type': 'application/json; charset=utf-8'
-                };
                 _a.label = 2;
             case 2:
                 _a.trys.push([2, 12, , 14]);
                 filters = [];
-                if (!action.cityId) return [3 /*break*/, 4];
-                return [4 /*yield*/, filters.push("cityId=" + action.cityId)];
+                if (!payload.cityId) return [3 /*break*/, 4];
+                return [4 /*yield*/, filters.push("cityId=" + payload.cityId)];
             case 3:
                 _a.sent();
                 _a.label = 4;
             case 4:
-                if (!action.countryId) return [3 /*break*/, 6];
-                return [4 /*yield*/, filters.push("countryId=" + action.countryId)];
+                if (!payload.countryId) return [3 /*break*/, 6];
+                return [4 /*yield*/, filters.push("countryId=" + payload.countryId)];
             case 5:
                 _a.sent();
                 _a.label = 6;
             case 6: return [4 /*yield*/, (filters.length > 0 ? '?' + filters.join('&') : '')];
             case 7:
                 queryString = _a.sent();
-                return [4 /*yield*/, axios_instance_1.default.get('/bank/count' + queryString, { headers: headers })];
+                return [4 /*yield*/, axios_instance_1.default.get('/bank/count' + queryString, {
+                        headers: utility_1.getHeaders()
+                    })];
             case 8:
                 response = _a.sent();
                 if (!((response === null || response === void 0 ? void 0 : response.status) === 200)) return [3 /*break*/, 10];
@@ -151,20 +150,19 @@ function fetchBanksCountSaga(action) {
     });
 }
 exports.fetchBanksCountSaga = fetchBanksCountSaga;
-function fetchBankSaga(action) {
-    var headers, response, error_3;
+function fetchBankSaga(payload) {
+    var response, error_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, effects_1.put(commonActions.showLoader())];
             case 1:
                 _a.sent();
-                headers = {
-                    'Content-Type': 'application/json; charset=utf-8'
-                };
                 _a.label = 2;
             case 2:
                 _a.trys.push([2, 9, , 11]);
-                return [4 /*yield*/, axios_instance_1.default.get('/bank/' + action.id, { headers: headers })];
+                return [4 /*yield*/, axios_instance_1.default.get('/bank/' + payload.id, {
+                        headers: utility_1.getHeaders()
+                    })];
             case 3:
                 response = _a.sent();
                 if (!((response === null || response === void 0 ? void 0 : response.status) === 200)) return [3 /*break*/, 5];
@@ -191,23 +189,84 @@ function fetchBankSaga(action) {
     });
 }
 exports.fetchBankSaga = fetchBankSaga;
-function saveBankSaga(action) {
-    var headers, response, error_4;
+function uploadBankLogoSaga(payload) {
+    var formData, channel;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, effects_1.put(commonActions.showLoader())];
             case 1:
                 _a.sent();
-                headers = {
-                    'Content-Type': 'application/json; charset=utf-8',
-                    'Authorization': "Bearer " + action.token
-                };
+                return [4 /*yield*/, effects_1.put(uploadActions.startUpload())];
+            case 2:
+                _a.sent();
+                formData = new FormData();
+                formData.append("file", payload.file, payload.file.name);
+                channel = effects_1.call(uploadFileChannel_1.default, '/Bank/UploadLogo/', formData, payload.token);
+                console.log(channel);
+                return [2 /*return*/];
+        }
+    });
+}
+exports.uploadBankLogoSaga = uploadBankLogoSaga;
+function removeBankLogoSaga(payload) {
+    var response, error_4;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, effects_1.put(commonActions.showLoader())];
+            case 1:
+                _a.sent();
+                _a.label = 2;
+            case 2:
+                _a.trys.push([2, 4, , 6]);
+                response = axios_instance_1.default.delete("/Bank/RemoveLogoFile?filePath=" + payload.filePath, {
+                    headers: utility_1.getTokenHeaders(payload.token)
+                });
+                //const response: Promise<{ status: number } > = yield axiosInstance.delete(`/Bank/RemoveLogoFile?filePath=${payload.filePath}`,
+                //    {
+                //        headers: getTokenHeaders(payload.token)
+                //    });
+                //if (response?.status === 200) {
+                //    console.log(433333334444);
+                //    //yield put(actions.deleteBankLogo(payload.id, payload.token));
+                //}
+                return [4 /*yield*/, effects_1.put(commonActions.hideLoader())];
+            case 3:
+                //const response: Promise<{ status: number } > = yield axiosInstance.delete(`/Bank/RemoveLogoFile?filePath=${payload.filePath}`,
+                //    {
+                //        headers: getTokenHeaders(payload.token)
+                //    });
+                //if (response?.status === 200) {
+                //    console.log(433333334444);
+                //    //yield put(actions.deleteBankLogo(payload.id, payload.token));
+                //}
+                _a.sent();
+                return [3 /*break*/, 6];
+            case 4:
+                error_4 = _a.sent();
+                return [4 /*yield*/, effects_1.put(commonActions.raiseError(error_4))];
+            case 5:
+                _a.sent();
+                return [3 /*break*/, 6];
+            case 6: return [2 /*return*/];
+        }
+    });
+}
+exports.removeBankLogoSaga = removeBankLogoSaga;
+function saveBankSaga(payload) {
+    var response, error_5;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, effects_1.put(commonActions.showLoader())];
+            case 1:
+                _a.sent();
                 _a.label = 2;
             case 2:
                 _a.trys.push([2, 11, , 13]);
                 response = void 0;
-                if (!!action.bank.id) return [3 /*break*/, 6];
-                return [4 /*yield*/, axios_instance_1.default.post('/bank', action.bank, { headers: headers })];
+                if (!!payload.bank.id) return [3 /*break*/, 6];
+                return [4 /*yield*/, axios_instance_1.default.post('/bank', payload.bank, {
+                        headers: utility_1.getTokenHeaders(payload.token)
+                    })];
             case 3:
                 response = _a.sent();
                 if (!((response === null || response === void 0 ? void 0 : response.status) === 201)) return [3 /*break*/, 5];
@@ -216,7 +275,9 @@ function saveBankSaga(action) {
                 _a.sent();
                 _a.label = 5;
             case 5: return [3 /*break*/, 9];
-            case 6: return [4 /*yield*/, axios_instance_1.default.put('/bank', action.bank, { headers: headers })];
+            case 6: return [4 /*yield*/, axios_instance_1.default.put('/bank', payload.bank, {
+                    headers: utility_1.getTokenHeaders(payload.token)
+                })];
             case 7:
                 response = _a.sent();
                 if (!((response === null || response === void 0 ? void 0 : response.status) === 200)) return [3 /*break*/, 9];
@@ -229,9 +290,9 @@ function saveBankSaga(action) {
                 _a.sent();
                 return [3 /*break*/, 13];
             case 11:
-                error_4 = _a.sent();
-                console.log(error_4);
-                return [4 /*yield*/, effects_1.put(commonActions.raiseError(error_4))];
+                error_5 = _a.sent();
+                console.log(error_5);
+                return [4 /*yield*/, effects_1.put(commonActions.raiseError(error_5))];
             case 12:
                 _a.sent();
                 return [3 /*break*/, 13];
@@ -240,39 +301,40 @@ function saveBankSaga(action) {
     });
 }
 exports.saveBankSaga = saveBankSaga;
-function deleteBankSaga(action) {
-    var headers, response, error_5;
+function deleteBankSaga(payload) {
+    var response, error_6;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, effects_1.put(commonActions.showLoader())];
             case 1:
                 _a.sent();
-                headers = {
-                    'Content-Type': 'application/json; charset=utf-8',
-                    Authorization: "Bearer " + action.token
-                };
                 _a.label = 2;
             case 2:
-                _a.trys.push([2, 7, , 9]);
-                return [4 /*yield*/, axios_instance_1.default.delete('/bank/' + action.id, { headers: headers })];
+                _a.trys.push([2, 8, , 10]);
+                return [4 /*yield*/, axios_instance_1.default.delete('/bank/' + payload.id, {
+                        headers: utility_1.getTokenHeaders(payload.token)
+                    })];
             case 3:
                 response = _a.sent();
-                if (!((response === null || response === void 0 ? void 0 : response.status) === 200)) return [3 /*break*/, 5];
+                if (!((response === null || response === void 0 ? void 0 : response.status) === 200)) return [3 /*break*/, 6];
                 return [4 /*yield*/, effects_1.put(commonActions.operationSucceeded(enums_1.SuccessfulOperationEnum.Delete))];
             case 4:
                 _a.sent();
-                _a.label = 5;
-            case 5: return [4 /*yield*/, effects_1.put(commonActions.hideLoader())];
-            case 6:
+                return [4 /*yield*/, effects_1.put(actions.clearSelectedBank())];
+            case 5:
                 _a.sent();
-                return [3 /*break*/, 9];
+                _a.label = 6;
+            case 6: return [4 /*yield*/, effects_1.put(commonActions.hideLoader())];
             case 7:
-                error_5 = _a.sent();
-                return [4 /*yield*/, effects_1.put(commonActions.raiseError(error_5))];
-            case 8:
                 _a.sent();
-                return [3 /*break*/, 9];
-            case 9: return [2 /*return*/];
+                return [3 /*break*/, 10];
+            case 8:
+                error_6 = _a.sent();
+                return [4 /*yield*/, effects_1.put(commonActions.raiseError(error_6))];
+            case 9:
+                _a.sent();
+                return [3 /*break*/, 10];
+            case 10: return [2 /*return*/];
         }
     });
 }

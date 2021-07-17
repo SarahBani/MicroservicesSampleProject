@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CRUD.APIService.Controllers
 {
     [Route("api/[controller]")]
-    public class BankController : BaseAPIController
+    public class BankController : BaseUploaderAPIController
     {
 
         #region Properties
@@ -149,6 +149,14 @@ namespace CRUD.APIService.Controllers
                 return Ok();
             }
             return Problem(result.ExceptionContentResult);
+        }
+
+        // DELETE: api/Bank/UploadLogo
+        [Authorize(Roles = "Admin")]
+        [HttpPost("UploadLogo"), DisableRequestSizeLimit]
+        public IActionResult UploadLogo()
+        {
+            return base.UploadImage("Banks");
         }
 
         #endregion /Actions

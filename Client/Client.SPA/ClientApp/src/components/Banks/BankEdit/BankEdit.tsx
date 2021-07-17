@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback, useMemo, memo, FC, ReactElement } fro
 import { Redirect, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getUpdatedForm, getFormElements, ValidateForm, checkValidity } from '../../../shared/utility';
+import { getUpdatedForm, getFormElements, ValidateForm } from '../../../shared/utility';
 import FormElement from '../../UI/FormElement/FormElement';
 import ConfirmDelete from '../../UI/ConfirmDelete/ConfirmDelete';
 import Modal from '../../UI/Modal/Modal';
@@ -14,6 +14,7 @@ import * as authActions from '../../../store/actions/authActions';
 import { Dictionary, FormControlElement, FormControlElementContent } from '../../../shared/types';
 import { AppState } from '../../../store';
 import { Bank } from '../../../models/Bank.model';
+import { FormEvent } from 'react';
 
 interface StoreProps {
     bank: Bank,
@@ -144,8 +145,7 @@ const BankEdit: FC<{ id: number }> = memo(({ id }) => {
         }
     }, [successfulOperation]);
 
-    const elementHandler = (event: any, id: string): void => {
-        console.log(event);
+    const elementHandler = (event: FormEvent, id: string): void => {
         setFormControls(getUpdatedForm(event, formControls, id));
     };
 
@@ -153,7 +153,7 @@ const BankEdit: FC<{ id: number }> = memo(({ id }) => {
         setRedirect(<Redirect to={`/banks/${id}`} />);
     }, [id, setRedirect]);
 
-    const saveHandler = (event: any): void => {
+    const saveHandler = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
         const bank: Bank = {
             id: id,

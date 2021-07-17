@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import { ChangeEventHandler, FC, FocusEventHandler, KeyboardEventHandler, ReactElement } from 'react';
+import { ChangeEventHandler, FC, FocusEventHandler, ReactElement } from 'react';
 
 import * as classes from './FormControl.module.scss';
 import DropDown from '../../DropDown/DropDown';

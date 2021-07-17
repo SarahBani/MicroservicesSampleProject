@@ -19,8 +19,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{3D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.APIService", "Microservices\Identity\Identity.APIService\Identity.APIService.csproj", "{BCD36F2C-7188-4274-967E-3F872C0F80CC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{EB335C75-8BA9-4E6D-955E-069D01B71C87}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRUD.APIService", "Microservices\CRUD\CRUD.APIService\CRUD.APIService.csproj", "{C651A466-AF54-4AFF-8F70-9C736C0C989A}"
 EndProject
 Global
@@ -41,10 +39,6 @@ Global
 		{BCD36F2C-7188-4274-967E-3F872C0F80CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCD36F2C-7188-4274-967E-3F872C0F80CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCD36F2C-7188-4274-967E-3F872C0F80CC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EB335C75-8BA9-4E6D-955E-069D01B71C87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EB335C75-8BA9-4E6D-955E-069D01B71C87}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EB335C75-8BA9-4E6D-955E-069D01B71C87}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EB335C75-8BA9-4E6D-955E-069D01B71C87}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C651A466-AF54-4AFF-8F70-9C736C0C989A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C651A466-AF54-4AFF-8F70-9C736C0C989A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C651A466-AF54-4AFF-8F70-9C736C0C989A}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -13,12 +13,12 @@ const initialState: State = {
     selectedBank: null
 };
 
-export const bankReducer = (state: State = initialState, action: any): any => {
-    switch (action.type) {
+export const bankReducer = (state: State = initialState, payload: any): any => {
+    switch (payload.type) {
         case actionTypes.SET_BANKS:
             return {
                 ...state,
-                banks: action.banks
+                banks: payload.banks
             };
         case actionTypes.RESET_BANKS: 
             return {
@@ -29,12 +29,12 @@ export const bankReducer = (state: State = initialState, action: any): any => {
         case actionTypes.SET_BANKS_COUNT:
             return {
                 ...state,
-                count: action.count
+                count: payload.count
             };
         case actionTypes.SET_BANK:
             return {
                 ...state,
-                selectedBank: action.bank
+                selectedBank: payload.bank
             };
         case actionTypes.CLEAR_SELECTED_BANK:
             return {

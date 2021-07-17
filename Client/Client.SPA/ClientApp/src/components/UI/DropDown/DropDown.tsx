@@ -1,8 +1,8 @@
 ﻿import * as React from 'react';
-import { useState, useEffect, useMemo, useCallback, useRef, Fragment, FC, ReactElement, FocusEventHandler, MutableRefObject, LegacyRef } from 'react';
-import { DropDownItem } from '../../../shared/types';
+import { useState, useEffect, useMemo, useCallback, useRef, Fragment, FC, ReactElement, FocusEventHandler, MutableRefObject } from 'react';
 
 import * as classes from './DropDown.module.scss';
+import { DropDownItem } from '../../../shared/types';
 
 interface Props {
     id?: string,

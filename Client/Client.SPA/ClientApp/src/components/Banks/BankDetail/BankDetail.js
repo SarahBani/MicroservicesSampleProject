@@ -19,7 +19,7 @@ var BankDetail = react_1.memo(function (_a) {
         loggedIn: state.auth.loggedIn,
         token: state.auth.token,
         error: state.common.error
-    }); }), bank = _b.bank, successfulOperation = _b.successfulOperation, failedOperation = _b.failedOperation, loggedIn = _b.loggedIn, token = _b.token, error = _b.error;
+    }); }), bank = _b.bank, successfulOperation = _b.successfulOperation, failedOperation = _b.failedOperation, loggedIn = _b.loggedIn, token = _b.token;
     var dispatch = react_redux_1.useDispatch();
     var action = react_router_1.useParams().action;
     var history = react_router_1.useHistory();
@@ -39,6 +39,7 @@ var BankDetail = react_1.memo(function (_a) {
         }
     }, [successfulOperation]);
     var cancelHandler = react_1.useCallback(function () {
+        dispatch(actions.clearSelectedBank());
         setRedirect(React.createElement(react_router_1.Redirect, { to: "/Banks" }));
     }, [setRedirect]);
     var editHandler = react_1.useCallback(function () {

@@ -15,7 +15,7 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using System.Threading.Tasks;
-using Utility = Common.Utility;
+using Utility = Identity.APIService.Helpers.Utility;
 
 namespace Identity.APIService
 {

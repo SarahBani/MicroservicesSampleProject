@@ -6,5 +6,7 @@ export const SET_BANKS_COUNT: string = 'SET_BANKS_COUNT';
 export const FETCH_BANK: string = 'FETCH_BANK';
 export const SET_BANK: string = 'SET_BANK';
 export const CLEAR_SELECTED_BANK: string = 'CLEAR_SELECTED_BANK';
+export const UPLOAD_BANK_LOGO: string = 'UPLOAD_BANK_LOGO';
+export const REMOVE_BANK_PHOTO: string = 'REMOVE_BANK_PHOTO';
 export const SAVE_BANK: string = 'SAVE_BANK';
 export const DELETE_BANK: string = 'DELETE_BANK';

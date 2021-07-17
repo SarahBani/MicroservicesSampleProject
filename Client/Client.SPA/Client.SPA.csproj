@@ -34,6 +34,18 @@
     <TypeScriptCompile Remove="ClientApp\node_modules\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <TypeScriptCompile Remove="ClientApp\src\components\Banks\NoBank\NoBank.tsx" />
+    <TypeScriptCompile Remove="ClientApp\src\components\UI\Footer\Footer.tsx" />
+    <TypeScriptCompile Remove="ClientApp\src\store\sagas\uploadFileChannel.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="ClientApp\src\components\Banks\NoBank\NoBank.tsx" />
+    <None Include="ClientApp\src\components\UI\Footer\Footer.tsx" />
+    <None Include="ClientApp\src\store\sagas\uploadFileChannel.ts" />
+  </ItemGroup>
+
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">

@@ -26,7 +26,7 @@ interface StoreProps {
 
 const BankDetail: FC<Props> = memo(({ id }) => {
 
-    const { bank, successfulOperation, failedOperation, loggedIn, token, error }: StoreProps =
+    const { bank, successfulOperation, failedOperation, loggedIn, token }: StoreProps =
         useSelector((state: AppState) => ({
             bank: state.bank.selectedBank,
             successfulOperation: state.common.successfulOperation,
@@ -59,6 +59,7 @@ const BankDetail: FC<Props> = memo(({ id }) => {
     }, [successfulOperation]);
 
     const cancelHandler = useCallback(() => {
+        dispatch(actions.clearSelectedBank());
         setRedirect(<Redirect to="/Banks" />);
     }, [setRedirect]);
 

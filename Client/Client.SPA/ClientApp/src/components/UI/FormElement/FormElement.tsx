@@ -1,8 +1,8 @@
 ﻿import * as React from 'react';
 import { ChangeEvent, FC, FocusEvent } from 'react';
-import { FormControlElement } from '../../../shared/types';
 
 import FormControl from './FormControl/FormControl';
+import { FormControlElement } from '../../../shared/types';
 
 interface Props {
     formElement: FormControlElement,

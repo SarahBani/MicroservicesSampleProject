@@ -1,5 +1,4 @@
-﻿using Common.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,7 +7,7 @@ namespace CRUD.APIService.Entities
 {
     public enum Grade
     {
-        A, B, C, D, F
+        A, B, C, D, E
     }
 
     public class Bank : Entity<int>

@@ -1,4 +1,4 @@
-﻿using Common;
+﻿using CRUD.APIService.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CRUD.APIService.Controllers

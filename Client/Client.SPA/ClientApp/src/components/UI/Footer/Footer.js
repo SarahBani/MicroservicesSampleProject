@@ -1,52 +1,35 @@
-﻿import React from 'react';
-import { Link } from 'react-router-dom';
-
-import * as classes from './Footer.module.scss';
-import Logo from '../Logo/Logo';
-import { connect } from 'react-redux';
-
-const Footer = props => (
-    <footer className={classes.Footer}>
-        <div className="container">
-            <div className="row">
-                <div className="col-offset-0 col-5 col-sm-offset-2 col-sm-4 col-md-3 col-lg-2">
-                    <Logo />
-                </div>
-                <div className="col-2 col-sm-8">
-                    <div className="row">
-                        <ul className="col-2 list-unstyled">
-                            <li>
-                                <Link to={{ pathname: "/" }}>Home</Link>
-                            </li>
-                            {
-                                props.isLoggedIn &&
-                                <li>
-                                    <Link to={{ pathname: "/Profile" }}>Profile</Link>
-                                </li>
-                            }
-                            <li>
-                                <Link to={{ pathname: "/Banks" }}>Banks</Link>
-                            </li>
-                            <li>
-                                <Link to={{ pathname: "/About" }}>About</Link>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div className="text-center pb-1">
-                © 2020 Copyright:
-                    <em> Sarah Banieghbal</em>
-            </div>
-        </div>
-    </footer>
-);
-
-const mapStateToProps = state => {
-    return {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = require("react");
+var react_router_dom_1 = require("react-router-dom");
+var react_redux_1 = require("react-redux");
+var classes = require("./Footer.module.scss");
+var Logo_1 = require("../Logo/Logo");
+;
+var Footer = function () {
+    var isLoggedIn = react_redux_1.useSelector(function (state) { return ({
         isLoggedIn: state.auth.loggedIn
-    };
+    }); }).isLoggedIn;
+    return (React.createElement("footer", { className: classes.Footer },
+        React.createElement("div", { className: "container" },
+            React.createElement("div", { className: "row" },
+                React.createElement("div", { className: "col-offset-0 col-5 col-sm-offset-2 col-sm-4 col-md-3 col-lg-2" },
+                    React.createElement(Logo_1.default, null)),
+                React.createElement("div", { className: "col-2 col-sm-8" },
+                    React.createElement("div", { className: "row" },
+                        React.createElement("ul", { className: "col-2 list-unstyled" },
+                            React.createElement("li", null,
+                                React.createElement(react_router_dom_1.Link, { to: { pathname: "/" } }, "Home")),
+                            isLoggedIn &&
+                                React.createElement("li", null,
+                                    React.createElement(react_router_dom_1.Link, { to: { pathname: "/Profile" } }, "Profile")),
+                            React.createElement("li", null,
+                                React.createElement(react_router_dom_1.Link, { to: { pathname: "/Banks" } }, "Banks")),
+                            React.createElement("li", null,
+                                React.createElement(react_router_dom_1.Link, { to: { pathname: "/About" } }, "About")))))),
+            React.createElement("div", { className: "text-center pb-1" },
+                "\u00A9 2020 Copyright:",
+                React.createElement("em", null, " Sarah Banieghbal")))));
 };
-
-export default connect(mapStateToProps)(Footer);
+exports.default = Footer;
+//# sourceMappingURL=Footer.js.map

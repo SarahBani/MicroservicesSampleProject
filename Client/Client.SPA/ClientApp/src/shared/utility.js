@@ -11,7 +11,7 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getErrorMessage = exports.disableForm = exports.checkValidity = exports.ValidateForm = exports.getUpdatedForm = exports.getFormElements = exports.updateObject = void 0;
+exports.getTokenHeaders = exports.getHeaders = exports.getErrorMessage = exports.disableForm = exports.checkValidity = exports.ValidateForm = exports.getUpdatedForm = exports.getFormElements = exports.updateObject = void 0;
 var Constants = require("./constants");
 var enums_1 = require("./enums");
 var updateObject = function (oldObject, updatedProperties) {
@@ -116,4 +116,13 @@ var getErrorMessage = function (error) {
     }
 };
 exports.getErrorMessage = getErrorMessage;
+var getHeaders = function () { return ({
+    'Content-Type': 'application/json; charset=utf-8',
+}); };
+exports.getHeaders = getHeaders;
+var getTokenHeaders = function (token) { return ({
+    'Content-Type': 'application/json; charset=utf-8',
+    Authorization: "Bearer " + token
+}); };
+exports.getTokenHeaders = getTokenHeaders;
 //# sourceMappingURL=utility.js.map

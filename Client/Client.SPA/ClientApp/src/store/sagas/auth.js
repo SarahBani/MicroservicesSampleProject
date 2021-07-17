@@ -38,7 +38,7 @@ var delay = function (ms) {
     return new Promise(function (res) { return setTimeout(res, ms); });
 };
 exports.delay = delay;
-function signInSaga(action) {
+function signInSaga(payload) {
     var data, response, authResponse, user, error_1;
     var _a;
     return __generator(this, function (_b) {
@@ -47,8 +47,8 @@ function signInSaga(action) {
             case 1:
                 _b.sent();
                 data = {
-                    email: action.email,
-                    password: action.password
+                    email: payload.email,
+                    password: payload.password
                 };
                 _b.label = 2;
             case 2:
@@ -110,11 +110,11 @@ function signOutSaga() {
     });
 }
 exports.signOutSaga = signOutSaga;
-function checkAuthTimeoutSaga(action) {
+function checkAuthTimeoutSaga(payload) {
     var duration;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, (new Date(action.tokenExpiration).getTime() - new Date().getTime())];
+            case 0: return [4 /*yield*/, (new Date(payload.tokenExpiration).getTime() - new Date().getTime())];
             case 1:
                 duration = _a.sent();
                 //delay(duration);

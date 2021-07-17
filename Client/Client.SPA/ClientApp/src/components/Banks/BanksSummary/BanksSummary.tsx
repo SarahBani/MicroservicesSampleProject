@@ -13,6 +13,8 @@ interface StoreProps {
     banks: Bank[]
 };
 
+const pageCount: number = 6;
+
 const BanksSummary: FC = () => {
 
     const { banks }: StoreProps = useSelector((state: AppState) => ({
@@ -21,7 +23,7 @@ const BanksSummary: FC = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(actions.fetchBanks(1, 6));
+        dispatch(actions.fetchBanks(null, null, 1, pageCount));
     }, []);
 
     const bankItemCards = useMemo(() => (
