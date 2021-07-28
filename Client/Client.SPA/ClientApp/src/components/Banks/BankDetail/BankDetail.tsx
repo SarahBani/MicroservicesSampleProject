@@ -46,6 +46,11 @@ const BankDetail: FC<Props> = memo(({ id }) => {
         dispatch(actions.fetchBank(id));
     }, [id]);
 
+    const logo = useMemo(() => {
+        let logoSrc = (bank?.logoUrl ? `Resources/Images/Banks/${bank.logoUrl}` : 'images/no-image.png' );
+        return <img className="img-response" src={logoSrc} />;
+    }, [bank]);
+
     useEffect(() => {
         if (failedOperation && failedOperation === FailedOperationEnum.FetchBank) {
             cancelHandler();
@@ -91,6 +96,12 @@ const BankDetail: FC<Props> = memo(({ id }) => {
         <div className={classes.BankDetail}>
             {redirect}
             {deleteConfirmContent}
+
+            <div className="row">
+                <div className="col-12">
+                    { logo}
+                </div>
+            </div>
 
             <div className="row">
                 <div className="col-12">

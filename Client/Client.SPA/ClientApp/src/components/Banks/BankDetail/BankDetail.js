@@ -28,6 +28,10 @@ var BankDetail = react_1.memo(function (_a) {
     react_1.useEffect(function () {
         dispatch(actions.fetchBank(id));
     }, [id]);
+    var logo = react_1.useMemo(function () {
+        var logoSrc = ((bank === null || bank === void 0 ? void 0 : bank.logoUrl) ? "Resources/Images/Banks/" + bank.logoUrl : 'images/no-image.png');
+        return React.createElement("img", { className: "img-response", src: logoSrc });
+    }, [bank]);
     react_1.useEffect(function () {
         if (failedOperation && failedOperation === enums_1.FailedOperationEnum.FetchBank) {
             cancelHandler();
@@ -61,6 +65,8 @@ var BankDetail = react_1.memo(function (_a) {
     return (React.createElement("div", { className: classes.BankDetail },
         redirect,
         deleteConfirmContent,
+        React.createElement("div", { className: "row" },
+            React.createElement("div", { className: "col-12" }, logo)),
         React.createElement("div", { className: "row" },
             React.createElement("div", { className: "col-12" },
                 React.createElement("h4", null, bank === null || bank === void 0 ? void 0 : bank.name))),
