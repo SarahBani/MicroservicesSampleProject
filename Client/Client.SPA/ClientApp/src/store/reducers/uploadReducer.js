@@ -13,17 +13,20 @@ var __assign = (this && this.__assign) || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var actionTypes = require("../actions/uploadActionTypes");
 var initialState = {
-    fileUploadPercentage: null
+    fileUploadPercentage: null,
+    filePath: null
 };
 var uploadReducer = function (state, action) {
     if (state === void 0) { state = initialState; }
     switch (action.type) {
         case actionTypes.RESET:
-            return __assign(__assign({}, state), { fileUploadPercentage: null });
+            return __assign(__assign({}, state), { fileUploadPercentage: null, filePath: null });
         case actionTypes.START_UPLOAD:
-            return __assign(__assign({}, state), { fileUploadPercentage: 0 });
+            return __assign(__assign({}, state), { fileUploadPercentage: 0, filePath: null });
         case actionTypes.SHOW_PROGRESS:
             return __assign(__assign({}, state), { fileUploadPercentage: action.progress });
+        case actionTypes.UPLOAD_SUCCEEDED:
+            return __assign(__assign({}, state), { filePath: action.filePath });
         default:
             return state;
     }

@@ -1,17 +1,13 @@
 ﻿import { buffers, eventChannel, END, EventChannel } from 'redux-saga';
 
-//export interface UploadChannelResult {
-//    progress: number,
-//    success: boolean
-//    err: Error,
-//    filePath: string
-//};
+import * as Constants from "../../shared/constants";
 
-export type UploadChannelResult = { progress: number } | { success: boolean } | { err: Error };
+export type UploadChannelResult = { progress: number } | { success: boolean } | { err: Error } | { filePath: string};
 
 const uploadFileChannel = (endpoint: string, file: FormData, token: string): EventChannel<UploadChannelResult> => {
+
     return eventChannel(emitter => {
-        const xhr = new XMLHttpRequest();
+        const xhr: XMLHttpRequest = new XMLHttpRequest();
         const onProgress = (event: any) => {
             if (event.lengthComputable) {
                 const progress: number = event.loaded / event.total * 100;
@@ -29,24 +25,19 @@ const uploadFileChannel = (endpoint: string, file: FormData, token: string): Eve
             const { readyState, status } = xhr;
             if (readyState === 4) {
                 if (status === 200) {
-                    const response = JSON.parse(xhr.responseText);
-                    if (response.isSuccessful) {
-                        emitter({
-                            success: true,
-                            //filePath: response.content
-                        });
-                        emitter(END);
-                    }
-                    else {
-                        onFailure(null);
-                    }
+                    const uploadedFilePath: string = xhr.responseText;
+                    emitter({
+                        success: true,
+                        filePath: uploadedFilePath
+                    });
+                    emitter(END);
                 }
                 else {
                     onFailure(null);
                 }
             }
         };
-        xhr.open("POST", endpoint, true);
+        xhr.open("POST", Constants.GATEWAY_URL + '/' + endpoint, true);
         xhr.setRequestHeader('Authorization', `Bearer ${token}`);
         xhr.send(file);
         return () => {

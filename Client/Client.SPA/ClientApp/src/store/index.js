@@ -5,6 +5,7 @@ var WeatherForecasts = require("./WeatherForecasts");
 var Counter = require("./Counter");
 var authReducer_1 = require("./reducers/authReducer");
 var commonReducer_1 = require("./reducers/commonReducer");
+var uploadReducer_1 = require("./reducers/uploadReducer");
 var bankReducer_1 = require("./reducers/bankReducer");
 var configureStore_1 = require("./configureStore");
 var redux_saga_1 = require("redux-saga");
@@ -27,7 +28,7 @@ var reducers = {
     auth: authReducer_1.default,
     //location: locationReducer,
     bank: bankReducer_1.default,
-    //upload: uploadReducer
+    upload: uploadReducer_1.default
 };
 ;
 var sagaMiddleware = redux_saga_1.default();

@@ -9,6 +9,7 @@ var ConfirmDelete_1 = require("../../UI/ConfirmDelete/ConfirmDelete");
 var enums_1 = require("../../../shared/enums");
 var actions = require("../../../store/actions/bankActions");
 var Modal_1 = require("../../UI/Modal/Modal");
+var Constants = require("../../../shared/constants");
 ;
 var BankDetail = react_1.memo(function (_a) {
     var id = _a.id;
@@ -29,7 +30,8 @@ var BankDetail = react_1.memo(function (_a) {
         dispatch(actions.fetchBank(id));
     }, [id]);
     var logo = react_1.useMemo(function () {
-        var logoSrc = ((bank === null || bank === void 0 ? void 0 : bank.logoUrl) ? "Resources/Images/Banks/" + bank.logoUrl : 'images/no-image.png');
+        var fileManagerUrl = Constants.FILE_MANAGER_URL;
+        var logoSrc = ((bank === null || bank === void 0 ? void 0 : bank.logoUrl) ? fileManagerUrl + "/Resources/Images/Banks/" + bank.logoUrl : 'images/no-image.png');
         return React.createElement("img", { className: "img-response", src: logoSrc });
     }, [bank]);
     react_1.useEffect(function () {

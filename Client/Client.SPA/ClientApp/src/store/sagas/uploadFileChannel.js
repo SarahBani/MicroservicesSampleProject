@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var redux_saga_1 = require("redux-saga");
+var Constants = require("../../shared/constants");
 var uploadFileChannel = function (endpoint, file, token) {
     return redux_saga_1.eventChannel(function (emitter) {
         var xhr = new XMLHttpRequest();
@@ -21,24 +22,19 @@ var uploadFileChannel = function (endpoint, file, token) {
             var readyState = xhr.readyState, status = xhr.status;
             if (readyState === 4) {
                 if (status === 200) {
-                    var response = JSON.parse(xhr.responseText);
-                    if (response.isSuccessful) {
-                        emitter({
-                            success: true,
-                            //filePath: response.content
-                        });
-                        emitter(redux_saga_1.END);
-                    }
-                    else {
-                        onFailure(null);
-                    }
+                    var uploadedFilePath = xhr.responseText;
+                    emitter({
+                        success: true,
+                        filePath: uploadedFilePath
+                    });
+                    emitter(redux_saga_1.END);
                 }
                 else {
                     onFailure(null);
                 }
             }
         };
-        xhr.open("POST", endpoint, true);
+        xhr.open("POST", Constants.GATEWAY_URL + '/' + endpoint, true);
         xhr.setRequestHeader('Authorization', "Bearer " + token);
         xhr.send(file);
         return function () {

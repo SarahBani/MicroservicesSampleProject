@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import * as classes from './BankItemCard.module.scss';
 import { Bank } from '../../../models/Bank.model';
+import * as Constants from '../../../shared/constants';
 
 interface Props {
     bank: Bank
@@ -11,7 +12,7 @@ interface Props {
 
 const BankItemCard: FC<Props> = props => {
 
-    const imageUrl = (props.bank.logoUrl ? `Resources/Images/Banks/${props.bank.logoUrl}` : 'images/no-image.png');
+    const imageUrl = (props.bank.logoUrl ? `${Constants.FILE_MANAGER_URL}/Resources/Images/Banks/${props.bank.logoUrl}` : 'images/no-image.png');
 
     return (
         <div className={["card", classes.BankItemCard].join(' ')}>

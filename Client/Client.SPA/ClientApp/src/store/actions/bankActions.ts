@@ -61,8 +61,6 @@ export const clearSelectedBank = () => {
 };
 
 export const uploadBankLogo = (file: any, token: string) => {
-    console.log(232323);
-    console.log(file);
     return {
         type: actionTypes.UPLOAD_BANK_LOGO,
         file: file,

@@ -1,4 +1,5 @@
-﻿import { call, put, take } from 'redux-saga/effects';
+﻿import { ActionPattern, put, take, call } from 'redux-saga/effects';
+import { EventChannel, TakeableChannel } from 'redux-saga';
 
 import { SuccessfulOperationEnum, FailedOperationEnum } from '../../shared/enums';
 import * as actions from '../actions/bankActions';
@@ -6,7 +7,7 @@ import * as commonActions from '../actions/commonActions';
 import * as uploadActions from '../actions/uploadActions';
 import { ResponseGenerator } from '../../models/ResponseGenerator.model';
 import axiosInstance from '../../shared/axios-instance';
-import uploadFileChannel, { UploadChannelResult } from './uploadFileChannel';
+import uploadFileChannel from './uploadFileChannel';
 import { getHeaders, getTokenHeaders } from '../../shared/utility';
 
 //const cancelSource = axios.CancelToken.source();
@@ -91,35 +92,26 @@ export function* uploadBankLogoSaga(payload: ReturnType<typeof actions.uploadBan
 
     const formData: FormData = new FormData();
     formData.append("file", payload.file, payload.file.name);
-    //const channel= yield call(uploadFileChannel,
-    //    `/Bank/UploadLogo/${payload.hotelId}`,
-    //    formData,
-    //    payload.token);
 
-    const channel = call(uploadFileChannel,
-        '/Bank/UploadLogo/',
+    const channel: ResponseGenerator  = yield call(uploadFileChannel,
+        'UploadBankLogo',
         formData,
         payload.token);
 
-    console.log(channel);
-
-    //while (true) {
-    //    const { progress = 0, err, success, filePath } = yield take(channel);
-    //    if (err) {
-    //        yield put(commonActions.raiseError(err));
-    //        return;
-    //    }
-    //    if (success) {
-    //        const imageUrl = filePath.replace('Resources\\Images\\Banks\\', '').replace('\\', '/');
-    //        console.log(3333333333);
-    //        console.log(imageUrl);
-    //        //yield put(actions.saveHotelPhoto({
-    //        //    hotelId: payload.hotelId,
-    //        //    photoUrl: imageUrl
-    //        //}, payload.token));
-    //    }
-    //    yield put(uploadActions.showProgress(progress));
-    //}
+    while (true) {
+        const { progress = 0, err, success, filePath } = yield take(channel as ActionPattern);
+       if (err) {
+            yield put(commonActions.raiseError(err));
+            return;
+        }
+        if (success) {
+            const imageUrl = filePath.replace('Resources\\Images\\Banks\\', '').replace('\\', '/');
+            yield put(uploadActions.uploadSucceeded(imageUrl));
+            yield put(commonActions.hideLoader());
+            return;
+        }
+        yield put(uploadActions.showProgress(progress));
+    }
 }
 
 export function* removeBankLogoSaga(payload: ReturnType<typeof actions.removeBankLogo>) {
@@ -165,6 +157,7 @@ export function* saveBankSaga(payload: ReturnType<typeof actions.saveBank>) {
                 yield put(commonActions.operationSucceeded(SuccessfulOperationEnum.Update));
             }
         }
+        yield put(uploadActions.reset());
         yield put(commonActions.hideLoader());
     } catch (error) {
         console.log(error);
@@ -182,6 +175,7 @@ export function* deleteBankSaga(payload: ReturnType<typeof actions.deleteBank>) 
         if (response?.status === 200) {
             yield put(commonActions.operationSucceeded(SuccessfulOperationEnum.Delete));
             yield put(actions.clearSelectedBank());
+            yield put(uploadActions.reset());
         }
         yield put(commonActions.hideLoader());
     } catch (error) {

@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import { useMemo, useEffect, FC, ReactElement, useRef } from 'react';
+import { useMemo, useEffect, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as classes from './BanksSummary.module.scss';

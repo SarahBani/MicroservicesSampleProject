@@ -10,6 +10,10 @@ echo "Deleting Folder - IdentityAPIService"
 @RD /S /Q "H:\Project\Microservices\MicroservicesSampleProject\Microservices\Identity\Identity.APIService\bin"
 @RD /S /Q "H:\Project\Microservices\MicroservicesSampleProject\Microservices\Identity\Identity.APIService\obj"
 
+echo "Deleting Folder - FileManagerAPIService"
+@RD /S /Q "H:\Project\Microservices\MicroservicesSampleProject\Microservices\FileManager\FileManager.APIService\bin"
+@RD /S /Q "H:\Project\Microservices\MicroservicesSampleProject\Microservices\FileManager\FileManager.APIService\obj"
+
 echo "Deleting Folder - ClientSPA
 @RD /S /Q "H:\Project\Microservices\MicroservicesSampleProject\Client\Client.SPA\bin"
 @RD /S /Q "H:\Project\Microservices\MicroservicesSampleProject\Client\Client.SPA\obj"

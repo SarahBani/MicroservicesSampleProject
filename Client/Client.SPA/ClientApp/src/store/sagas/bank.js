@@ -190,20 +190,46 @@ function fetchBankSaga(payload) {
 }
 exports.fetchBankSaga = fetchBankSaga;
 function uploadBankLogoSaga(payload) {
-    var formData, channel;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+    var formData, channel, _a, _b, progress, err, success, filePath, imageUrl;
+    return __generator(this, function (_c) {
+        switch (_c.label) {
             case 0: return [4 /*yield*/, effects_1.put(commonActions.showLoader())];
             case 1:
-                _a.sent();
+                _c.sent();
                 return [4 /*yield*/, effects_1.put(uploadActions.startUpload())];
             case 2:
-                _a.sent();
+                _c.sent();
                 formData = new FormData();
                 formData.append("file", payload.file, payload.file.name);
-                channel = effects_1.call(uploadFileChannel_1.default, '/Bank/UploadLogo/', formData, payload.token);
-                console.log(channel);
+                return [4 /*yield*/, effects_1.call(uploadFileChannel_1.default, 'UploadBankLogo', formData, payload.token)];
+            case 3:
+                channel = _c.sent();
+                _c.label = 4;
+            case 4:
+                if (!true) return [3 /*break*/, 12];
+                return [4 /*yield*/, effects_1.take(channel)];
+            case 5:
+                _a = _c.sent(), _b = _a.progress, progress = _b === void 0 ? 0 : _b, err = _a.err, success = _a.success, filePath = _a.filePath;
+                if (!err) return [3 /*break*/, 7];
+                return [4 /*yield*/, effects_1.put(commonActions.raiseError(err))];
+            case 6:
+                _c.sent();
                 return [2 /*return*/];
+            case 7:
+                if (!success) return [3 /*break*/, 10];
+                imageUrl = filePath.replace('Resources\\Images\\Banks\\', '').replace('\\', '/');
+                return [4 /*yield*/, effects_1.put(uploadActions.uploadSucceeded(imageUrl))];
+            case 8:
+                _c.sent();
+                return [4 /*yield*/, effects_1.put(commonActions.hideLoader())];
+            case 9:
+                _c.sent();
+                return [2 /*return*/];
+            case 10: return [4 /*yield*/, effects_1.put(uploadActions.showProgress(progress))];
+            case 11:
+                _c.sent();
+                return [3 /*break*/, 4];
+            case 12: return [2 /*return*/];
         }
     });
 }
@@ -261,7 +287,7 @@ function saveBankSaga(payload) {
                 _a.sent();
                 _a.label = 2;
             case 2:
-                _a.trys.push([2, 11, , 13]);
+                _a.trys.push([2, 12, , 14]);
                 response = void 0;
                 if (!!payload.bank.id) return [3 /*break*/, 6];
                 return [4 /*yield*/, axios_instance_1.default.post('/bank', payload.bank, {
@@ -285,18 +311,21 @@ function saveBankSaga(payload) {
             case 8:
                 _a.sent();
                 _a.label = 9;
-            case 9: return [4 /*yield*/, effects_1.put(commonActions.hideLoader())];
+            case 9: return [4 /*yield*/, effects_1.put(uploadActions.reset())];
             case 10:
                 _a.sent();
-                return [3 /*break*/, 13];
+                return [4 /*yield*/, effects_1.put(commonActions.hideLoader())];
             case 11:
+                _a.sent();
+                return [3 /*break*/, 14];
+            case 12:
                 error_5 = _a.sent();
                 console.log(error_5);
                 return [4 /*yield*/, effects_1.put(commonActions.raiseError(error_5))];
-            case 12:
+            case 13:
                 _a.sent();
-                return [3 /*break*/, 13];
-            case 13: return [2 /*return*/];
+                return [3 /*break*/, 14];
+            case 14: return [2 /*return*/];
         }
     });
 }
@@ -310,31 +339,34 @@ function deleteBankSaga(payload) {
                 _a.sent();
                 _a.label = 2;
             case 2:
-                _a.trys.push([2, 8, , 10]);
+                _a.trys.push([2, 9, , 11]);
                 return [4 /*yield*/, axios_instance_1.default.delete('/bank/' + payload.id, {
                         headers: utility_1.getTokenHeaders(payload.token)
                     })];
             case 3:
                 response = _a.sent();
-                if (!((response === null || response === void 0 ? void 0 : response.status) === 200)) return [3 /*break*/, 6];
+                if (!((response === null || response === void 0 ? void 0 : response.status) === 200)) return [3 /*break*/, 7];
                 return [4 /*yield*/, effects_1.put(commonActions.operationSucceeded(enums_1.SuccessfulOperationEnum.Delete))];
             case 4:
                 _a.sent();
                 return [4 /*yield*/, effects_1.put(actions.clearSelectedBank())];
             case 5:
                 _a.sent();
-                _a.label = 6;
-            case 6: return [4 /*yield*/, effects_1.put(commonActions.hideLoader())];
-            case 7:
+                return [4 /*yield*/, effects_1.put(uploadActions.reset())];
+            case 6:
                 _a.sent();
-                return [3 /*break*/, 10];
+                _a.label = 7;
+            case 7: return [4 /*yield*/, effects_1.put(commonActions.hideLoader())];
             case 8:
+                _a.sent();
+                return [3 /*break*/, 11];
+            case 9:
                 error_6 = _a.sent();
                 return [4 /*yield*/, effects_1.put(commonActions.raiseError(error_6))];
-            case 9:
+            case 10:
                 _a.sent();
-                return [3 /*break*/, 10];
-            case 10: return [2 /*return*/];
+                return [3 /*break*/, 11];
+            case 11: return [2 /*return*/];
         }
     });
 }

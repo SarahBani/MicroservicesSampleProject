@@ -1,13 +1,14 @@
 ﻿import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { HttpErrorEnum } from './enums';
 import { getErrorMessage } from './utility';
+import * as Constants from "./constants";
 //import * as https from 'https';
 
 //const httpsAgent = new https.Agent({ rejectUnauthorized: false });
 const cancelSource = axios.CancelToken.source();
 
 const axiosInstance: AxiosInstance = axios.create({
-    baseURL: 'https://localhost:5101/gateway',
+    baseURL: Constants.GATEWAY_URL,
     //cancelToken: cancelSource.token
     //httpsAgent: httpsAgent
 });

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace Identity.APIService.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
     [Authorize]
     public class AccountController : BaseAPIController
     {

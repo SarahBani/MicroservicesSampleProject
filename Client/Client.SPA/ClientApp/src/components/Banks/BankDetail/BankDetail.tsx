@@ -10,6 +10,7 @@ import * as actions from '../../../store/actions/bankActions';
 import { AppState } from '../../../store';
 import { Bank } from '../../../models/Bank.model';
 import Modal from '../../UI/Modal/Modal';
+import * as Constants from '../../../shared/constants';
 
 interface Props {
     id: number,
@@ -47,7 +48,8 @@ const BankDetail: FC<Props> = memo(({ id }) => {
     }, [id]);
 
     const logo = useMemo(() => {
-        let logoSrc = (bank?.logoUrl ? `Resources/Images/Banks/${bank.logoUrl}` : 'images/no-image.png' );
+        const fileManagerUrl = Constants.FILE_MANAGER_URL;
+        const logoSrc = (bank?.logoUrl ? `${fileManagerUrl}/Resources/Images/Banks/${bank.logoUrl}` : 'images/no-image.png');
         return <img className="img-response" src={logoSrc} />;
     }, [bank]);
 
@@ -99,7 +101,7 @@ const BankDetail: FC<Props> = memo(({ id }) => {
 
             <div className="row">
                 <div className="col-12">
-                    { logo}
+                    {logo}
                 </div>
             </div>
 

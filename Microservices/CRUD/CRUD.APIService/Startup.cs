@@ -35,7 +35,7 @@ namespace CRUD.APIService
 
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            this.Configuration = configuration;
         }
 
         #endregion /Constructors

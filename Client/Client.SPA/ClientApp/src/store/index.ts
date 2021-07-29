@@ -2,6 +2,7 @@ import * as WeatherForecasts from './WeatherForecasts';
 import * as Counter from './Counter';
 import authReducer, * as Auth from './reducers/authReducer';
 import commonReducer, * as Common from './reducers/commonReducer';
+import uploadReducer, * as Upload from './reducers/uploadReducer';
 import bankReducer, * as Bank from './reducers/bankReducer';
 import configureStore from './configureStore';
 import createSagaMiddleware from 'redux-saga';
@@ -27,7 +28,7 @@ const reducers = {
     auth: authReducer,
     //location: locationReducer,
     bank: bankReducer,
-    //upload: uploadReducer
+    upload: uploadReducer
 };
 
 // This type can be used as a hint on action creators so that its 'dispatch' and 'getState' params are

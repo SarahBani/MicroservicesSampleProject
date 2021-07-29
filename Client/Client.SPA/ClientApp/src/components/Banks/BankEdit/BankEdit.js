@@ -15,6 +15,7 @@ var React = require("react");
 var react_1 = require("react");
 var react_router_dom_1 = require("react-router-dom");
 var react_redux_1 = require("react-redux");
+var classes = require("./BankEdit.module.scss");
 var utility_1 = require("../../../shared/utility");
 var FormElement_1 = require("../../UI/FormElement/FormElement");
 var ConfirmDelete_1 = require("../../UI/ConfirmDelete/ConfirmDelete");
@@ -22,6 +23,9 @@ var Modal_1 = require("../../UI/Modal/Modal");
 var enums_1 = require("../../../shared/enums");
 var actions = require("../../../store/actions/bankActions");
 var authActions = require("../../../store/actions/authActions");
+//import * as locationActions from '../../../store/actions/locationActions';
+var uploadActions = require("../../../store/actions/uploadActions");
+var Constants = require("../../../shared/constants");
 ;
 var initialFormState = {
     name: {
@@ -72,17 +76,21 @@ var BankEdit = react_1.memo(function (_a) {
         bank: state.bank.selectedBank,
         loggedIn: state.auth.loggedIn,
         token: state.auth.token,
+        uploadedPercentage: state.upload.fileUploadPercentage,
+        logoFilePath: state.upload.filePath,
         loading: state.common.isLoading,
         successfulOperation: state.common.successfulOperation,
         failedOperation: state.common.failedOperation
-    }); }), bank = _b.bank, loggedIn = _b.loggedIn, token = _b.token, loading = _b.loading, successfulOperation = _b.successfulOperation, failedOperation = _b.failedOperation;
+    }); }), bank = _b.bank, loggedIn = _b.loggedIn, token = _b.token, uploadedPercentage = _b.uploadedPercentage, logoFilePath = _b.logoFilePath, loading = _b.loading, successfulOperation = _b.successfulOperation, failedOperation = _b.failedOperation;
     var dispatch = react_redux_1.useDispatch();
     var location = react_router_dom_1.useLocation();
     var _c = react_1.useState(initialFormState), formControls = _c[0], setFormControls = _c[1];
-    var _d = react_1.useState(false), isFormValid = _d[0], setIsFormValid = _d[1];
-    var _e = react_1.useState(), redirect = _e[0], setRedirect = _e[1];
-    var _f = react_1.useState(false), isDeleteConfirmShown = _f[0], setIsDeleteConfirmShown = _f[1];
-    var _g = react_1.useState(true), isInitializing = _g[0], setIsInitializing = _g[1];
+    var _d = react_1.useState(), logoUrl = _d[0], setLogoUrl = _d[1];
+    var logoFileUploader = react_1.useRef(null);
+    var _e = react_1.useState(false), isFormValid = _e[0], setIsFormValid = _e[1];
+    var _f = react_1.useState(), redirect = _f[0], setRedirect = _f[1];
+    var _g = react_1.useState(false), isDeleteConfirmShown = _g[0], setIsDeleteConfirmShown = _g[1];
+    var _h = react_1.useState(true), isInitializing = _h[0], setIsInitializing = _h[1];
     react_1.useEffect(function () {
         if (failedOperation && failedOperation === enums_1.FailedOperationEnum.FetchBank) {
             setRedirect(React.createElement(react_router_dom_1.Redirect, { to: '/banks' }));
@@ -106,9 +114,31 @@ var BankEdit = react_1.memo(function (_a) {
         if (bank && updatedForm && isInitializing) {
             updatedForm = __assign(__assign({}, updatedForm), (_a = {}, _a['name'] = __assign(__assign({}, updatedForm['name']), { value: bank.name, valid: true }), _a['grade'] = __assign(__assign({}, updatedForm['grade']), { value: (_c = (_b = bank.grade) === null || _b === void 0 ? void 0 : _b.toString()) !== null && _c !== void 0 ? _c : '', valid: true }), _a));
             setIsInitializing(false);
+            setLogoUrl(bank.logoUrl);
         }
         setFormControls(updatedForm);
     }, [bank]);
+    react_1.useEffect(function () {
+        setLogoUrl(logoFilePath);
+    }, [logoFilePath]);
+    var logo = react_1.useMemo(function () {
+        if (logoUrl) {
+            var fileManagerUrl = Constants.FILE_MANAGER_URL;
+            return (React.createElement("div", { className: classes.ImageUploader },
+                React.createElement("img", { src: fileManagerUrl + "/Resources/Images/Banks/" + logoUrl, className: "img-response" }),
+                React.createElement("div", null,
+                    React.createElement("img", { className: classes.DeleteImage, src: '/images/delete.png', alt: "Delete Image", onClick: function () { return deleteLogoHandler(); } }))));
+        }
+        else {
+            return (React.createElement("img", { src: 'images/no-image.png', className: ["img-response", classes.NoImage].join(' ') }));
+        }
+    }, [logoUrl]);
+    var deleteLogoHandler = function () {
+        if (logoFileUploader) {
+            logoFileUploader.current.value = '';
+        }
+        dispatch(uploadActions.reset());
+    };
     react_1.useEffect(function () {
         setIsFormValid(utility_1.ValidateForm(formControls));
     }, [formControls]);
@@ -125,6 +155,13 @@ var BankEdit = react_1.memo(function (_a) {
     var elementHandler = function (event, id) {
         setFormControls(utility_1.getUpdatedForm(event, formControls, id));
     };
+    var uploadImageHandler = react_1.useCallback(function (event) {
+        var files = event.target.files;
+        if (files.length == 0) {
+            return;
+        }
+        dispatch(actions.uploadBankLogo(files[0], token));
+    }, []);
     var cancelHandler = react_1.useCallback(function () {
         setRedirect(React.createElement(react_router_dom_1.Redirect, { to: "/banks/" + id }));
     }, [id, setRedirect]);
@@ -133,7 +170,8 @@ var BankEdit = react_1.memo(function (_a) {
         var bank = {
             id: id,
             name: formControls.name.value.toString(),
-            grade: (formControls.grade.value ? parseInt(formControls.grade.value.toString()) : undefined)
+            grade: (formControls.grade.value ? parseInt(formControls.grade.value.toString()) : undefined),
+            logoUrl: logoUrl
         };
         dispatch(actions.saveBank(bank, token));
     };
@@ -151,11 +189,24 @@ var BankEdit = react_1.memo(function (_a) {
         setIsDeleteConfirmShown(false);
     }, [id, token, setIsDeleteConfirmShown]);
     var formElements = utility_1.getFormElements(formControls).map(function (formElement) { return (React.createElement(FormElement_1.default, { formElement: formElement, key: formElement.id, onChange: function (event) { return elementHandler(event, formElement.id); }, onLostFocus: function (event) { return elementHandler(event, formElement.id); } })); });
-    return (React.createElement("div", null,
+    return (React.createElement("div", { className: classes.BankEdit },
         redirect,
         deleteConfirmContent,
         React.createElement("form", { onSubmit: saveHandler },
             formElements,
+            React.createElement("div", { className: "row" },
+                React.createElement("div", { className: "col-12 " }, logo)),
+            React.createElement("div", { className: "row" },
+                React.createElement("div", { className: "col-12 " },
+                    React.createElement("input", { type: "file", id: "customFile", className: "form-control-file border", accept: "image/*", onChange: uploadImageHandler, ref: logoFileUploader }))),
+            uploadedPercentage &&
+                React.createElement("div", { className: "row" },
+                    React.createElement("div", { className: "col-12" },
+                        React.createElement("progress", { id: "file", value: uploadedPercentage, max: "100" }),
+                        React.createElement("small", { className: "align-top" },
+                            " ",
+                            uploadedPercentage,
+                            "%"))),
             React.createElement("div", { className: "row" },
                 React.createElement("div", { className: "col-12 text-center" },
                     React.createElement("button", { className: "btn btn-primary", type: "reset" }, "Clear"),

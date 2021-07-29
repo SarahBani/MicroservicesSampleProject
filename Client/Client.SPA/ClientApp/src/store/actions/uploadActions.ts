@@ -18,3 +18,10 @@ export const showProgress = (progress: number) => {
         progress: progress
     };
 };
+
+export const uploadSucceeded = (filePath: string) => {
+    return {
+        type: actionTypes.UPLOAD_SUCCEEDED,
+        filePath: filePath
+    };
+};
