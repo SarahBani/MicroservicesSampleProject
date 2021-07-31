@@ -93,19 +93,20 @@ export function* uploadBankLogoSaga(payload: ReturnType<typeof actions.uploadBan
     const formData: FormData = new FormData();
     formData.append("file", payload.file, payload.file.name);
 
-    const channel: ResponseGenerator  = yield call(uploadFileChannel,
+    const channel: ResponseGenerator = yield call(uploadFileChannel,
         'UploadBankLogo',
         formData,
         payload.token);
 
     while (true) {
         const { progress = 0, err, success, filePath } = yield take(channel as ActionPattern);
-       if (err) {
+        if (err) {
             yield put(commonActions.raiseError(err));
             return;
         }
         if (success) {
-            const imageUrl = filePath.replace('Resources\\Images\\Banks\\', '').replace('\\', '/');
+            /*  const imageUrl = filePath.replace('Resources\\Images\\Banks\\', '').replace('\\', '/');*/
+            const imageUrl = filePath.replace('\\', '/');
             yield put(uploadActions.uploadSucceeded(imageUrl));
             yield put(commonActions.hideLoader());
             return;
@@ -114,21 +115,17 @@ export function* uploadBankLogoSaga(payload: ReturnType<typeof actions.uploadBan
     }
 }
 
-export function* removeBankLogoSaga(payload: ReturnType<typeof actions.removeBankLogo>) {
+export function* deleteBankLogoSaga(payload: ReturnType<typeof actions.deleteBankLogo>) {
     yield put(commonActions.showLoader());
     try {
-        const response: Promise<{ status: number }> = axiosInstance.delete(`/Bank/RemoveLogoFile?filePath=${payload.filePath}`,
+        const response: ResponseGenerator = yield axiosInstance.delete('/bank/UploadBankLogo',
             {
-                headers: getTokenHeaders(payload.token)
+                headers: getTokenHeaders(payload.token),
+                data: `Temp/${payload.filePath}`
             });
-        //const response: Promise<{ status: number } > = yield axiosInstance.delete(`/Bank/RemoveLogoFile?filePath=${payload.filePath}`,
-        //    {
-        //        headers: getTokenHeaders(payload.token)
-        //    });
-        //if (response?.status === 200) {
-        //    console.log(433333334444);
-        //    //yield put(actions.deleteBankLogo(payload.id, payload.token));
-        //}
+        if (response?.status === 200) {
+            yield put(uploadActions.reset());
+        }
         yield put(commonActions.hideLoader());
     } catch (error) {
         yield put(commonActions.raiseError(error));

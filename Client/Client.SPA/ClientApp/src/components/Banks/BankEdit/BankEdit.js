@@ -77,11 +77,11 @@ var BankEdit = react_1.memo(function (_a) {
         loggedIn: state.auth.loggedIn,
         token: state.auth.token,
         uploadedPercentage: state.upload.fileUploadPercentage,
-        logoFilePath: state.upload.filePath,
+        uploadedLogoPath: state.upload.filePath,
         loading: state.common.isLoading,
         successfulOperation: state.common.successfulOperation,
         failedOperation: state.common.failedOperation
-    }); }), bank = _b.bank, loggedIn = _b.loggedIn, token = _b.token, uploadedPercentage = _b.uploadedPercentage, logoFilePath = _b.logoFilePath, loading = _b.loading, successfulOperation = _b.successfulOperation, failedOperation = _b.failedOperation;
+    }); }), bank = _b.bank, loggedIn = _b.loggedIn, token = _b.token, uploadedPercentage = _b.uploadedPercentage, uploadedLogoPath = _b.uploadedLogoPath, loading = _b.loading, successfulOperation = _b.successfulOperation, failedOperation = _b.failedOperation;
     var dispatch = react_redux_1.useDispatch();
     var location = react_router_dom_1.useLocation();
     var _c = react_1.useState(initialFormState), formControls = _c[0], setFormControls = _c[1];
@@ -111,27 +111,30 @@ var BankEdit = react_1.memo(function (_a) {
         };
     }, [id]);
     react_1.useEffect(function () {
-        setLogoUrl(function () { return logoFilePath; });
-    }, [logoFilePath]);
-    react_1.useEffect(function () {
         var _a;
         var _b, _c;
         var updatedForm = __assign({}, formControls);
         if (bank && updatedForm && isInitializing) {
             updatedForm = __assign(__assign({}, updatedForm), (_a = {}, _a['name'] = __assign(__assign({}, updatedForm['name']), { value: bank.name, valid: true }), _a['grade'] = __assign(__assign({}, updatedForm['grade']), { value: (_c = (_b = bank.grade) === null || _b === void 0 ? void 0 : _b.toString()) !== null && _c !== void 0 ? _c : '', valid: true }), _a));
             setIsInitializing(false);
-            setLogoUrl(function () { return bank.logoUrl; });
+            setLogoUrl(bank.logoUrl);
         }
         setFormControls(updatedForm);
     }, [bank]);
+    react_1.useEffect(function () {
+        if (!isInitializing) {
+            setLogoUrl(uploadedLogoPath);
+        }
+    }, [uploadedLogoPath]);
     var logo = react_1.useMemo(function () {
         if (isInitializing) {
             return;
         }
+        var fileManagerUrl = Constants.FILE_MANAGER_URL;
         if (logoUrl) {
-            var fileManagerUrl = Constants.FILE_MANAGER_URL;
+            var logoSrc = fileManagerUrl + "/Resources/Images/Banks/" + ((logoUrl === bank.logoUrl) ? logoUrl : "Temp/" + logoUrl);
             return (React.createElement("div", { className: classes.ImageUploader },
-                React.createElement("img", { src: fileManagerUrl + "/Resources/Images/Banks/" + logoUrl, className: "img-response" }),
+                React.createElement("img", { src: logoSrc, className: "img-response" }),
                 React.createElement("div", null,
                     React.createElement("img", { className: classes.DeleteImage, src: '/images/delete.png', alt: "Delete Image", onClick: function () { return deleteLogoHandler(); } }))));
         }
@@ -140,10 +143,13 @@ var BankEdit = react_1.memo(function (_a) {
         }
     }, [logoUrl]);
     var deleteLogoHandler = function () {
-        if (logoFileUploader) {
-            logoFileUploader.current.value = '';
+        logoFileUploader.current.value = '';
+        if (uploadedLogoPath) {
+            dispatch(uploadActions.reset());
         }
-        dispatch(uploadActions.reset());
+        else {
+            setLogoUrl(undefined);
+        }
     };
     react_1.useEffect(function () {
         setIsFormValid(utility_1.ValidateForm(formControls));
@@ -173,13 +179,13 @@ var BankEdit = react_1.memo(function (_a) {
     }, [id, setRedirect]);
     var saveHandler = function (event) {
         event.preventDefault();
-        var bank = {
+        var bankObj = {
             id: id,
             name: formControls.name.value.toString(),
             grade: (formControls.grade.value ? parseInt(formControls.grade.value.toString()) : undefined),
             logoUrl: logoUrl
         };
-        dispatch(actions.saveBank(bank, token));
+        dispatch(actions.saveBank(bankObj, token));
     };
     var deleteConfirmContent = react_1.useMemo(function () {
         return (React.createElement(Modal_1.default, { isShown: isDeleteConfirmShown, type: enums_1.ModalTypeEnum.Component },

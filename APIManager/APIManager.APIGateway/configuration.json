@@ -46,6 +46,25 @@
       }
     },
     {
+      "DownstreamPathTemplate": "/api/image/MoveBankLogo",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5401
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/MoveBankLogo",
+      "UpstreamHttpMethod": [ "POST" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": []
+      },
+      "UpstreamHeaderTransform": {
+        "Microservice": "file-manager"
+      }
+    },
+    {
       "DownstreamPathTemplate": "/api/Image/DeleteBankLogo",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -149,7 +168,7 @@
         //"Role": "Admin", // customized claim
         "sss": "ddd"
       }
-    },
+    }
     //{
     //  "DownstreamPathTemplate": "/api/Bank/{id}",
     //  "DownstreamScheme": "https",

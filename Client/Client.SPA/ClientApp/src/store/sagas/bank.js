@@ -27,7 +27,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteBankSaga = exports.saveBankSaga = exports.removeBankLogoSaga = exports.uploadBankLogoSaga = exports.fetchBankSaga = exports.fetchBanksCountSaga = exports.fetchBanksSaga = void 0;
+exports.deleteBankSaga = exports.saveBankSaga = exports.deleteBankLogoSaga = exports.uploadBankLogoSaga = exports.fetchBankSaga = exports.fetchBanksCountSaga = exports.fetchBanksSaga = void 0;
 var effects_1 = require("redux-saga/effects");
 var enums_1 = require("../../shared/enums");
 var actions = require("../actions/bankActions");
@@ -217,7 +217,7 @@ function uploadBankLogoSaga(payload) {
                 return [2 /*return*/];
             case 7:
                 if (!success) return [3 /*break*/, 10];
-                imageUrl = filePath.replace('Resources\\Images\\Banks\\', '').replace('\\', '/');
+                imageUrl = filePath.replace('\\', '/');
                 return [4 /*yield*/, effects_1.put(uploadActions.uploadSucceeded(imageUrl))];
             case 8:
                 _c.sent();
@@ -234,7 +234,7 @@ function uploadBankLogoSaga(payload) {
     });
 }
 exports.uploadBankLogoSaga = uploadBankLogoSaga;
-function removeBankLogoSaga(payload) {
+function deleteBankLogoSaga(payload) {
     var response, error_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -243,41 +243,33 @@ function removeBankLogoSaga(payload) {
                 _a.sent();
                 _a.label = 2;
             case 2:
-                _a.trys.push([2, 4, , 6]);
-                response = axios_instance_1.default.delete("/Bank/RemoveLogoFile?filePath=" + payload.filePath, {
-                    headers: utility_1.getTokenHeaders(payload.token)
-                });
-                //const response: Promise<{ status: number } > = yield axiosInstance.delete(`/Bank/RemoveLogoFile?filePath=${payload.filePath}`,
-                //    {
-                //        headers: getTokenHeaders(payload.token)
-                //    });
-                //if (response?.status === 200) {
-                //    console.log(433333334444);
-                //    //yield put(actions.deleteBankLogo(payload.id, payload.token));
-                //}
-                return [4 /*yield*/, effects_1.put(commonActions.hideLoader())];
+                _a.trys.push([2, 7, , 9]);
+                return [4 /*yield*/, axios_instance_1.default.delete('/bank/UploadBankLogo', {
+                        headers: utility_1.getTokenHeaders(payload.token),
+                        data: "Temp/" + payload.filePath
+                    })];
             case 3:
-                //const response: Promise<{ status: number } > = yield axiosInstance.delete(`/Bank/RemoveLogoFile?filePath=${payload.filePath}`,
-                //    {
-                //        headers: getTokenHeaders(payload.token)
-                //    });
-                //if (response?.status === 200) {
-                //    console.log(433333334444);
-                //    //yield put(actions.deleteBankLogo(payload.id, payload.token));
-                //}
-                _a.sent();
-                return [3 /*break*/, 6];
+                response = _a.sent();
+                if (!((response === null || response === void 0 ? void 0 : response.status) === 200)) return [3 /*break*/, 5];
+                return [4 /*yield*/, effects_1.put(uploadActions.reset())];
             case 4:
+                _a.sent();
+                _a.label = 5;
+            case 5: return [4 /*yield*/, effects_1.put(commonActions.hideLoader())];
+            case 6:
+                _a.sent();
+                return [3 /*break*/, 9];
+            case 7:
                 error_4 = _a.sent();
                 return [4 /*yield*/, effects_1.put(commonActions.raiseError(error_4))];
-            case 5:
+            case 8:
                 _a.sent();
-                return [3 /*break*/, 6];
-            case 6: return [2 /*return*/];
+                return [3 /*break*/, 9];
+            case 9: return [2 /*return*/];
         }
     });
 }
-exports.removeBankLogoSaga = removeBankLogoSaga;
+exports.deleteBankLogoSaga = deleteBankLogoSaga;
 function saveBankSaga(payload) {
     var response, error_5;
     return __generator(this, function (_a) {

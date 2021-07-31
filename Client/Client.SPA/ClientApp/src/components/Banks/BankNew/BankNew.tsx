@@ -20,7 +20,7 @@ interface StoreProps {
     loggedIn: boolean
     token: string,
     uploadedPercentage: number,
-    logoPath: string,
+    uploadedLogoPath: string,
     loading: boolean,
     successfulOperation: SuccessfulOperationEnum,
 };
@@ -74,11 +74,11 @@ const initialFormState: Dictionary<FormControlElementContent> = {
 
 const BankNew = memo(() => {
 
-    const { loggedIn, token, uploadedPercentage, logoPath, loading, successfulOperation }: StoreProps = useSelector((state: AppState) => ({
+    const { loggedIn, token, uploadedPercentage, uploadedLogoPath, loading, successfulOperation }: StoreProps = useSelector((state: AppState) => ({
         loggedIn: state.auth.loggedIn,
         token: state.auth.token,
         uploadedPercentage: state.upload.fileUploadPercentage,
-        logoPath: state.upload.filePath,
+        uploadedLogoPath: state.upload.filePath,
         loading: state.common.isLoading,
         successfulOperation: state.common.successfulOperation
     }));
@@ -98,11 +98,11 @@ const BankNew = memo(() => {
     }, []);
 
     const logo = useMemo(() => {
-        if (logoPath) {
+        if (uploadedLogoPath) {
             const fileManagerUrl = Constants.FILE_MANAGER_URL;
             return (
                 <div className={classes.ImageUploader}>
-                    <img src={`${fileManagerUrl}/Resources/Images/Banks/${logoPath}`} className="img-response" />
+                    <img src={`${fileManagerUrl}/Resources/Images/Banks/Temp/${uploadedLogoPath}`} className="img-response" />
                     <div>
                         <img className={classes.DeleteImage} src='/images/delete.png' alt="Delete Image"
                             onClick={() => deleteLogoHandler()} />
@@ -115,13 +115,14 @@ const BankNew = memo(() => {
                 <img src='images/no-image.png' className={["img-response", classes.NoImage].join(' ')} />
             );
         }
-    }, [logoPath]);
+    }, [uploadedLogoPath]);
 
     const deleteLogoHandler = () => {
         if (logoFileUploader) {
             logoFileUploader.current!.value = '';
         }
         dispatch(uploadActions.reset());
+        //dispatch(actions.deleteBankLogo(uploadedLogoPath, token));
     };
 
     useEffect(() => {
@@ -163,7 +164,7 @@ const BankNew = memo(() => {
             id: 0,
             name: formControls.name.value.toString(),
             grade: (formControls.grade.value ? parseInt(formControls.grade.value.toString()) : undefined),
-            logoUrl: logoPath
+            logoUrl: uploadedLogoPath
         };
         dispatch(actions.saveBank(bank, token));
     };

@@ -93,7 +93,7 @@ function watchBank() {
                     effects_1.takeLatest(bankActionTypes.FETCH_BANKS_COUNT, bank_1.fetchBanksCountSaga),
                     effects_1.takeLatest(bankActionTypes.FETCH_BANK, bank_1.fetchBankSaga),
                     effects_1.takeLatest(bankActionTypes.UPLOAD_BANK_LOGO, bank_1.uploadBankLogoSaga),
-                    effects_1.takeLatest(bankActionTypes.REMOVE_BANK_PHOTO, bank_1.removeBankLogoSaga),
+                    effects_1.takeLatest(bankActionTypes.DELETE_BANK_LOGO, bank_1.deleteBankLogoSaga),
                     effects_1.takeLatest(bankActionTypes.SAVE_BANK, bank_1.saveBankSaga),
                     effects_1.takeLatest(bankActionTypes.DELETE_BANK, bank_1.deleteBankSaga),
                 ])];

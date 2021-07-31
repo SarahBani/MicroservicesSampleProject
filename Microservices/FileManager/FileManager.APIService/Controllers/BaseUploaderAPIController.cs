@@ -1,6 +1,7 @@
 ﻿using FileManager.APIService.Helpers;
 using FileManager.APIService.Models;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.IO;
 
 namespace FileManager.APIService.Controllers
@@ -34,7 +35,7 @@ namespace FileManager.APIService.Controllers
                 if (file.Length > 0)
                 {
                     DeletePreviousFile();
-                    this.FilePath = Utility.UploadImage(file, subFolderName);
+                    this.FilePath = Utility.UploadImage(file, subFolderName + "/Temp");
                     return Ok(this.FilePath);
                 }
                 else
@@ -67,6 +68,36 @@ namespace FileManager.APIService.Controllers
             {
                 Utility.DeleteFile(this.FilePath);
                 this.FilePath = string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Delete uploaded files older than one hour
+        /// </summary>
+        /// <param name="subFolderName"></param>
+        protected void DeleteOldImages(string subFolderName)
+        {
+            string tempDirectoryPath = $"Resources/Images/{subFolderName}/Temp";
+            foreach (string fileName in Directory.GetFiles(tempDirectoryPath))
+            {
+                var fileInfo = new FileInfo(fileName);
+                if (fileInfo.LastAccessTime < DateTime.Now.AddHours(-1)) { 
+                    fileInfo.Delete();
+                }
+            }
+        }
+
+        protected IActionResult MoveTempFile(string filePath)
+        {
+            try
+            {
+                string destFilePath = filePath.Replace("/Temp", "");
+                System.IO.File.Move(filePath, destFilePath, true);
+                return Ok();
+            }
+            catch
+            {
+                return Problem(Constant.Exception_MoveFileProblem);
             }
         }
 

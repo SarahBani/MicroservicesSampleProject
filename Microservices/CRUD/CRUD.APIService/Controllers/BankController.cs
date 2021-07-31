@@ -97,6 +97,10 @@ namespace CRUD.APIService.Controllers
             var result = await this._bankService.InsertAsync(bank);
             if (result.IsSuccessful)
             {
+                if (!string.IsNullOrEmpty(bank.LogoUrl))
+                {
+                    MoveLogoFile(bank.LogoUrl);
+                }
                 return CreatedAtAction("GetById", new
                 {
                     controller = "bank",
@@ -132,9 +136,18 @@ namespace CRUD.APIService.Controllers
             {
                 return BadRequest(Constant.Exception_InvalidModelState);
             }
+            string prevLogoUrl = await this._bankService.GetLogoUrlByIdAsync(bank.Id);
             var result = await this._bankService.UpdateAsync(bank);
             if (result.IsSuccessful)
             {
+                if (prevLogoUrl != bank.LogoUrl)
+                {
+                    DeleteLogoFile(prevLogoUrl);
+                }
+                if (!string.IsNullOrEmpty(bank.LogoUrl))
+                {
+                    MoveLogoFile(bank.LogoUrl);
+                }
                 return Ok();
             }
             return Problem(result.ExceptionContentResult);
@@ -156,37 +169,10 @@ namespace CRUD.APIService.Controllers
             var result = await this._bankService.DeleteAsync(id);
             if (result.IsSuccessful)
             {
-                //try
-                //{
-                string gatewayUrl = this._configuration.GetSection(Constant.AppSettings_GatewayUrl).Value;
-                using (var client = new HttpClient())
+                if (!string.IsNullOrEmpty(logoUrl))
                 {
-                    client.DefaultRequestHeaders.Add(HttpRequestHeader.Authorization.ToString(), HttpContext.Request.Headers["Authorization"].ToString());
-
-                    var request = new HttpRequestMessage(HttpMethod.Delete, $"{gatewayUrl}/DeleteBankLogo");
-                    request.Content = new StringContent(JsonConvert.SerializeObject(logoUrl),
-                        Encoding.UTF8,
-                        "application/json"); // CONTENT-TYPE header
-                    HttpResponseMessage response = await client.SendAsync(request);
-
-                    //await client.SendAsync(request)
-                    //    .ContinueWith(responseTask =>
-                    //    {
-                    //        Console.WriteLine("Response: {0}", responseTask.Result);
-                    //    });
-                    //if (response.IsSuccessStatusCode)
-                    //{
-                    //    return Ok();
-                    //}
-                    //else
-                    //{
-                    //}
+                    DeleteLogoFile(logoUrl);
                 }
-                //}
-                //catch (Exception e)
-                //{
-                //    return Problem(result.ExceptionContentResult);
-                //}
                 return Ok();
             }
             return Problem(result.ExceptionContentResult);
@@ -199,6 +185,57 @@ namespace CRUD.APIService.Controllers
         //{
         //    return base.UploadImage("Banks");
         //}
+
+        private async void MoveLogoFile(string logoUrl)
+        {
+            string gatewayUrl = this._configuration.GetSection(Constant.AppSettings_GatewayUrl).Value;
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add(HttpRequestHeader.Authorization.ToString(), HttpContext.Request.Headers["Authorization"].ToString());
+
+                var request = new HttpRequestMessage(HttpMethod.Post, $"{gatewayUrl}/MoveBankLogo");
+                request.Content = new StringContent(JsonConvert.SerializeObject(logoUrl),
+                    Encoding.UTF8,
+                    "application/json"); // CONTENT-TYPE header
+                await client.SendAsync(request);
+            }
+        }
+
+        private async void DeleteLogoFile(string logoUrl)
+        {
+            //try
+            //{
+            string gatewayUrl = this._configuration.GetSection(Constant.AppSettings_GatewayUrl).Value;
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add(HttpRequestHeader.Authorization.ToString(), HttpContext.Request.Headers["Authorization"].ToString());
+
+                var request = new HttpRequestMessage(HttpMethod.Delete, $"{gatewayUrl}/DeleteBankLogo");
+                request.Content = new StringContent(JsonConvert.SerializeObject(logoUrl),
+                    Encoding.UTF8,
+                    "application/json"); // CONTENT-TYPE header
+                await client.SendAsync(request);
+                //HttpResponseMessage response = await client.SendAsync(request);
+
+                //await client.SendAsync(request)
+                //    .ContinueWith(responseTask =>
+                //    {
+                //        Console.WriteLine("Response: {0}", responseTask.Result);
+                //    });
+                //if (response.IsSuccessStatusCode)
+                //{
+                //    return Ok();
+                //}
+                //else
+                //{
+                //}
+            }
+            //}
+            //catch (Exception e)
+            //{
+            //    return Problem(result.ExceptionContentResult);
+            //}
+        }
 
         #endregion /Actions
 

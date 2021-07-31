@@ -39,6 +39,7 @@ namespace FileManager.APIService.Models
         public const string Exception_EmptyFile = "The file is empty!";
         public const string Exception_UploadFileProblem = "The file cannot be uploaded!";
         public const string Exception_DeleteFileProblem = "The file cannot be deleted!";
+        public const string Exception_MoveFileProblem = "The file cannot be moved!";
 
         public const string ActionResult_Successful = "Successful";
 

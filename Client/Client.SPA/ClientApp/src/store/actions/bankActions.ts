@@ -68,9 +68,9 @@ export const uploadBankLogo = (file: any, token: string) => {
     };
 };
 
-export const removeBankLogo = (filePath: string, token: string) => {
+export const deleteBankLogo = (filePath: string, token: string) => {
     return {
-        type: actionTypes.REMOVE_BANK_PHOTO,
+        type: actionTypes.DELETE_BANK_LOGO,
         filePath: filePath,
         token: token
     };

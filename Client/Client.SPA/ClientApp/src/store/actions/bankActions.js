@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteBank = exports.saveBank = exports.removeBankLogo = exports.uploadBankLogo = exports.clearSelectedBank = exports.setBank = exports.fetchBank = exports.setBanksCount = exports.fetchBanksCount = exports.resetBanks = exports.setBanks = exports.fetchBanks = void 0;
+exports.deleteBank = exports.saveBank = exports.deleteBankLogo = exports.uploadBankLogo = exports.clearSelectedBank = exports.setBank = exports.fetchBank = exports.setBanksCount = exports.fetchBanksCount = exports.resetBanks = exports.setBanks = exports.fetchBanks = void 0;
 var actionTypes = require("./bankActionTypes");
 var fetchBanks = function (cityId, countryId, pageNo, pageCount) {
     if (cityId === void 0) { cityId = null; }
@@ -74,14 +74,14 @@ var uploadBankLogo = function (file, token) {
     };
 };
 exports.uploadBankLogo = uploadBankLogo;
-var removeBankLogo = function (filePath, token) {
+var deleteBankLogo = function (filePath, token) {
     return {
-        type: actionTypes.REMOVE_BANK_PHOTO,
+        type: actionTypes.DELETE_BANK_LOGO,
         filePath: filePath,
         token: token
     };
 };
-exports.removeBankLogo = removeBankLogo;
+exports.deleteBankLogo = deleteBankLogo;
 var saveBank = function (bank, token) {
     return {
         type: actionTypes.SAVE_BANK,

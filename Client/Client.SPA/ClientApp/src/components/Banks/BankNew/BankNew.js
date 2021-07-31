@@ -64,10 +64,10 @@ var BankNew = react_1.memo(function () {
         loggedIn: state.auth.loggedIn,
         token: state.auth.token,
         uploadedPercentage: state.upload.fileUploadPercentage,
-        logoPath: state.upload.filePath,
+        uploadedLogoPath: state.upload.filePath,
         loading: state.common.isLoading,
         successfulOperation: state.common.successfulOperation
-    }); }), loggedIn = _a.loggedIn, token = _a.token, uploadedPercentage = _a.uploadedPercentage, logoPath = _a.logoPath, loading = _a.loading, successfulOperation = _a.successfulOperation;
+    }); }), loggedIn = _a.loggedIn, token = _a.token, uploadedPercentage = _a.uploadedPercentage, uploadedLogoPath = _a.uploadedLogoPath, loading = _a.loading, successfulOperation = _a.successfulOperation;
     var dispatch = react_redux_1.useDispatch();
     var location = react_router_dom_1.useLocation();
     var _b = react_1.useState(initialFormState), formControls = _b[0], setFormControls = _b[1];
@@ -81,22 +81,23 @@ var BankNew = react_1.memo(function () {
         };
     }, []);
     var logo = react_1.useMemo(function () {
-        if (logoPath) {
+        if (uploadedLogoPath) {
             var fileManagerUrl = Constants.FILE_MANAGER_URL;
             return (React.createElement("div", { className: classes.ImageUploader },
-                React.createElement("img", { src: fileManagerUrl + "/Resources/Images/Banks/" + logoPath, className: "img-response" }),
+                React.createElement("img", { src: fileManagerUrl + "/Resources/Images/Banks/Temp/" + uploadedLogoPath, className: "img-response" }),
                 React.createElement("div", null,
                     React.createElement("img", { className: classes.DeleteImage, src: '/images/delete.png', alt: "Delete Image", onClick: function () { return deleteLogoHandler(); } }))));
         }
         else {
             return (React.createElement("img", { src: 'images/no-image.png', className: ["img-response", classes.NoImage].join(' ') }));
         }
-    }, [logoPath]);
+    }, [uploadedLogoPath]);
     var deleteLogoHandler = function () {
         if (logoFileUploader) {
             logoFileUploader.current.value = '';
         }
         dispatch(uploadActions.reset());
+        //dispatch(actions.deleteBankLogo(uploadedLogoPath, token));
     };
     react_1.useEffect(function () {
         if (!loggedIn) {
@@ -131,7 +132,7 @@ var BankNew = react_1.memo(function () {
             id: 0,
             name: formControls.name.value.toString(),
             grade: (formControls.grade.value ? parseInt(formControls.grade.value.toString()) : undefined),
-            logoUrl: logoPath
+            logoUrl: uploadedLogoPath
         };
         dispatch(actions.saveBank(bank, token));
     };

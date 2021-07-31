@@ -15,16 +15,16 @@ const initialState: State = {
 
 export const bankReducer = (state: State = initialState, payload: any): any => {
     switch (payload.type) {
-        case actionTypes.SET_BANKS:
-            return {
-                ...state,
-                banks: payload.banks
-            };
-        case actionTypes.RESET_BANKS: 
+        case actionTypes.RESET_BANKS:
             return {
                 ...state,
                 banks: null,
                 count: 0
+            };
+        case actionTypes.SET_BANKS:
+            return {
+                ...state,
+                banks: payload.banks
             };
         case actionTypes.SET_BANKS_COUNT:
             return {

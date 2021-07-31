@@ -17,20 +17,21 @@ namespace FileManager.APIService.Helpers
 
         public static string UploadFile(IFormFile file, string resourceFolderPath)
         {
-            var directoryRelativePath = Path.Combine("Resources", resourceFolderPath);
-            var directoryFullPath = Path.Combine(Directory.GetCurrentDirectory(), directoryRelativePath);
+            string directoryRelativePath = Path.Combine("Resources", resourceFolderPath);
+            string directoryFullPath = Path.Combine(Directory.GetCurrentDirectory(), directoryRelativePath);
             string fileName = GetUniqueFileName(file.FileName);
             if (!Directory.Exists(directoryFullPath))
             {
                 Directory.CreateDirectory(directoryFullPath);
             }
-            var fileFullPath = Path.Combine(directoryFullPath, fileName);
+            string fileFullPath = Path.Combine(directoryFullPath, fileName);
             using (var stream = new FileStream(fileFullPath, FileMode.Create))
             {
                 file.CopyTo(stream);
             }
-            string fileRelativePath = Path.Combine(directoryRelativePath, fileName);
-            return fileRelativePath;
+            //string fileRelativePath = Path.Combine(directoryRelativePath, fileName);
+            //return fileRelativePath;
+            return fileName;
         }
 
         public static void DeleteFile(string fileRelativePath)

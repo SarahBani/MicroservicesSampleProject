@@ -40,7 +40,7 @@ var BankList = function () {
         }
     }, [successfulOperation]);
     var refreshHandler = react_1.useCallback(function () {
-        dispatch(actions.fetchBanks(pageNo, pageCount));
+        dispatch(actions.fetchBanks(null, null, pageNo, pageCount));
         dispatch(actions.fetchBanksCount());
         setPageNo(1);
     }, []);

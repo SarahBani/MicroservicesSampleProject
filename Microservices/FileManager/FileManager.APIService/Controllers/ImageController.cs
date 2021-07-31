@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.IO;
 
 namespace FileManager.APIService.Controllers
 {
@@ -12,6 +11,7 @@ namespace FileManager.APIService.Controllers
 
         public ImageController()
         {
+            base.DeleteOldImages("Banks");
         }
 
         #endregion /Constructors
@@ -33,6 +33,15 @@ namespace FileManager.APIService.Controllers
         {
             string logoPath = $"Resources/Images/Banks/{logoName}";
             return base.DeleteFile(logoPath);
+        }
+
+        // POST: api/Image/MoveBankLogo
+        [Authorize(Roles = "Admin")]
+        [HttpPost("MoveBankLogo")]
+        public IActionResult MoveBankLogo([FromBody] string logoName)
+        {
+            string logoPath = $"Resources/Images/Banks/Temp/{logoName}";
+            return base.MoveTempFile(logoPath);
         }
 
         #endregion /Actions

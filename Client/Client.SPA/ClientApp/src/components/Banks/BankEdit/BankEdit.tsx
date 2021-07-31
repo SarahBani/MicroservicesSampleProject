@@ -24,7 +24,7 @@ interface StoreProps {
     loggedIn: boolean,
     token: string,
     uploadedPercentage: number,
-    logoFilePath: string,
+    uploadedLogoPath: string,
     loading: boolean,
     successfulOperation: SuccessfulOperationEnum,
     failedOperation: FailedOperationEnum
@@ -77,12 +77,12 @@ const initialFormState: Dictionary<FormControlElementContent> = {
 
 const BankEdit: FC<{ id: number }> = memo(({ id }) => {
 
-    const { bank, loggedIn, token, uploadedPercentage, logoFilePath, loading, successfulOperation, failedOperation }: StoreProps = useSelector((state: AppState) => ({
+    const { bank, loggedIn, token, uploadedPercentage, uploadedLogoPath, loading, successfulOperation, failedOperation }: StoreProps = useSelector((state: AppState) => ({
         bank: state.bank.selectedBank,
         loggedIn: state.auth.loggedIn,
         token: state.auth.token,
         uploadedPercentage: state.upload.fileUploadPercentage,
-        logoFilePath: state.upload.filePath,
+        uploadedLogoPath: state.upload.filePath,
         loading: state.common.isLoading,
         successfulOperation: state.common.successfulOperation,
         failedOperation: state.common.failedOperation
@@ -120,10 +120,6 @@ const BankEdit: FC<{ id: number }> = memo(({ id }) => {
     }, [id]);
 
     useEffect(() => {
-        setLogoUrl(() => logoFilePath);
-    }, [logoFilePath]);
-
-    useEffect(() => {
         let updatedForm = {
             ...formControls
         };
@@ -142,20 +138,27 @@ const BankEdit: FC<{ id: number }> = memo(({ id }) => {
                 },
             };
             setIsInitializing(false);
-            setLogoUrl(() => bank!.logoUrl);
+            setLogoUrl(bank!.logoUrl);
         }
         setFormControls(updatedForm);
     }, [bank]);
+
+    useEffect(() => {
+        if (!isInitializing) {
+            setLogoUrl(uploadedLogoPath);
+        }
+    }, [uploadedLogoPath]);
 
     const logo = useMemo(() => {
         if (isInitializing) {
             return;
         }
+        const fileManagerUrl = Constants.FILE_MANAGER_URL;
         if (logoUrl) {
-            const fileManagerUrl = Constants.FILE_MANAGER_URL;
+            const logoSrc: string = `${fileManagerUrl}/Resources/Images/Banks/${(logoUrl === bank!.logoUrl) ? logoUrl : `Temp/${logoUrl}`}`;
             return (
                 <div className={classes.ImageUploader}>
-                    <img src={`${fileManagerUrl}/Resources/Images/Banks/${logoUrl}`} className="img-response" />
+                    <img src={logoSrc} className="img-response" />
                     <div>
                         <img className={classes.DeleteImage} src='/images/delete.png' alt="Delete Image"
                             onClick={() => deleteLogoHandler()} />
@@ -171,10 +174,13 @@ const BankEdit: FC<{ id: number }> = memo(({ id }) => {
     }, [logoUrl]);
 
     const deleteLogoHandler = () => {
-        if (logoFileUploader) {
-            logoFileUploader.current!.value = '';
+        logoFileUploader.current!.value = '';
+        if (uploadedLogoPath) {
+            dispatch(uploadActions.reset());
         }
-        dispatch(uploadActions.reset());
+        else {
+            setLogoUrl(undefined);
+        }
     };
 
     useEffect(() => {
@@ -210,13 +216,13 @@ const BankEdit: FC<{ id: number }> = memo(({ id }) => {
 
     const saveHandler = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
-        const bank: Bank = {
+        const bankObj: Bank = {
             id: id,
             name: formControls.name.value.toString(),
             grade: (formControls.grade.value ? parseInt(formControls.grade.value.toString()) : undefined),
             logoUrl: logoUrl
         };
-        dispatch(actions.saveBank(bank, token));
+        dispatch(actions.saveBank(bankObj, token));
     };
 
     const deleteConfirmContent = useMemo((): ReactElement => {

@@ -4,7 +4,7 @@ import { autoSignInSaga, checkAuthTimeoutSaga, signInSaga, signOutSaga } from '.
 //import { fetchCountriesSaga, selectCountrySaga, selectCitySaga } from './location';
 import {
     fetchBanksSaga, fetchBankSaga, fetchBanksCountSaga, deleteBankSaga, saveBankSaga,
-    uploadBankLogoSaga, removeBankLogoSaga
+    uploadBankLogoSaga, deleteBankLogoSaga
 } from './bank';
 import * as authActionTypes from '../actions/authActionTypes';
 //import * as locationActionTypes from '../actions/locationActionTypes';
@@ -58,7 +58,7 @@ export function* watchBank() {
         takeLatest(bankActionTypes.FETCH_BANKS_COUNT, fetchBanksCountSaga),
         takeLatest(bankActionTypes.FETCH_BANK, fetchBankSaga),
         takeLatest(bankActionTypes.UPLOAD_BANK_LOGO, uploadBankLogoSaga),
-        takeLatest(bankActionTypes.REMOVE_BANK_PHOTO, removeBankLogoSaga),
+        takeLatest(bankActionTypes.DELETE_BANK_LOGO, deleteBankLogoSaga),
         takeLatest(bankActionTypes.SAVE_BANK, saveBankSaga),
         takeLatest(bankActionTypes.DELETE_BANK, deleteBankSaga),
     ]);

@@ -57,7 +57,7 @@ const BankList: FC = () => {
     }, [successfulOperation]);
 
     const refreshHandler = useCallback(() => {
-        dispatch(actions.fetchBanks(pageNo, pageCount));
+        dispatch(actions.fetchBanks(null, null, pageNo, pageCount));
         dispatch(actions.fetchBanksCount());
         setPageNo(1);
     }, []);
