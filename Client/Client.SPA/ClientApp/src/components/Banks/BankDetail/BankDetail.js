@@ -35,7 +35,7 @@ var BankDetail = react_1.memo(function (_a) {
         return React.createElement("img", { className: "img-response", src: logoSrc });
     }, [bank]);
     react_1.useEffect(function () {
-        if (failedOperation && failedOperation === enums_1.FailedOperationEnum.FetchBank) {
+        if (!!failedOperation && failedOperation === enums_1.FailedOperationEnum.FetchBank) {
             cancelHandler();
         }
     }, [failedOperation]);

@@ -1,10 +1,11 @@
-﻿import * as actionTypes from '../actions/commonActionTypes';
+﻿import { FailedOperationEnum, SuccessfulOperationEnum } from '../../shared/enums';
+import * as actionTypes from '../actions/commonActionTypes';
 
 export interface State {
     isLoading: boolean,
     error: string | null,
-    successfulOperation: string | null,
-    failedOperation: string | null,
+    successfulOperation: SuccessfulOperationEnum | null,
+    failedOperation: FailedOperationEnum | null,
 }
 
 const initialState: State = {

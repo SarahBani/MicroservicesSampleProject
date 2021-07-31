@@ -7,7 +7,7 @@
 };
 
 export enum FailedOperationEnum {
-    FetchBank
+    FetchBank = 1
 };
 
 export enum ElementTypeEnum {

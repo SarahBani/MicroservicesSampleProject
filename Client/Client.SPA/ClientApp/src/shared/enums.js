@@ -12,7 +12,7 @@ var SuccessfulOperationEnum;
 ;
 var FailedOperationEnum;
 (function (FailedOperationEnum) {
-    FailedOperationEnum[FailedOperationEnum["FetchBank"] = 0] = "FetchBank";
+    FailedOperationEnum[FailedOperationEnum["FetchBank"] = 1] = "FetchBank";
 })(FailedOperationEnum = exports.FailedOperationEnum || (exports.FailedOperationEnum = {}));
 ;
 var ElementTypeEnum;

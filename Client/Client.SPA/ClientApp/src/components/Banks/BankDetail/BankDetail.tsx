@@ -54,7 +54,7 @@ const BankDetail: FC<Props> = memo(({ id }) => {
     }, [bank]);
 
     useEffect(() => {
-        if (failedOperation && failedOperation === FailedOperationEnum.FetchBank) {
+        if (!!failedOperation && failedOperation === FailedOperationEnum.FetchBank) {
             cancelHandler();
         }
     }, [failedOperation]);

@@ -78,6 +78,7 @@ export function* fetchBankSaga(payload: ReturnType<typeof actions.fetchBank>) {
             yield put(actions.setBank(response.data));
         }
         else {
+            console.log(6666666666);
             yield put(commonActions.operationFailed(FailedOperationEnum.FetchBank));
         }
         yield put(commonActions.hideLoader());

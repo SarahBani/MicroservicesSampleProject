@@ -170,7 +170,9 @@ function fetchBankSaga(payload) {
             case 4:
                 _a.sent();
                 return [3 /*break*/, 7];
-            case 5: return [4 /*yield*/, effects_1.put(commonActions.operationFailed(enums_1.FailedOperationEnum.FetchBank))];
+            case 5:
+                console.log(6666666666);
+                return [4 /*yield*/, effects_1.put(commonActions.operationFailed(enums_1.FailedOperationEnum.FetchBank))];
             case 6:
                 _a.sent();
                 _a.label = 7;
