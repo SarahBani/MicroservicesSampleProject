@@ -1,4 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using CRUD.APIService.Entities;
 using CRUD.APIService.Models;
@@ -6,6 +11,8 @@ using CRUD.APIService.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace CRUD.APIService.Controllers
 {
@@ -15,14 +22,16 @@ namespace CRUD.APIService.Controllers
 
         #region Properties
 
+        private readonly IConfiguration _configuration;
         private readonly IBankService _bankService;
 
         #endregion /Properties
 
         #region Constructors
 
-        public BankController(IBankService bankService)
+        public BankController(IConfiguration configuration, IBankService bankService)
         {
+            this._configuration = configuration;
             this._bankService = bankService;
         }
 
@@ -143,9 +152,41 @@ namespace CRUD.APIService.Controllers
             {
                 return BadRequest(Constant.Exception_InvalidModelState);
             }
+            string logoUrl = await this._bankService.GetLogoUrlByIdAsync(id);
             var result = await this._bankService.DeleteAsync(id);
             if (result.IsSuccessful)
             {
+                //try
+                //{
+                string gatewayUrl = this._configuration.GetSection(Constant.AppSettings_GatewayUrl).Value;
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Add(HttpRequestHeader.Authorization.ToString(), HttpContext.Request.Headers["Authorization"].ToString());
+
+                    var request = new HttpRequestMessage(HttpMethod.Delete, $"{gatewayUrl}/DeleteBankLogo");
+                    request.Content = new StringContent(JsonConvert.SerializeObject(logoUrl),
+                        Encoding.UTF8,
+                        "application/json"); // CONTENT-TYPE header
+                    HttpResponseMessage response = await client.SendAsync(request);
+
+                    //await client.SendAsync(request)
+                    //    .ContinueWith(responseTask =>
+                    //    {
+                    //        Console.WriteLine("Response: {0}", responseTask.Result);
+                    //    });
+                    //if (response.IsSuccessStatusCode)
+                    //{
+                    //    return Ok();
+                    //}
+                    //else
+                    //{
+                    //}
+                }
+                //}
+                //catch (Exception e)
+                //{
+                //    return Problem(result.ExceptionContentResult);
+                //}
                 return Ok();
             }
             return Problem(result.ExceptionContentResult);

@@ -10,6 +10,7 @@ namespace CRUD.APIService.Models
         public const string AppSettings_DefaultConnection = "DefaultConnection";
 
         public const string AppSettings_TokenSetting = "TokenSetting";
+        public const string AppSettings_GatewayUrl = "GatewayUrl";        
 
         #endregion /AppSettings
 

@@ -10,6 +10,8 @@ namespace CRUD.APIService.Services
 
         Task<Bank> GetByIdAsync(int id);
 
+        Task<string> GetLogoUrlByIdAsync(int id);
+
         Task<int> GetCountAsync();
 
         Task<IList<Bank>> GetAllAsync();

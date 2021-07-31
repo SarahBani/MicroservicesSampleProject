@@ -75,6 +75,11 @@ var BankNew = react_1.memo(function () {
     var logoFileUploader = react_1.useRef(null);
     var _c = react_1.useState(false), isFormValid = _c[0], setIsFormValid = _c[1];
     var _d = react_1.useState(), redirect = _d[0], setRedirect = _d[1];
+    react_1.useEffect(function () {
+        return function () {
+            dispatch(uploadActions.reset());
+        };
+    }, []);
     var logo = react_1.useMemo(function () {
         if (logoPath) {
             var fileManagerUrl = Constants.FILE_MANAGER_URL;

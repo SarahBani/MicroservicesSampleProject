@@ -1,6 +1,7 @@
 ﻿using FileManager.APIService.Helpers;
 using FileManager.APIService.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
 
 namespace FileManager.APIService.Controllers
 {
@@ -44,6 +45,19 @@ namespace FileManager.APIService.Controllers
             catch 
             {
                return Problem(Constant.Exception_UploadFileProblem);
+            }
+        }
+
+        protected IActionResult DeleteFile(string filePath)
+        {
+            try
+            {
+                Utility.DeleteFile(filePath);
+                return Ok();
+            }
+            catch
+            {
+                return Problem(Constant.Exception_DeleteFileProblem);
             }
         }
 

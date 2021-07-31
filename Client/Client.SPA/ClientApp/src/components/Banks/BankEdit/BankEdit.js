@@ -106,7 +106,13 @@ var BankEdit = react_1.memo(function (_a) {
         if (!bank) {
             dispatch(actions.fetchBank(id));
         }
+        return function () {
+            dispatch(uploadActions.reset());
+        };
     }, [id]);
+    react_1.useEffect(function () {
+        setLogoUrl(function () { return logoFilePath; });
+    }, [logoFilePath]);
     react_1.useEffect(function () {
         var _a;
         var _b, _c;
@@ -114,14 +120,14 @@ var BankEdit = react_1.memo(function (_a) {
         if (bank && updatedForm && isInitializing) {
             updatedForm = __assign(__assign({}, updatedForm), (_a = {}, _a['name'] = __assign(__assign({}, updatedForm['name']), { value: bank.name, valid: true }), _a['grade'] = __assign(__assign({}, updatedForm['grade']), { value: (_c = (_b = bank.grade) === null || _b === void 0 ? void 0 : _b.toString()) !== null && _c !== void 0 ? _c : '', valid: true }), _a));
             setIsInitializing(false);
-            setLogoUrl(bank.logoUrl);
+            setLogoUrl(function () { return bank.logoUrl; });
         }
         setFormControls(updatedForm);
     }, [bank]);
-    react_1.useEffect(function () {
-        setLogoUrl(logoFilePath);
-    }, [logoFilePath]);
     var logo = react_1.useMemo(function () {
+        if (isInitializing) {
+            return;
+        }
         if (logoUrl) {
             var fileManagerUrl = Constants.FILE_MANAGER_URL;
             return (React.createElement("div", { className: classes.ImageUploader },

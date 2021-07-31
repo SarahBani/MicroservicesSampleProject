@@ -114,7 +114,14 @@ const BankEdit: FC<{ id: number }> = memo(({ id }) => {
         if (!bank) {
             dispatch(actions.fetchBank(id));
         }
+        return () => {
+            dispatch(uploadActions.reset());
+        };
     }, [id]);
+
+    useEffect(() => {
+        setLogoUrl(() => logoFilePath);
+    }, [logoFilePath]);
 
     useEffect(() => {
         let updatedForm = {
@@ -135,16 +142,15 @@ const BankEdit: FC<{ id: number }> = memo(({ id }) => {
                 },
             };
             setIsInitializing(false);
-            setLogoUrl(bank!.logoUrl);
+            setLogoUrl(() => bank!.logoUrl);
         }
         setFormControls(updatedForm);
     }, [bank]);
 
-    useEffect(() => {
-        setLogoUrl(logoFilePath);
-    }, [logoFilePath]);
-
     const logo = useMemo(() => {
+        if (isInitializing) {
+            return;
+        }
         if (logoUrl) {
             const fileManagerUrl = Constants.FILE_MANAGER_URL;
             return (

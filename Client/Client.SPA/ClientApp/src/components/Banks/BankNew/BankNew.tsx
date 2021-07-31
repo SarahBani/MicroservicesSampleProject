@@ -91,6 +91,12 @@ const BankNew = memo(() => {
     const [isFormValid, setIsFormValid] = useState<boolean>(false);
     const [redirect, setRedirect] = useState<ReactElement>();
 
+    useEffect(() => {
+        return () => {
+            dispatch(uploadActions.reset());
+        }
+    }, []);
+
     const logo = useMemo(() => {
         if (logoPath) {
             const fileManagerUrl = Constants.FILE_MANAGER_URL;

@@ -25,6 +25,45 @@
       "UpstreamPathTemplate": "/gateway/login",
       "UpstreamHttpMethod": [ "Post" ]
     },
+    /// File Manager
+    {
+      "DownstreamPathTemplate": "/api/image/UploadBankLogo",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5401
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/UploadBankLogo",
+      "UpstreamHttpMethod": [ "POST" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": []
+      },
+      "UpstreamHeaderTransform": {
+        "Microservice": "file-manager"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Image/DeleteBankLogo",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5401
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/DeleteBankLogo",
+      "UpstreamHttpMethod": [ "DELETE" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": []
+      },
+      "UpstreamHeaderTransform": {
+        "Microservice": "file-manager"
+      }
+    },
     /// CRUD
     {
       "DownstreamPathTemplate": "/api/bank",
@@ -80,26 +119,7 @@
     //  "UpstreamHeaderTransform": {
     //    "Microservice": "crud"
     //  }
-    //},,
-    {
-      "DownstreamPathTemplate": "/api/image/UploadBankLogo",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5401
-        }
-      ],
-      "UpstreamPathTemplate": "/gateway/UploadBankLogo",
-      "UpstreamHttpMethod": [ "POST" ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "IdentityApiKey",
-        "AllowedScopes": []
-      },
-      "UpstreamHeaderTransform": {
-        "Microservice": "file-manager"
-      }
-    },
+    //},
     {
       "DownstreamPathTemplate": "/api/{controller}",
       "DownstreamScheme": "https",
@@ -129,8 +149,59 @@
         //"Role": "Admin", // customized claim
         "sss": "ddd"
       }
-    }
+    },
+    //{
+    //  "DownstreamPathTemplate": "/api/Bank/{id}",
+    //  "DownstreamScheme": "https",
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "localhost",
+    //      "Port": 5301
+    //    }
+    //    "UpstreamPathTemplate": "/DeleteBank/{id}",
+    //    "UpstreamHttpMethod": [ "DELETE" ],
+    //    "AuthenticationOptions": {
+    //      "AuthenticationProviderKey": "IdentityApiKey",
+    //      "AllowedScopes": []
+    //    },
+    //    "UpstreamHeaderTransform": {
+    //      "Microservice": "crud"
+    //    },
+    //    "Key": "DeleteBank",
+    //    "Priority": 1
+    //  },
+    //  {
+    //    "DownstreamPathTemplate": "/api/Image/DeleteBankLogo",
+    //    "DownstreamScheme": "https",
+    //    "DownstreamHostAndPorts": [
+    //      {
+    //        "Host": "localhost",
+    //        "Port": 5401
+    //      }
+    //    ],
+    //    "UpstreamPathTemplate": "/DeleteBankLogo",
+    //    "UpstreamHttpMethod": [ "DELETE" ],
+    //    "AuthenticationOptions": {
+    //      "AuthenticationProviderKey": "IdentityApiKey",
+    //      "AllowedScopes": []
+    //    },
+    //    "UpstreamHeaderTransform": {
+    //      "Microservice": "file-manager"
+    //    },
+    //    "Key": "DeleteBankLogo",
+    //    "Priority": 2
+    //  }
   ],
+  //"Aggregates": [
+  //  {
+  //    "RouteKeys": [
+  //      "DeleteBank",
+  //      "DeleteBankLogo"
+  //    ],
+  //    "UpstreamPathTemplate": "/gateway/Bank/{id}"//,
+  //    //"Aggregator": "FakeDefinedAggregator"
+  //  }
+  //],
   "GlobalConfiguration": {
     //"BaseUrl": "https://localhost:5000",
     "RequestIdKey": "OcRequestId",

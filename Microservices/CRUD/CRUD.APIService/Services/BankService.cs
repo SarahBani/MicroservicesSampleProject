@@ -26,6 +26,9 @@ namespace CRUD.APIService.Services
 
         #region Methods
 
+        public async Task<string> GetLogoUrlByIdAsync(int id) =>
+            (await base.GetByIdAsync(id)).LogoUrl;
+
         public Task<int> GetCountAsync() => base.GetCountAsync();
 
         public Task<IList<Bank>> GetListAsync(Page page = null)
