@@ -109,10 +109,14 @@ namespace Identity.APIService.Services
         {
             string subSystems = role switch
             {
-                RoleEnum.Admin =>
-                   string.Join(";", SubSystemEnum.Auth.ToString().ToLower(), SubSystemEnum.CRUD.ToString().ToLower(), SubSystemEnum.CQRS.ToString().ToLower()),
-                RoleEnum.Clerk =>
-                   string.Join(";", SubSystemEnum.CRUD.ToString().ToLower(), SubSystemEnum.CQRS.ToString().ToLower()),
+                RoleEnum.Admin => string.Join(";",
+                    SubSystemEnum.Auth.ToString().ToLower(),
+                    SubSystemEnum.CRUD.ToString().ToLower(),
+                    SubSystemEnum.FileManager.ToString().ToLower(),
+                    SubSystemEnum.CQRS.ToString().ToLower()),
+                RoleEnum.Clerk => string.Join(";",
+                    SubSystemEnum.CRUD.ToString().ToLower(),
+                    SubSystemEnum.CQRS.ToString().ToLower()),
                 var x when x == RoleEnum.Client || x == RoleEnum.Guest =>
                     SubSystemEnum.CRUD.ToString(),
                 _ =>
@@ -208,7 +212,7 @@ namespace Identity.APIService.Services
         private AuthenticationResponse GetAuthenticationResponse(User user, IList<string> roles)
         {
             DateTime expirationTime = DateTime.UtcNow.AddMinutes(double.Parse(this._tokenSetting.AccessExpiration));
-            string token = GenerateJwtToken(user, roles,  expirationTime);
+            string token = GenerateJwtToken(user, roles, expirationTime);
             return new AuthenticationResponse(user.Email, token, expirationTime);
         }
 
@@ -222,7 +226,7 @@ namespace Identity.APIService.Services
             {
                 new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.Email, user.Email),
-            };           
+            };
             // Add roles as multiple claims
             foreach (var role in roles)
             {

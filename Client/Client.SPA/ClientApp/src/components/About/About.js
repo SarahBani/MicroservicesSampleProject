@@ -13,6 +13,8 @@ var About = function () { return (React.createElement("div", { className: "conta
         React.createElement("li", null,
             React.createElement("em", null, "C#.NET")),
         React.createElement("li", null,
+            React.createElement("em", null, "Microservices Architecture")),
+        React.createElement("li", null,
             React.createElement("em", null, "Ocelot 16.0.1 as API Gateway")),
         React.createElement("li", null,
             React.createElement("em", null, "SQL Server Database")),

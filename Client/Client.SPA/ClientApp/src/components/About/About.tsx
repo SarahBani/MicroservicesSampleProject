@@ -17,6 +17,8 @@ export const About: FC = () => (
         <ul>
             <li><em>ASP.NET Core Web API 3.1</em></li>
             <li><em>C#.NET</em></li>
+            <li><em>Microservices Architecture</em></li>
+            {/*<li><em>DDD</em></li>*/}
             <li><em>Ocelot 16.0.1 as API Gateway</em></li>
             <li><em>SQL Server Database</em></li>
             <li><em>JWT Authentication</em></li>

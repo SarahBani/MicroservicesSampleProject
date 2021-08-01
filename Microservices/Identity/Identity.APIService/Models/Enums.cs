@@ -15,6 +15,7 @@
     {
         Auth,
         CRUD,
+        FileManager,
         CQRS
     }
 
