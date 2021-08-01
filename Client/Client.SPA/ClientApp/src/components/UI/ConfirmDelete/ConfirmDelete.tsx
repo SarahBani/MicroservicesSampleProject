@@ -1,11 +1,11 @@
 ﻿import * as React from 'react';
-import { FC } from 'react';
+import { FC, FormEvent } from 'react';
 
 import * as classes from './ConfirmDelete.module.scss';
 
 interface Props {
-    onOK: (event: any) => void,
-    onCancel: (event: any) => void
+    onOK: (event: FormEvent) => void,
+    onCancel: (event: FormEvent) => void
 };
 
 const ConfirmDelete: FC<Props> = ({ onOK, onCancel }) => (

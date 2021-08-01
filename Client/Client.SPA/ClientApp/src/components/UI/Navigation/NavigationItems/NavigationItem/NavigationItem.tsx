@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import { FC, MouseEventHandler, ReactNode } from 'react';
+import { FC, MouseEvent, ReactNode } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import * as classes from './NavigationItem.module.scss';
@@ -14,9 +14,7 @@ type Props = OwnProps & { children?: ReactNode };
 
 const navigationItem: FC<Props> = props => {
 
-    function clickHandler(event: any) {
-        console.log(111111111);
-        console.log(event);
+    function clickHandler(event: MouseEvent<HTMLAnchorElement>) {
         event.preventDefault();
         props.clicked?.();
     };

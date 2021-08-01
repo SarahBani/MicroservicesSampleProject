@@ -19,7 +19,6 @@ var http_error_handler_1 = require("../../hooks/http-error-handler");
 var actions = require("../../store/actions/commonActions");
 var enums_1 = require("../../shared/enums");
 var axios_instance_1 = require("../../shared/axios-instance");
-var react_2 = require("react");
 ;
 var withErrorHandler = function (WrappedComponent) {
     return function (props) {
@@ -47,7 +46,7 @@ var withErrorHandler = function (WrappedComponent) {
                 setError(null);
             };
         }, [axiosError, customError, setError]);
-        var onHideErrorHandler = react_2.useCallback(function () {
+        var onHideErrorHandler = react_1.useCallback(function () {
             if (axiosError) {
                 axiosClearErrorHandler();
             }

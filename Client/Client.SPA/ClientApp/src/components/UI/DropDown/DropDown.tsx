@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import { useState, useEffect, useMemo, useCallback, useRef, Fragment, FC, ReactElement, FocusEventHandler, MutableRefObject } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef, Fragment, FC, ReactElement, FocusEventHandler, MutableRefObject, FormEvent } from 'react';
 
 import * as classes from './DropDown.module.scss';
 import { DropDownItem } from '../../../shared/types';
@@ -71,6 +71,7 @@ const DropDown: FC<Props> = (props) => {
     }, [props.onSelect, setSelectedItem]);
 
     const filterHandler = useCallback((event: any) => {
+        console.log(event);
         const key: string = event.key.toLowerCase();
         const filteredData: DropDownItem[] = props.data?.filter(q => q.text.toLowerCase().startsWith(key))
         if (filteredData.length > 0) {

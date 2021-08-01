@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import { Fragment, useState, useEffect, FC, useMemo, MouseEventHandler } from 'react';
+import { Fragment, useState, useEffect, useCallback, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Modal from '../../components/UI/Modal/Modal';
@@ -8,7 +8,6 @@ import * as actions from '../../store/actions/commonActions';
 import { ModalTypeEnum } from '../../shared/enums';
 import { AppState } from '../../store';
 import axiosInstance from '../../shared/axios-instance';
-import { useCallback } from 'react';
 
 interface StoreProps {
     customError: string

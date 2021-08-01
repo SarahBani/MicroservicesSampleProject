@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useEffect, FC } from "react";
+import { useState, useEffect, FC, FormEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory } from "react-router";
 
@@ -72,17 +72,17 @@ export const Auth: FC = () => {
         setFormControls(updatedForm);
     }, [isLoading, setFormControls]);
 
-    const elementChangedHandler = (event: any, id: string) => {
+    const elementChangedHandler = (event: FormEvent, id: string) => {
         const updatedForm = getUpdatedForm(event, formControls, id);
         setFormControls(updatedForm);
         setIsFormValid(ValidateForm(updatedForm));
     };
 
-    const elementLostFocusHandler = (event: any, id: string) => {
+    const elementLostFocusHandler = (event: FormEvent, id: string) => {
         setFormControls(getUpdatedForm(event, formControls, id));
     };
 
-    const signInHandler = (event: any) => {
+    const signInHandler = (event: FormEvent) => {
         event.preventDefault();
         dispatch(actions.signIn(formControls.email.value.toString(), formControls.password.value.toString()));
     };
@@ -95,8 +95,8 @@ export const Auth: FC = () => {
                 getFormElements(formControls).map((formElement: FormControlElement) => (
                     <FormElement formElement={formElement}
                         key={formElement.id}
-                        onChange={(event: any) => elementChangedHandler(event, formElement.id)}
-                        onLostFocus={(event: any) => elementLostFocusHandler(event, formElement.id)}
+                        onChange={(event: FormEvent) => elementChangedHandler(event, formElement.id)}
+                        onLostFocus={(event: FormEvent) => elementLostFocusHandler(event, formElement.id)}
                     />
                 ))
             }

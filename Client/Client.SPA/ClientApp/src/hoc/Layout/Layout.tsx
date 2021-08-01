@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import * as classes from './Layout.module.css';

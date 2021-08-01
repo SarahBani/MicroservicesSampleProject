@@ -7,8 +7,6 @@ var classes = require("./NavigationItem.module.scss");
 var navigationItem = function (props) {
     function clickHandler(event) {
         var _a;
-        console.log(111111111);
-        console.log(event);
         event.preventDefault();
         (_a = props.clicked) === null || _a === void 0 ? void 0 : _a.call(props);
     }

@@ -1,5 +1,4 @@
 ﻿import { ActionPattern, put, take, call } from 'redux-saga/effects';
-import { EventChannel, TakeableChannel } from 'redux-saga';
 
 import { SuccessfulOperationEnum, FailedOperationEnum } from '../../shared/enums';
 import * as actions from '../actions/bankActions';

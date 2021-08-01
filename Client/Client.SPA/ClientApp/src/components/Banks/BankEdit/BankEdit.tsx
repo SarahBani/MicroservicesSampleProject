@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { useState, useEffect, useCallback, useMemo, memo, FC, ReactElement, useRef } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef, memo, FC, ReactElement, FormEvent } from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { FormEvent } from 'react';
 
 import * as classes from './BankEdit.module.scss';
 import { getUpdatedForm, getFormElements, ValidateForm } from '../../../shared/utility';

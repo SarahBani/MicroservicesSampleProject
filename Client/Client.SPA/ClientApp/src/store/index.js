@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.store = void 0;
+var redux_saga_1 = require("redux-saga");
 var WeatherForecasts = require("./WeatherForecasts");
 var Counter = require("./Counter");
 var authReducer_1 = require("./reducers/authReducer");
@@ -8,7 +9,6 @@ var commonReducer_1 = require("./reducers/commonReducer");
 var uploadReducer_1 = require("./reducers/uploadReducer");
 var bankReducer_1 = require("./reducers/bankReducer");
 var configureStore_1 = require("./configureStore");
-var redux_saga_1 = require("redux-saga");
 var sagas_1 = require("./sagas");
 //// The top-level state object
 //export interface ApplicationState {

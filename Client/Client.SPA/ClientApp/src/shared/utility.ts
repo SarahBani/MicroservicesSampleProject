@@ -1,4 +1,5 @@
-﻿import { ChangeEvent, FormEvent, SyntheticEvent } from "react";
+﻿import { FormEvent } from "react";
+
 import { ResponseHeaders } from "../models/ResponseHeaders";
 import * as Constants from "./constants";
 import { HttpErrorEnum } from "./enums";
@@ -24,7 +25,7 @@ export const getFormElements = (formControls: Dictionary<FormControlElementConte
 
 //export const getUpdatedForm = (event: { target: HTMLInputElement }, formControls, controlId) => {
 export const getUpdatedForm = (
-    event: SyntheticEvent<Element>,
+    event: FormEvent<Element>,
     formControls: Dictionary<FormControlElementContent>,
     controlId: string): Dictionary<FormControlElementContent> => {
     const isControlValid = checkValidity((event.target as HTMLInputElement).value, formControls[controlId].validation);

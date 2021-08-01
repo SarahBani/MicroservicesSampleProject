@@ -53,6 +53,7 @@ var DropDown = function (props) {
     }, [props.onSelect, setSelectedItem]);
     var filterHandler = react_1.useCallback(function (event) {
         var _a;
+        console.log(event);
         var key = event.key.toLowerCase();
         var filteredData = (_a = props.data) === null || _a === void 0 ? void 0 : _a.filter(function (q) { return q.text.toLowerCase().startsWith(key); });
         if (filteredData.length > 0) {
