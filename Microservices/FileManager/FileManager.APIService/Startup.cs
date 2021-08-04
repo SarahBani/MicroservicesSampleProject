@@ -1,3 +1,4 @@
+using FileManager.APIService.Helpers;
 using FileManager.APIService.Models;
 using FileManager.APIService.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -47,6 +48,7 @@ namespace FileManager.APIService
             services.Configure<TokenSetting>(tokenSetting);
             ConfigureAuthentication(services, tokenSetting.Get<TokenSetting>());
 
+            DependencyInjection.SetInjection(services);
             services.AddControllers();
         }
 

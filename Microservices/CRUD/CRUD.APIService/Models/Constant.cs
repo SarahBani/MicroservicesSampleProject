@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CRUD.APIService.Models
+﻿namespace CRUD.APIService.Models
 {
     public static class Constant
     {
@@ -10,6 +8,7 @@ namespace CRUD.APIService.Models
         public const string AppSettings_DefaultConnection = "DefaultConnection";
 
         public const string AppSettings_TokenSetting = "TokenSetting";
+
         public const string AppSettings_GatewayUrl = "GatewayUrl";        
 
         #endregion /AppSettings

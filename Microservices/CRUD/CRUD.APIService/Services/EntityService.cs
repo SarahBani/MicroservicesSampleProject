@@ -1,5 +1,7 @@
 ﻿using CRUD.APIService.Entities;
 using CRUD.APIService.Repository;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using System.Linq;
 
 namespace CRUD.APIService.Services
@@ -8,6 +10,12 @@ namespace CRUD.APIService.Services
     {
 
         #region Properties
+
+        public IConfiguration Configuration { get; private set; }
+
+        protected IHttpContextAccessor HttpContextAccessor { get; private set; }
+
+        public HttpContext HttpContext => this.HttpContextAccessor.HttpContext;
 
         public IUnitOfWork UnitOfWork { get; private set; }
 
@@ -87,18 +95,23 @@ namespace CRUD.APIService.Services
 
         #region Constructors
 
-        public EntityService(IBaseRepository<Bank, int> bankRepository,
+        public EntityService(IConfiguration configuration,
+                             IHttpContextAccessor contextAccessor,
+                             IUnitOfWork unitOfWork,
+                             IBaseRepository<Bank, int> bankRepository,
                              IBaseRepository<Branch, long> branchRepository,
                              //IBaseReadOnlyRepository<City, long> cityRepository,
-                             IBaseReadOnlyRepository<Country, short> countryRepository,
-                             IUnitOfWork unitOfWork)
+                             IBaseReadOnlyRepository<Country, short> countryRepository)
         {
+
+            this.Configuration = configuration;
+            this.HttpContextAccessor = contextAccessor;
+            this.UnitOfWork = unitOfWork;
+
             this.BankRepository = (bankRepository as IBankRepository);
             this.BranchRepository = (branchRepository as IBranchRepository);
             //this.CityRepository = (cityRepository as ICityRepository);
             this.CountryRepository = (countryRepository as ICountryRepository);
-
-            this.UnitOfWork = unitOfWork;
         }
 
         #endregion /Constructors

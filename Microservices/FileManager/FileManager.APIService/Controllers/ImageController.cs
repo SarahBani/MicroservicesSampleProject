@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FileManager.APIService.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FileManager.APIService.Controllers
@@ -9,7 +10,8 @@ namespace FileManager.APIService.Controllers
 
         #region Constructors
 
-        public ImageController()
+        public ImageController(IFileManagerService fileManagerService)
+            :base(fileManagerService)
         {
             base.DeleteOldImages("Banks");
         }

@@ -6,6 +6,9 @@
 <ul>
 	<li><em>ASP.NET Core Web API 3.1</em></li>
 	<li><em>C#.NET</em></li>
+	<li><em>EF Core (Code-First)</em></li>
+	<li><em>ASP.NET Core Identity</em></li>
+	<li><em>Microservices Architecture</em></li>
 	<li><em>Ocelot 16.0.1 as API Gateway</em></li>
 	<li><em>SQL Server Database</em></li>
 	<li><em>JWT Authentication</em></li>
@@ -26,3 +29,9 @@
 	<li><em>Email: "sarah@yahoo.com"</em></li>
 	<li><em>Password: "123456"</em></li>
 </ul>
+
+<p>
+	<b>Notice:</b>
+	<br />
+	Create a SQL Server database and update it by 'Update-Database' command in 'CRUD.APIService' & 'Identity.APIService' projects
+</p>

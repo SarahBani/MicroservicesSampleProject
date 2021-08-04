@@ -13,6 +13,10 @@ var About = function () { return (React.createElement("div", { className: "conta
         React.createElement("li", null,
             React.createElement("em", null, "C#.NET")),
         React.createElement("li", null,
+            React.createElement("em", null, "EF Core (Code-First)")),
+        React.createElement("li", null,
+            React.createElement("em", null, "ASP.NET Core Identity")),
+        React.createElement("li", null,
             React.createElement("em", null, "Microservices Architecture")),
         React.createElement("li", null,
             React.createElement("em", null, "Ocelot 16.0.1 as API Gateway")),
@@ -43,7 +47,11 @@ var About = function () { return (React.createElement("div", { className: "conta
         React.createElement("li", null,
             React.createElement("em", null, "Email: \"sarah@yahoo.com\"")),
         React.createElement("li", null,
-            React.createElement("em", null, "Password: \"123456\""))))); };
+            React.createElement("em", null, "Password: \"123456\""))),
+    React.createElement("p", null,
+        React.createElement("b", null, "Notice:"),
+        React.createElement("br", null),
+        "Create a SQL Server database and update it by 'Update-Database' command in 'CRUD.APIService' & 'Identity.APIService' projects. Change the settings in appsettings.json files in both projects."))); };
 exports.About = About;
 exports.default = exports.About;
 //# sourceMappingURL=About.js.map

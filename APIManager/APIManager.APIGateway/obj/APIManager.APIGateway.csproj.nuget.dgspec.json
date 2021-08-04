@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "H:\\Project\\Microservices\\MicroservicesSampleProject\\APIManager\\APIManager.APIGateway\\APIManager.APIGateway.csproj": {}
+    "H:\\Project\\MicroServices\\MicroServicesSampleProject\\APIManager\\APIManager.APIGateway\\APIManager.APIGateway.csproj": {}
   },
   "projects": {
-    "H:\\Project\\Microservices\\MicroservicesSampleProject\\APIManager\\APIManager.APIGateway\\APIManager.APIGateway.csproj": {
+    "H:\\Project\\MicroServices\\MicroServicesSampleProject\\APIManager\\APIManager.APIGateway\\APIManager.APIGateway.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "H:\\Project\\Microservices\\MicroservicesSampleProject\\APIManager\\APIManager.APIGateway\\APIManager.APIGateway.csproj",
+        "projectUniqueName": "H:\\Project\\MicroServices\\MicroServicesSampleProject\\APIManager\\APIManager.APIGateway\\APIManager.APIGateway.csproj",
         "projectName": "APIManager.APIGateway",
-        "projectPath": "H:\\Project\\Microservices\\MicroservicesSampleProject\\APIManager\\APIManager.APIGateway\\APIManager.APIGateway.csproj",
+        "projectPath": "H:\\Project\\MicroServices\\MicroServicesSampleProject\\APIManager\\APIManager.APIGateway\\APIManager.APIGateway.csproj",
         "packagesPath": "C:\\Users\\Sarah\\.nuget\\packages\\",
-        "outputPath": "H:\\Project\\Microservices\\MicroservicesSampleProject\\APIManager\\APIManager.APIGateway\\obj\\",
+        "outputPath": "H:\\Project\\MicroServices\\MicroServicesSampleProject\\APIManager\\APIManager.APIGateway\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "F:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

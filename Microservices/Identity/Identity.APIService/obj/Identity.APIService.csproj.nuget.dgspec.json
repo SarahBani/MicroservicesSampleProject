@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "H:\\Project\\Microservices\\MicroservicesSampleProject\\Microservices\\Identity\\Identity.APIService\\Identity.APIService.csproj": {}
+    "H:\\Project\\MicroServices\\MicroServicesSampleProject\\Microservices\\Identity\\Identity.APIService\\Identity.APIService.csproj": {}
   },
   "projects": {
-    "H:\\Project\\Microservices\\MicroservicesSampleProject\\Microservices\\Identity\\Identity.APIService\\Identity.APIService.csproj": {
+    "H:\\Project\\MicroServices\\MicroServicesSampleProject\\Microservices\\Identity\\Identity.APIService\\Identity.APIService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "H:\\Project\\Microservices\\MicroservicesSampleProject\\Microservices\\Identity\\Identity.APIService\\Identity.APIService.csproj",
+        "projectUniqueName": "H:\\Project\\MicroServices\\MicroServicesSampleProject\\Microservices\\Identity\\Identity.APIService\\Identity.APIService.csproj",
         "projectName": "Identity.APIService",
-        "projectPath": "H:\\Project\\Microservices\\MicroservicesSampleProject\\Microservices\\Identity\\Identity.APIService\\Identity.APIService.csproj",
+        "projectPath": "H:\\Project\\MicroServices\\MicroServicesSampleProject\\Microservices\\Identity\\Identity.APIService\\Identity.APIService.csproj",
         "packagesPath": "C:\\Users\\Sarah\\.nuget\\packages\\",
-        "outputPath": "H:\\Project\\Microservices\\MicroservicesSampleProject\\Microservices\\Identity\\Identity.APIService\\obj\\",
+        "outputPath": "H:\\Project\\MicroServices\\MicroServicesSampleProject\\Microservices\\Identity\\Identity.APIService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "F:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

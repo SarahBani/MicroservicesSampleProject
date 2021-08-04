@@ -24,5 +24,9 @@ namespace CRUD.APIService.Services
 
         Task<TransactionResult> DeleteAsync(int id);
 
+        void MoveLogoFile(string logoUrl);
+
+        void DeleteLogoFile(string logoUrl);
+
     }
 }

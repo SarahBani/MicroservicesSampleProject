@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using CRUD.APIService.Entities;
 using CRUD.APIService.Models;
@@ -11,8 +6,6 @@ using CRUD.APIService.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 
 namespace CRUD.APIService.Controllers
 {
@@ -22,16 +15,14 @@ namespace CRUD.APIService.Controllers
 
         #region Properties
 
-        private readonly IConfiguration _configuration;
         private readonly IBankService _bankService;
 
         #endregion /Properties
 
         #region Constructors
 
-        public BankController(IConfiguration configuration, IBankService bankService)
+        public BankController(IBankService bankService)
         {
-            this._configuration = configuration;
             this._bankService = bankService;
         }
 
@@ -99,7 +90,7 @@ namespace CRUD.APIService.Controllers
             {
                 if (!string.IsNullOrEmpty(bank.LogoUrl))
                 {
-                    MoveLogoFile(bank.LogoUrl);
+                    this._bankService.MoveLogoFile(bank.LogoUrl);
                 }
                 return CreatedAtAction("GetById", new
                 {
@@ -142,11 +133,11 @@ namespace CRUD.APIService.Controllers
             {
                 if (prevLogoUrl != bank.LogoUrl)
                 {
-                    DeleteLogoFile(prevLogoUrl);
+                    this._bankService.DeleteLogoFile(prevLogoUrl);
                 }
                 if (!string.IsNullOrEmpty(bank.LogoUrl))
                 {
-                    MoveLogoFile(bank.LogoUrl);
+                    this._bankService.MoveLogoFile(bank.LogoUrl);
                 }
                 return Ok();
             }
@@ -171,7 +162,7 @@ namespace CRUD.APIService.Controllers
             {
                 if (!string.IsNullOrEmpty(logoUrl))
                 {
-                    DeleteLogoFile(logoUrl);
+                    this._bankService.DeleteLogoFile(logoUrl);
                 }
                 return Ok();
             }
@@ -184,58 +175,7 @@ namespace CRUD.APIService.Controllers
         //public IActionResult UploadLogo()
         //{
         //    return base.UploadImage("Banks");
-        //}
-
-        private async void MoveLogoFile(string logoUrl)
-        {
-            string gatewayUrl = this._configuration.GetSection(Constant.AppSettings_GatewayUrl).Value;
-            using (var client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Add(HttpRequestHeader.Authorization.ToString(), HttpContext.Request.Headers["Authorization"].ToString());
-
-                var request = new HttpRequestMessage(HttpMethod.Post, $"{gatewayUrl}/MoveBankLogo");
-                request.Content = new StringContent(JsonConvert.SerializeObject(logoUrl),
-                    Encoding.UTF8,
-                    "application/json"); // CONTENT-TYPE header
-                await client.SendAsync(request);
-            }
-        }
-
-        private async void DeleteLogoFile(string logoUrl)
-        {
-            //try
-            //{
-            string gatewayUrl = this._configuration.GetSection(Constant.AppSettings_GatewayUrl).Value;
-            using (var client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Add(HttpRequestHeader.Authorization.ToString(), HttpContext.Request.Headers["Authorization"].ToString());
-
-                var request = new HttpRequestMessage(HttpMethod.Delete, $"{gatewayUrl}/DeleteBankLogo");
-                request.Content = new StringContent(JsonConvert.SerializeObject(logoUrl),
-                    Encoding.UTF8,
-                    "application/json"); // CONTENT-TYPE header
-                await client.SendAsync(request);
-                //HttpResponseMessage response = await client.SendAsync(request);
-
-                //await client.SendAsync(request)
-                //    .ContinueWith(responseTask =>
-                //    {
-                //        Console.WriteLine("Response: {0}", responseTask.Result);
-                //    });
-                //if (response.IsSuccessStatusCode)
-                //{
-                //    return Ok();
-                //}
-                //else
-                //{
-                //}
-            }
-            //}
-            //catch (Exception e)
-            //{
-            //    return Problem(result.ExceptionContentResult);
-            //}
-        }
+        //}      
 
         #endregion /Actions
 

@@ -1,8 +1,6 @@
-﻿using FileManager.APIService.Helpers;
-using FileManager.APIService.Models;
+﻿using FileManager.APIService.Models;
+using FileManager.APIService.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.IO;
 
 namespace FileManager.APIService.Controllers
 {
@@ -12,15 +10,15 @@ namespace FileManager.APIService.Controllers
 
         #region Properties
 
-        [TempData]
-        public string FilePath { get; set; }
+        private readonly IFileManagerService _fileManagerService;
 
         #endregion /Properties
 
         #region Constructors
 
-        public BaseUploaderAPIController()
+        public BaseUploaderAPIController(IFileManagerService fileManagerService)
         {
+            this._fileManagerService = fileManagerService;
         }
 
         #endregion /Constructors
@@ -34,18 +32,17 @@ namespace FileManager.APIService.Controllers
                 var file = Request.Form.Files[0];
                 if (file.Length > 0)
                 {
-                    DeletePreviousFile();
-                    this.FilePath = Utility.UploadImage(file, subFolderName + "/Temp");
-                    return Ok(this.FilePath);
+                    string filePath = this._fileManagerService.UploadImage(file, subFolderName);
+                    return Ok(filePath);
                 }
                 else
                 {
                     return BadRequest(Constant.Exception_EmptyFile);
                 }
             }
-            catch 
+            catch
             {
-               return Problem(Constant.Exception_UploadFileProblem);
+                return Problem(Constant.Exception_UploadFileProblem);
             }
         }
 
@@ -53,7 +50,7 @@ namespace FileManager.APIService.Controllers
         {
             try
             {
-                Utility.DeleteFile(filePath);
+                this._fileManagerService.DeleteFile(filePath);
                 return Ok();
             }
             catch
@@ -62,29 +59,10 @@ namespace FileManager.APIService.Controllers
             }
         }
 
-        protected void DeletePreviousFile()
-        {
-            if (!string.IsNullOrEmpty(this.FilePath))
-            {
-                Utility.DeleteFile(this.FilePath);
-                this.FilePath = string.Empty;
-            }
-        }
-
-        /// <summary>
-        /// Delete uploaded files older than one hour
-        /// </summary>
-        /// <param name="subFolderName"></param>
         protected void DeleteOldImages(string subFolderName)
         {
             string tempDirectoryPath = $"Resources/Images/{subFolderName}/Temp";
-            foreach (string fileName in Directory.GetFiles(tempDirectoryPath))
-            {
-                var fileInfo = new FileInfo(fileName);
-                if (fileInfo.LastAccessTime < DateTime.Now.AddHours(-1)) { 
-                    fileInfo.Delete();
-                }
-            }
+            this._fileManagerService.DeleteOldFiles(tempDirectoryPath);
         }
 
         protected IActionResult MoveTempFile(string filePath)
@@ -92,7 +70,7 @@ namespace FileManager.APIService.Controllers
             try
             {
                 string destFilePath = filePath.Replace("/Temp", "");
-                System.IO.File.Move(filePath, destFilePath, true);
+                this._fileManagerService.MoveFile(filePath, destFilePath);
                 return Ok();
             }
             catch

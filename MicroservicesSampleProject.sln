@@ -23,7 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRUD.APIService", "Microser
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FileManager", "FileManager", "{18F5ACD1-D2DE-4FD1-A058-3400854B1406}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileManager.APIService", "Microservices\FileManager\FileManager.APIService\FileManager.APIService.csproj", "{716D588F-C937-4933-B25C-7632F007690A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileManager.APIService", "Microservices\FileManager\FileManager.APIService\FileManager.APIService.csproj", "{716D588F-C937-4933-B25C-7632F007690A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedKernel", "SharedKernel", "{8B3CE440-1E7E-43D2-A38D-29FF834F66E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -54,7 +54,6 @@ H:\Project\Microservices\MicroservicesSampleProject\Microservices\Identity\Ident
 H:\Project\Microservices\MicroservicesSampleProject\Microservices\Identity\Identity.APIService\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 H:\Project\Microservices\MicroservicesSampleProject\Microservices\Identity\Identity.APIService\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 H:\Project\Microservices\MicroservicesSampleProject\Microservices\Identity\Identity.APIService\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-H:\Project\Microservices\MicroservicesSampleProject\Microservices\Identity\Identity.APIService\obj\Debug\netcoreapp3.1\Identity.APIService.csproj.AssemblyReference.cache
 H:\Project\Microservices\MicroservicesSampleProject\Microservices\Identity\Identity.APIService\obj\Debug\netcoreapp3.1\Identity.APIService.AssemblyInfoInputs.cache
 H:\Project\Microservices\MicroservicesSampleProject\Microservices\Identity\Identity.APIService\obj\Debug\netcoreapp3.1\Identity.APIService.AssemblyInfo.cs
 H:\Project\Microservices\MicroservicesSampleProject\Microservices\Identity\Identity.APIService\obj\Debug\netcoreapp3.1\Identity.APIService.csproj.CoreCompileInputs.cache
@@ -67,3 +66,4 @@ H:\Project\Microservices\MicroservicesSampleProject\Microservices\Identity\Ident
 H:\Project\Microservices\MicroservicesSampleProject\Microservices\Identity\Identity.APIService\obj\Debug\netcoreapp3.1\Identity.APIService.dll
 H:\Project\Microservices\MicroservicesSampleProject\Microservices\Identity\Identity.APIService\obj\Debug\netcoreapp3.1\Identity.APIService.pdb
 H:\Project\Microservices\MicroservicesSampleProject\Microservices\Identity\Identity.APIService\obj\Debug\netcoreapp3.1\Identity.APIService.genruntimeconfig.cache
+H:\Project\Microservices\MicroservicesSampleProject\Microservices\Identity\Identity.APIService\obj\Debug\netcoreapp3.1\Identity.APIService.csproj.AssemblyReference.cache

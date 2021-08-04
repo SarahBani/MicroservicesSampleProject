@@ -10,6 +10,7 @@ namespace CRUD.APIService.Helpers
 
         public static IServiceCollection SetInjection(this IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IEntityService, EntityService>();
 

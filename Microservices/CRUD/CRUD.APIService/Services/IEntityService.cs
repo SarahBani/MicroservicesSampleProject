@@ -1,10 +1,16 @@
 ﻿using CRUD.APIService.Entities;
 using CRUD.APIService.Repository;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 
 namespace CRUD.APIService.Services
 {
     public interface IEntityService
     {
+
+        IConfiguration Configuration { get; }
+
+        HttpContext HttpContext { get; }
 
         IUnitOfWork UnitOfWork { get; }
 

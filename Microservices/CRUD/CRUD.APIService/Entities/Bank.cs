@@ -31,7 +31,6 @@ namespace CRUD.APIService.Entities
 
         public Bank()
         {
-
         }
 
         #endregion /Constructors

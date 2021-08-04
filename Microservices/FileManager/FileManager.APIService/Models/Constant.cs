@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace FileManager.APIService.Models
+﻿namespace FileManager.APIService.Models
 {
     public static class Constant
     {
@@ -10,6 +8,8 @@ namespace FileManager.APIService.Models
         public const string AppSettings_DefaultConnection = "DefaultConnection";
 
         public const string AppSettings_TokenSetting = "TokenSetting";
+
+        public const string AppSettings_FileUploadDeadline = "FileUploadDeadline";
 
         #endregion /AppSettings
 
